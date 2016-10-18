@@ -1,53 +1,61 @@
-## structure preparation 
-0) structure download: ~25 structures (P1, not too many atoms, resolution ~3 Å, bad validation metrics) were selected from the PDB. 
+## Objective
 
-*.pdb files are in 0_pdb, and *.mtz files are in 0_mtz.
+a) Select ~10-20 P1 structures from PDB and run SE (mozyeme) refinements without using clustering.
+   This requires finding structure-candidates and preparing them for refinement.
+b) Once line-search is ready, pick up final or intermediate results from "a)" and
+   use it as input to run SE using clustering.
+c) Analyse results of "b)" and pick one or two most favorable (showing most improvement)
+   to run HF based refinements.
 
-1) Residues missing:
-[1il5.pdb 2pro.pdb 3kyi.pdb 3tz9.pdb 4ctd.pdb 4drw.pdb 4k2r.pdb 4rnf.pdb 4tql.pdb 4xa1.pdb 5d12.pdb]
+Details for each step a-b-c) follow below.
 
-It is not available now in run_finalize.py. 
-Just keep those structures without missing residues in a chain in 1_pdb
+Structure preparation
+---------------------
 
-2) Keep completed structures by run_finalise.py in 2_pdb
+1) Get structures from PDB. 
+
+This is done manually using RCSB site. Selection criteria are: P1, not too many atoms, 
+resolution ~3-4 Å, bad validation metrics. The criteria are rather arbitrary: we try
+to find low-resolution models that we believe can be improved by quantum refinement.
+
+File were downloaded using 
+    phenix.fetch_pdb PDB_CODE --mtz
+
+Some models have unknown to Phenix ligands. Corresponding CIF files were created using 
+phenix.ready_set file_name.pdb
+
+Some data file were missing R-free flags. They were added at subsequent (re-refinement).
+
+*.pdb, *.mtz and *.cif files are stored in 00 folder.
+
+2) Refine structures from "1)" using phenix.refine. List of commands per each structure is
+   in 01_run_phenix_refine file.
+
+Refinement results are stored in 01 folder. MTZ files from this folder are to be used in all
+subsequent refinements.
+
+3) Run structure from "2)" through run_finalise.py using command
+
+   XXX
+
+and store results in 03 folder. Structures in 03 are ready for quantum refinement.
+
+Current issues to be resolved ASAP:
 
 Errors:
 ligand or metal
-[1ok9.pdb 1pag.pdb 1u0d.pdb 1va7.pdb 1y1l.pdb 2ghj.pdb 2iwe.pdb 2oy0.pdb 3nm9.pdb 4l21.pdb]:
+[1ok9 1pag 1u0d 1va7 1y1l 2ghj 2iwe 2oy0 3nm9 4l21]:
 run_finalise.py throw error like 
      Sorry: no charge found in the model file for ""HETATM 7669 ZN    ZN A1129 .*.    ZN  ""
 or:
   AssertionError: residue "HETATM 8395  N   SAH A 301 .*.     N  " charge 2 is greater than 1
 
-
 No errors:
 [1fh5.pdb 2jee.pdb 2oeq.pdb 3dtj.pdb]
 
+No errors for 2jee, while 2jee_complete.pdb has missing atoms.
 
-*Incompleteness:
+Structure refinement
+--------------------
 
-No errors throw for 2jee, while 2jee_complete.pdb  has missing atoms through visualization.
-
-3) Filter by using standard cctbx refinement.
-
-1fh5 is not good because data seem to be corrupted, plus published R factors were not reproducible.
-
-selected *.pdb in 3_pdb, and select *.mtz in 3_mtz
-
-4) Complete those structures from step 3) as input structures for Q|R
-
-## Q|R refinement procedure.
-a) pre-refine using mozyeme for all structures in 4_pdb using full system (i.e. no clustering) 2oeq.pdb, 3dtj.pdb
-
-   select improved structures for next step
-
-
-b) Run cluster-Q|R refinement for selected pre-refined structures -  run clustering at two levels:
- 1. semi-empirical  for all structures
- 2. HF-2c for best structure (based on metrics) found so far.
-
-sample command:
-phenix.python ../qr-core/qrefine.py a87_99_h.pdb.mtz perturbed/1.5/4.pdb 
-
-
-
+XXX more results here, in folders 04, 05, etc.
