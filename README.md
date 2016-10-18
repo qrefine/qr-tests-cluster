@@ -55,7 +55,8 @@ Structure preparation
 
    * Run structure from "2)" through run_finalise.py using command
 
-   XXX
+   XXX This needs a careful and clear description what's being done and how. Adding H and missing
+   non-H atoms? Remove altlocs? Reset occupancies? XXX
 
    and store results in 03 folder. Structures in 03 are ready for quantum refinement.
 
