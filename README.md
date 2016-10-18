@@ -32,13 +32,17 @@ No errors throw for 2jee, while 2jee_complete.pdb  has missing atoms through vis
 
 1fh5 is not good because data seem to be corrupted, plus published R factors were not reproducible.
 
-4) Complete those structures from 3) as input structures for Q|R
+selected *.pdb in 3_pdb, and select *.mtz in 3_mtz
+
+4) Complete those structures from step 3) as input structures for Q|R
 
 ## Q|R refinement procedure.
-a) pre-refine using mozyeme for all structures in 4_pdb using full system (i.e. no clustering) 2oeq_refine_001.pdb, 3dtj_refine_001.pdb
+a) pre-refine using mozyeme for all structures in 4_pdb using full system (i.e. no clustering) 2oeq.pdb, 3dtj.pdb
+
+   select improved structures for next step
 
 
-b) Run cluster-Q|R refinement -  run clustering at two levels:
+b) Run cluster-Q|R refinement for selected pre-refined structures -  run clustering at two levels:
  1. semi-empirical  for all structures
  2. HF-2c for best structure (based on metrics) found so far.
 
