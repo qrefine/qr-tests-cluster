@@ -1,17 +1,28 @@
-## Objective
+## Objective and steps
 
 ##### a) Select structure-candidates.
 
-   Select ~10-20 P1 structures from PDB and run SE (mozyeme) refinements without using clustering.
-   This requires finding structure-candidates and preparing them for refinement.
+   Select ~10-20 P1 structures from PDB and prepare them for quantim refinement.
    
-b) Once line-search is ready (Mark), pick up final or intermediate results from "a)" and
+##### b) Pre-screen by preliminary SE refinement.
+   
+   Run SE (mozyeme) refinements without using clustering. Make sure qrefine outputs 
+   intermediate PDB files so that refinement can be stopped any time and best outcome 
+   selected.
+   
+##### c) Further SE refinement using clustering.
+
+   Once line-search is ready (Mark), pick up final or intermediate results from "b)" and
    use it as input to run SE using clustering.
    
-c) Analyse results of "b)" and pick one or two most favorable (showing most improvement)
+   XXX Using what programs?
+   
+##### d) Final HF based refinement.
+
+   Analyse results of "c)" and pick one or two most favorable (showing most improvement)
    to run HF based refinements.
 
-Details for each step a-b-c) follow below.
+Details for each step a-b-c-d) follow below.
 
 Structure preparation
 ---------------------
