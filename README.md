@@ -1,5 +1,5 @@
 # qr-tests-cluster
-
+## structure prepareation 
 0) structure selection: ~15 structures (P1, not too many atoms, resolution ~3 Å, bad validation metrics) were selected from the PDB.
 
 Residues missing: 
@@ -11,7 +11,7 @@ This causes a known problem of run_finalize not working for residue incomplete s
 
 Errors:
 ligand or metal
-[1ok9.pdb 1pag.pdb 1u0d.pdb 1va7.pdb 1y1l.pdb 2ghj.pdb 2iwe.pdb 2oy0.pdb 3dtj.pdb 3nm9.pdb 4l21.pdb]:
+[1ok9.pdb 1pag.pdb 1u0d.pdb 1va7.pdb 1y1l.pdb 2ghj.pdb 2iwe.pdb 2oy0.pdb 3nm9.pdb 4l21.pdb]:
 run_finalise.py throw error like 
      Sorry: no charge found in the model file for ""HETATM 7669 ZN    ZN A1129 .*.    ZN  ""   
 or:
