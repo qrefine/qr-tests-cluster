@@ -27,33 +27,37 @@ Details for each step a-b-c-d) follow below.
 Structure preparation
 ---------------------
 
-1) Get structures from PDB. 
+#### 1) Get structures from PDB. 
 
-This is done manually using RCSB site. Selection criteria are: P1, not too many atoms, 
-resolution ~3-4 Å, bad validation metrics. The criteria are rather arbitrary: we try
-to find low-resolution models that we believe can be improved by quantum refinement.
+   * This is done manually using RCSB site. Selection criteria are: P1, not too many atoms, 
+   resolution ~3-4 Å, bad validation metrics. The criteria are rather arbitrary: we try
+   to find low-resolution models that we believe can be improved by quantum refinement.
 
-File were downloaded using 
-    phenix.fetch_pdb PDB_CODE --mtz
+   * File were downloaded using 
+   phenix.fetch_pdb PDB_CODE --mtz
 
-Some models have unknown to Phenix ligands. Corresponding CIF files were created using 
-phenix.ready_set file_name.pdb
+   * Some models have unknown to Phenix ligands. Corresponding CIF files were created using 
+   phenix.ready_set file_name.pdb
 
-Some data file were missing R-free flags. They were added at subsequent (re-refinement).
+   * Some data file were missing R-free flags. They were added at subsequent (re-refinement).
 
-*.pdb, *.mtz and *.cif files are stored in 00 folder.
+   * .pdb, .mtz and .cif files are stored in 00 folder.
 
-2) Refine structures from "1)" using phenix.refine. List of commands per each structure is
+#### 2) Phenix-Refine 
+
+   * Refine structures from "1)" using phenix.refine. List of commands per each structure is
    in 01_run_phenix_refine file.
 
-Refinement results are stored in 01 folder. MTZ files from this folder are to be used in all
-subsequent refinements.
+   * Refinement results are stored in 01 folder. MTZ files from this folder are to be used in all
+   subsequent refinements.
 
-3) Run structure from "2)" through run_finalise.py using command
+#### 3) Finalize
+
+   * Run structure from "2)" through run_finalise.py using command
 
    XXX
 
-and store results in 03 folder. Structures in 03 are ready for quantum refinement.
+   and store results in 03 folder. Structures in 03 are ready for quantum refinement.
 
 Current issues to be resolved ASAP:
 
