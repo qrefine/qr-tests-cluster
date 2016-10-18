@@ -1,6 +1,8 @@
 ## Objective
 
-a) Select ~10-20 P1 structures from PDB and run SE (mozyeme) refinements without using clustering.
+a) Select structure-candidates.
+
+   Select ~10-20 P1 structures from PDB and run SE (mozyeme) refinements without using clustering.
    This requires finding structure-candidates and preparing them for refinement.
    
 b) Once line-search is ready (Mark), pick up final or intermediate results from "a)" and
