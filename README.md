@@ -1,5 +1,7 @@
 ## structure preparation 
-0) structure download: ~25 structures (P1, not too many atoms, resolution ~3 Å, bad validation metrics) were selected from the PDB. *.pdb files are in 0_pdb, and *.mtz files are in 0_mtz.
+0) structure download: ~25 structures (P1, not too many atoms, resolution ~3 Å, bad validation metrics) were selected from the PDB. 
+
+*.pdb files are in 0_pdb, and *.mtz files are in 0_mtz.
 
 1) Residues missing:
 [1il5.pdb 2pro.pdb 3kyi.pdb 3tz9.pdb 4ctd.pdb 4drw.pdb 4k2r.pdb 4rnf.pdb 4tql.pdb 4xa1.pdb 5d12.pdb]
@@ -7,7 +9,7 @@
 It is not available now in run_finalize.py. 
 Just keep those structures without missing residues in a chain in 1_pdb
 
-2) Keep completed structures by run_finalise.py
+2) Keep completed structures by run_finalise.py in 2_pdb
 
 Errors:
 ligand or metal
@@ -26,7 +28,7 @@ No errors:
 
 No errors throw for 2jee, while 2jee_complete.pdb  has missing atoms through visualization.
 
-3) Refine using standard cctbx.
+3) Filter by using standard cctbx refinement.
 
 1fh5 is not good because data seem to be corrupted, plus published R factors were not reproducible.
 
@@ -44,5 +46,4 @@ sample command:
 phenix.python ../qr-core/qrefine.py a87_99_h.pdb.mtz perturbed/1.5/4.pdb 
 
 
-_analyze.py is to analyze the results.  
 
