@@ -1,0 +1,18 @@
+phenix.refine 2jee.{pdb,mtz}     ordered_solvent=true ordered_solvent.low_r=5 optimize_xyz=true optimize_adp=true nproc=8 --overwrite xray_data.r_free_flags.generate=True >& 2jee.zlog &
+phenix.refine 2oeq.{pdb,mtz}     ordered_solvent=true ordered_solvent.low_r=5 optimize_xyz=true optimize_adp=true nproc=8 --overwrite strategy=individual_sites+individual_adp+occupancies >& 2oeq.zlog &
+phenix.refine 3dtj.{pdb,mtz}                                                  optimize_xyz=true optimize_adp=true nproc=8 --overwrite xray_data.r_free_flags.generate=True >& 3dtj.zlog &
+phenix.refine 1va7.{pdb,mtz}                                                  optimize_xyz=true optimize_adp=true nproc=8 --overwrite >& 1va7.zlog &
+phenix.refine 1y1l.{pdb,mtz}                                                  optimize_xyz=true optimize_adp=true nproc=8 --overwrite >& 1y1l.zlog &
+phenix.refine 2ghj.{pdb,mtz}     ordered_solvent=true ordered_solvent.low_r=5 optimize_xyz=true optimize_adp=true nproc=8 --overwrite xray_data.r_free_flags.generate=True >& 2ghj.zlog &
+phenix.refine 2oy0.{pdb,mtz}     ordered_solvent=true ordered_solvent.low_r=5 optimize_xyz=true optimize_adp=true nproc=8 --overwrite >& 2oy0.zlog &
+phenix.refine 3nm9.{pdb,mtz}     ordered_solvent=true ordered_solvent.low_r=5 optimize_xyz=true optimize_adp=true nproc=8 --overwrite >& 3nm9.zlog &
+phenix.refine 1il5.{pdb,mtz,cif} ordered_solvent=true ordered_solvent.low_r=5 optimize_xyz=true optimize_adp=true nproc=8 --overwrite >& 1il5.zlog &
+phenix.refine 3kyi.{pdb,mtz}                                                  optimize_xyz=true optimize_adp=true nproc=8 --overwrite >& 3kyi.zlog &
+phenix.refine 3tz9.{pdb,mtz,cif}                                              optimize_xyz=true optimize_adp=true nproc=8 --overwrite >& 3tz9.zlog &
+phenix.refine 4drw.{pdb,mtz}                                                  optimize_xyz=true optimize_adp=true nproc=8 --overwrite >& 4drw.zlog &
+phenix.refine 4k2r.{pdb,mtz}                                                  optimize_xyz=true optimize_adp=true nproc=8 --overwrite >& 4k2r.zlog &
+phenix.refine 4rnf.{pdb,mtz}                                                  optimize_xyz=true optimize_adp=true nproc=8 --overwrite >& 4rnf.zlog &
+phenix.refine 4xa1.{pdb,mtz}     ordered_solvent=true ordered_solvent.low_r=5 optimize_xyz=true optimize_adp=true nproc=8 --overwrite >& 4xa1.zlog &
+phenix.refine 5d12.{pdb,mtz,cif}                                              optimize_xyz=true optimize_adp=true nproc=8 --overwrite >& 5d12.zlog &
+
+
