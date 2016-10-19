@@ -1,0 +1,479 @@
+# electronic Ligand Builder and Optimisation Workbench (eLBOW)
+#   - a module of PHENIX version dev-2497-
+#   - file written: Wed Oct 19 11:35:58 2016
+#
+#   Input file: /home/m/m_zhen01/phenix-installer-dev-2497/phenix-dev-2497/modules/chem_data/chemical_components/a/data_AQU.cif
+#   Random seed: 3628800
+#
+data_comp_list
+loop_
+_chem_comp.id
+_chem_comp.three_letter_code
+_chem_comp.name
+_chem_comp.group
+_chem_comp.number_atoms_all
+_chem_comp.number_atoms_nh
+_chem_comp.desc_level
+AQU        AQU 'Unknown                  ' ligand 65 37 .
+#
+data_comp_AQU
+#
+loop_
+_chem_comp_atom.comp_id
+_chem_comp_atom.atom_id
+_chem_comp_atom.type_symbol
+_chem_comp_atom.type_energy
+_chem_comp_atom.charge
+_chem_comp_atom.partial_charge
+_chem_comp_atom.x
+_chem_comp_atom.y
+_chem_comp_atom.z
+AQU         N1     N   N      0    .       0.6687    4.0362    5.1595
+AQU         C2     C   CR16   0    .       0.3806    5.3018    5.5703
+AQU         N3     N   N      0    .       1.1223    5.8863    6.5443
+AQU         C4     C   CR66   0    .       2.1431    5.2171    7.1058
+AQU         C5     C   CR66   0    .       2.4302    3.9616    6.6994
+AQU         C6     C   CR6    0    .       1.6756    3.3714    5.7108
+AQU         CAA    C   CH3    0    .       1.7928   -4.8168   -3.3119
+AQU         CAB    C   CH3    0    .       1.9964   -3.6068   -5.4848
+AQU         CAC    C   CH3    0    .       0.2119   -5.3216   -5.1731
+AQU         NAD    N   NH2    0    .      -6.5289   -2.4110   -2.5009
+AQU         OAE    O   O      0    .       0.5051   -0.7302   -0.5183
+AQU         CAF    C   CR16   0    .       3.9680    5.1352    8.6982
+AQU         CAG    C   CR16   0    .       4.2615    3.8517    8.2829
+AQU         CAH    C   CR16   0    .      -4.7723   -1.0374   -5.4537
+AQU         CAJ    C   CR16   0    .      -5.7678   -1.4741   -4.5940
+AQU         CAK    C   CR16   0    .      -3.4400   -1.1850   -5.1028
+AQU         CAL    C   CR16   0    .       1.6648    2.1512    1.0891
+AQU         CAM    C   CR16   0    .      -0.3429    1.3682    2.1464
+AQU         CAN    C   CR16   0    .       2.2025    2.4499    2.3328
+AQU         CAO    C   CR16   0    .       0.1955    1.6671    3.3891
+AQU         CAP    C   CR16   0    .       2.9173    5.8258    8.1216
+AQU         CAQ    C   CR16   0    .       3.5049    3.2559    7.2897
+AQU         CAR    C   CR16   0    .      -4.0980   -2.2054   -3.0332
+AQU         CAS    C   CR15   0    .       0.4262   -2.0140   -3.2825
+AQU         NAV    N   N      0    .      -1.2596   -3.1562   -4.0649
+AQU         NAW    N   NH1    0    .      -0.2274    1.4324   -0.3126
+AQU         NAX    N   NH1    0    .      -0.7813   -0.0423   -2.2884
+AQU         NAY    N   NH1    0    .       1.8453    2.1810    4.8884
+AQU         CAZ    C   C      0    .      -0.1007    0.1591   -1.0127
+AQU         CBA    C   CR6    0    .      -5.4311   -2.0578   -3.3842
+AQU         CBB    C   CR6    0    .       0.3920    1.6103    0.9958
+AQU         CBC    C   CR6    0    .       1.4679    2.2077    3.4813
+AQU         CBD    C   CR6    0    .      -3.1029   -1.7689   -3.8926
+AQU         CBE    C   CR5    0    .       0.0660   -3.1391   -3.9717
+AQU         CBF    C   CR5    0    .      -0.7155   -1.3376   -2.9533
+AQU         NBJ    N   NR5    0    .      -1.7504   -2.0256   -3.4258
+AQU         CBK    C   CT     0    .       1.0170   -4.2217   -4.4856
+AQU         H2     H   HCR6   0    .      -0.4432    5.8437    5.1181
+AQU         HAA    H   HCH3   0    .       2.3781   -4.0382   -2.8331
+AQU        HAAA    H   HCH3   0    .       2.4559   -5.5972   -3.6744
+AQU        HAAB    H   HCH3   0    .       1.0944   -5.2394   -2.5930
+AQU         HAB    H   HCH3   0    .       2.5228   -4.3990   -6.0106
+AQU        HABA    H   HCH3   0    .       1.4492   -2.9980   -6.2005
+AQU        HABB    H   HCH3   0    .       2.7117   -2.9869   -4.9551
+AQU         HAC    H   HCH3   0    .      -0.4108   -5.8261   -4.4402
+AQU        HACA    H   HCH3   0    .       0.8915   -6.0388   -5.6263
+AQU        HACB    H   HCH3   0    .      -0.4168   -4.8832   -5.9417
+AQU        HNAD    H   HNH2   0    .      -6.3392   -2.7970   -1.5945
+AQU        HNAA    H   HNH2   0    .      -7.4762   -2.2550   -2.7912
+AQU         HAF    H   HCR6   0    .       4.5595    5.6006    9.4743
+AQU         HAG    H   HCR6   0    .       5.0846    3.3111    8.7348
+AQU         HAH    H   HCR6   0    .      -5.0354   -0.5815   -6.3986
+AQU         HAJ    H   HCR6   0    .      -6.8107   -1.3586   -4.8687
+AQU         HAK    H   HCR6   0    .      -2.6609   -0.8432   -5.7758
+AQU         HAL    H   HCR6   0    .       2.2392    2.3406    0.1918
+AQU         HAM    H   HCR6   0    .      -1.3381    0.9454    2.0746
+AQU         HAN    H   HCR6   0    .       3.1978    2.8729    2.4055
+AQU         HAO    H   HCR6   0    .      -0.3788    1.4778    4.2879
+AQU         HAP    H   HCR6   0    .       2.6876    6.8319    8.4475
+AQU         HAQ    H   HCR6   0    .       3.7352    2.2502    6.9646
+AQU         HAR    H   HCR6   0    .      -3.8347   -2.6615   -2.0878
+AQU         HAS    H   HCR5   0    .       1.4400   -1.7114   -3.0396
+AQU        HNAX    H   HNH1   0    .      -1.3015    0.7062   -2.7015
+AQU        HNAW    H   HNH1   0    .      -0.7666    2.1716   -0.7145
+AQU        HNAY    H   HNH1   0    .       2.2290    1.3443    5.2894
+#
+loop_
+_chem_comp_bond.comp_id
+_chem_comp_bond.atom_id_1
+_chem_comp_bond.atom_id_2
+_chem_comp_bond.type
+_chem_comp_bond.value_dist
+_chem_comp_bond.value_dist_esd
+_chem_comp_bond.value_dist_neutron
+AQU   N1      C2    aromatic      1.361 0.020     1.361
+AQU   N1      C6    aromatic      1.327 0.020     1.327
+AQU   C2      N3    aromatic      1.357 0.020     1.357
+AQU   N3      C4    aromatic      1.344 0.020     1.344
+AQU   C4      C5    aromatic      1.351 0.020     1.351
+AQU   C4      CAP   aromatic      1.415 0.020     1.415
+AQU   C5      C6    aromatic      1.377 0.020     1.377
+AQU   C5      CAQ   aromatic      1.415 0.020     1.415
+AQU   C6      NAY   single        1.457 0.020     1.457
+AQU   CAA     CBK   single        1.528 0.020     1.528
+AQU   CAB     CBK   single        1.528 0.020     1.528
+AQU   CAC     CBK   single        1.527 0.020     1.527
+AQU   NAD     CBA   single        1.453 0.020     1.453
+AQU   OAE     CAZ   double        1.184 0.020     1.184
+AQU   CAF     CAG   aromatic      1.381 0.020     1.381
+AQU   CAF     CAP   aromatic      1.383 0.020     1.383
+AQU   CAG     CAQ   aromatic      1.383 0.020     1.383
+AQU   CAH     CAJ   aromatic      1.386 0.020     1.386
+AQU   CAH     CAK   aromatic      1.386 0.020     1.386
+AQU   CAJ     CBA   aromatic      1.385 0.020     1.385
+AQU   CAK     CBD   aromatic      1.385 0.020     1.385
+AQU   CAL     CAN   aromatic      1.388 0.020     1.388
+AQU   CAL     CBB   aromatic      1.386 0.020     1.386
+AQU   CAM     CAO   aromatic      1.387 0.020     1.387
+AQU   CAM     CBB   aromatic      1.387 0.020     1.387
+AQU   CAN     CBC   aromatic      1.385 0.020     1.385
+AQU   CAO     CBC   aromatic      1.386 0.020     1.386
+AQU   CAR     CBA   aromatic      1.386 0.020     1.386
+AQU   CAR     CBD   aromatic      1.385 0.020     1.385
+AQU   CAS     CBE   aromatic      1.368 0.020     1.368
+AQU   CAS     CBF   aromatic      1.367 0.020     1.367
+AQU   NAV     CBE   aromatic      1.329 0.020     1.329
+AQU   NAV     NBJ   aromatic      1.388 0.020     1.388
+AQU   NAW     CAZ   single        1.459 0.020     1.459
+AQU   NAW     CBB   single        1.459 0.020     1.459
+AQU   NAX     CAZ   single        1.460 0.020     1.460
+AQU   NAX     CBF   single        1.457 0.020     1.457
+AQU   NAY     CBC   single        1.457 0.020     1.457
+AQU   CBD     NBJ   single        1.454 0.020     1.454
+AQU   CBE     CBK   single        1.530 0.020     1.530
+AQU   CBF     NBJ   aromatic      1.330 0.020     1.330
+AQU   C2      H2    single        0.930 0.020     1.080
+AQU   CAA     HAA   single        0.970 0.020     1.090
+AQU   CAA    HAAA   single        0.970 0.020     1.090
+AQU   CAA    HAAB   single        0.970 0.020     1.090
+AQU   CAB     HAB   single        0.970 0.020     1.090
+AQU   CAB    HABA   single        0.970 0.020     1.090
+AQU   CAB    HABB   single        0.970 0.020     1.090
+AQU   CAC     HAC   single        0.970 0.020     1.090
+AQU   CAC    HACA   single        0.970 0.020     1.090
+AQU   CAC    HACB   single        0.970 0.020     1.090
+AQU   NAD    HNAD   single        0.860 0.020     1.020
+AQU   NAD    HNAA   single        0.860 0.020     1.020
+AQU   CAF     HAF   single        0.930 0.020     1.080
+AQU   CAG     HAG   single        0.930 0.020     1.080
+AQU   CAH     HAH   single        0.930 0.020     1.080
+AQU   CAJ     HAJ   single        0.930 0.020     1.080
+AQU   CAK     HAK   single        0.930 0.020     1.080
+AQU   CAL     HAL   single        0.930 0.020     1.080
+AQU   CAM     HAM   single        0.930 0.020     1.080
+AQU   CAN     HAN   single        0.930 0.020     1.080
+AQU   CAO     HAO   single        0.930 0.020     1.080
+AQU   CAP     HAP   single        0.930 0.020     1.080
+AQU   CAQ     HAQ   single        0.930 0.020     1.080
+AQU   CAR     HAR   single        0.930 0.020     1.080
+AQU   CAS     HAS   single        0.930 0.020     1.080
+AQU   NAX    HNAX   single        0.860 0.020     1.020
+AQU   NAY    HNAY   single        0.860 0.020     1.020
+AQU   NAW    HNAW   single        0.860 0.020     1.020
+#
+loop_
+_chem_comp_angle.comp_id
+_chem_comp_angle.atom_id_1
+_chem_comp_angle.atom_id_2
+_chem_comp_angle.atom_id_3
+_chem_comp_angle.value_angle
+_chem_comp_angle.value_angle_esd
+AQU   C6      N1      C2          120.08 3.000
+AQU   H2      C2      N3          119.95 3.000
+AQU   H2      C2      N1          119.95 3.000
+AQU   N3      C2      N1          120.09 3.000
+AQU   C4      N3      C2          120.06 3.000
+AQU   CAP     C4      C5          119.98 3.000
+AQU   CAP     C4      N3          120.10 3.000
+AQU   C5      C4      N3          119.92 3.000
+AQU   CAQ     C5      C6          120.15 3.000
+AQU   CAQ     C5      C4          119.97 3.000
+AQU   C6      C5      C4          119.88 3.000
+AQU   NAY     C6      C5          133.78 3.000
+AQU   NAY     C6      N1          105.27 3.000
+AQU   C5      C6      N1          119.97 3.000
+AQU  HAAB     CAA    HAAA         109.47 3.000
+AQU  HAAB     CAA     HAA         109.47 3.000
+AQU  HAAA     CAA     HAA         109.47 3.000
+AQU  HAAB     CAA     CBK         109.46 3.000
+AQU  HAAA     CAA     CBK         109.48 3.000
+AQU   HAA     CAA     CBK         109.47 3.000
+AQU  HABB     CAB    HABA         109.47 3.000
+AQU  HABB     CAB     HAB         109.47 3.000
+AQU  HABA     CAB     HAB         109.47 3.000
+AQU  HABB     CAB     CBK         109.47 3.000
+AQU  HABA     CAB     CBK         109.46 3.000
+AQU   HAB     CAB     CBK         109.48 3.000
+AQU  HACB     CAC    HACA         109.47 3.000
+AQU  HACB     CAC     HAC         109.47 3.000
+AQU  HACA     CAC     HAC         109.47 3.000
+AQU  HACB     CAC     CBK         109.47 3.000
+AQU  HACA     CAC     CBK         109.47 3.000
+AQU   HAC     CAC     CBK         109.46 3.000
+AQU   HAF     CAF     CAP         120.00 3.000
+AQU   HAF     CAF     CAG         119.99 3.000
+AQU   CAP     CAF     CAG         120.01 3.000
+AQU   HAG     CAG     CAQ         120.00 3.000
+AQU   HAG     CAG     CAF         119.99 3.000
+AQU   CAQ     CAG     CAF         120.01 3.000
+AQU   HAH     CAH     CAK         120.00 3.000
+AQU   HAH     CAH     CAJ         120.00 3.000
+AQU   CAK     CAH     CAJ         120.00 3.000
+AQU   HAJ     CAJ     CBA         120.00 3.000
+AQU   HAJ     CAJ     CAH         120.00 3.000
+AQU   CBA     CAJ     CAH         120.00 3.000
+AQU   HAK     CAK     CBD         120.00 3.000
+AQU   HAK     CAK     CAH         120.00 3.000
+AQU   CBD     CAK     CAH         120.00 3.000
+AQU   HAL     CAL     CBB         120.00 3.000
+AQU   HAL     CAL     CAN         119.99 3.000
+AQU   CBB     CAL     CAN         120.01 3.000
+AQU   HAM     CAM     CBB         120.00 3.000
+AQU   HAM     CAM     CAO         119.99 3.000
+AQU   CBB     CAM     CAO         120.01 3.000
+AQU   HAN     CAN     CBC         119.99 3.000
+AQU   HAN     CAN     CAL         120.00 3.000
+AQU   CBC     CAN     CAL         120.02 3.000
+AQU   HAO     CAO     CBC         119.99 3.000
+AQU   HAO     CAO     CAM         120.00 3.000
+AQU   CBC     CAO     CAM         120.01 3.000
+AQU   HAP     CAP     CAF         119.99 3.000
+AQU   HAP     CAP     C4          120.00 3.000
+AQU   CAF     CAP     C4          120.01 3.000
+AQU   HAQ     CAQ     CAG         119.99 3.000
+AQU   HAQ     CAQ     C5          120.00 3.000
+AQU   CAG     CAQ     C5          120.01 3.000
+AQU   HAR     CAR     CBD         120.00 3.000
+AQU   HAR     CAR     CBA         120.00 3.000
+AQU   CBD     CAR     CBA         120.00 3.000
+AQU   HAS     CAS     CBF         126.02 3.000
+AQU   HAS     CAS     CBE         126.02 3.000
+AQU   CBF     CAS     CBE         107.96 3.000
+AQU   NBJ     NAV     CBE         108.05 3.000
+AQU  HNAX     NAX     CBF         119.99 3.000
+AQU  HNAX     NAX     CAZ         119.99 3.000
+AQU   CBF     NAX     CAZ         120.01 3.000
+AQU  HNAY     NAY     CBC         120.00 3.000
+AQU  HNAY     NAY     C6          120.00 3.000
+AQU   CBC     NAY     C6          120.00 3.000
+AQU   NAX     CAZ     NAW         119.96 3.000
+AQU   NAX     CAZ     OAE         119.98 3.000
+AQU   NAW     CAZ     OAE         119.98 3.000
+AQU   CAR     CBA     CAJ         120.00 3.000
+AQU   CAR     CBA     NAD         123.15 3.000
+AQU   CAJ     CBA     NAD         116.74 3.000
+AQU   NAW     CBB     CAM         119.87 3.000
+AQU   NAW     CBB     CAL         119.86 3.000
+AQU   CAM     CBB     CAL         119.94 3.000
+AQU   NAY     CBC     CAO         107.15 3.000
+AQU   NAY     CBC     CAN         131.82 3.000
+AQU   CAO     CBC     CAN         120.02 3.000
+AQU   NBJ     CBD     CAR         114.42 3.000
+AQU   NBJ     CBD     CAK         125.55 3.000
+AQU   CAR     CBD     CAK         120.00 3.000
+AQU   CBK     CBE     NAV         125.97 3.000
+AQU   CBK     CBE     CAS         125.99 3.000
+AQU   NAV     CBE     CAS         107.98 3.000
+AQU   NBJ     CBF     NAX         125.94 3.000
+AQU   NBJ     CBF     CAS         107.96 3.000
+AQU   NAX     CBF     CAS         125.96 3.000
+AQU   CBF     NBJ     CBD         138.33 3.000
+AQU   CBF     NBJ     NAV         108.05 3.000
+AQU   CBD     NBJ     NAV         108.96 3.000
+AQU  HNAW     NAW     CBB         119.98 3.000
+AQU  HNAW     NAW     CAZ         119.98 3.000
+AQU   CBB     NAW     CAZ         120.01 3.000
+AQU   CBE     CBK     CAC         109.47 3.000
+AQU   CBE     CBK     CAB         109.47 3.000
+AQU   CAC     CBK     CAB         109.48 3.000
+AQU   CBE     CBK     CAA         109.46 3.000
+AQU   CAC     CBK     CAA         109.46 3.000
+AQU   CAB     CBK     CAA         109.49 3.000
+AQU  HNAA     NAD    HNAD         120.00 3.000
+AQU  HNAA     NAD     CBA         120.00 3.000
+AQU  HNAD     NAD     CBA         120.00 3.000
+#
+loop_
+_chem_comp_tor.comp_id
+_chem_comp_tor.id
+_chem_comp_tor.atom_id_1
+_chem_comp_tor.atom_id_2
+_chem_comp_tor.atom_id_3
+_chem_comp_tor.atom_id_4
+_chem_comp_tor.value_angle
+_chem_comp_tor.value_angle_esd
+_chem_comp_tor.period
+AQU CONST_01       C4      N3      C2      N1            0.00   0.0 0
+AQU CONST_02       C4      C5      C6      N1            0.00   0.0 0
+AQU CONST_03       CAQ     C5      C6      N1         -179.99   0.0 0
+AQU CONST_04       C5      C6      N1      C2           -0.00   0.0 0
+AQU CONST_05       C5      C4      N3      C2           -0.00   0.0 0
+AQU CONST_06       CAP     C4      N3      C2          179.99   0.0 0
+AQU CONST_07       C6      N1      C2      N3            0.00   0.0 0
+AQU CONST_08       C6      C5      C4      N3            0.00   0.0 0
+AQU CONST_09       CAQ     C5      C4      N3          179.99   0.0 0
+AQU CONST_10       CAF     CAP     C4      N3         -179.99   0.0 0
+AQU CONST_11       CAG     CAQ     C5      C4            0.00   0.0 0
+AQU CONST_12       CAG     CAF     CAP     C4            0.00   0.0 0
+AQU CONST_13       CAF     CAP     C4      C5           -0.00   0.0 0
+AQU CONST_14       CAF     CAG     CAQ     C5           -0.00   0.0 0
+AQU CONST_15       CAP     C4      C5      C6         -179.99   0.0 0
+AQU CONST_16       CAG     CAQ     C5      C6          179.99   0.0 0
+AQU CONST_17       CAR     CBA     CAJ     CAH          -0.00   0.0 0
+AQU CONST_18       CAR     CBD     CAK     CAH           0.00   0.0 0
+AQU CONST_19       NBJ     CBD     CAK     CAH         177.69   0.0 0
+AQU CONST_20       CBD     CAK     CAH     CAJ          -0.00   0.0 0
+AQU CONST_21       CBD     CAR     CBA     CAJ           0.00   0.0 0
+AQU CONST_22       CBA     CAJ     CAH     CAK           0.00   0.0 0
+AQU CONST_23       CBA     CAR     CBD     CAK          -0.00   0.0 0
+AQU CONST_24       NAV     NBJ     CBD     CAK         -77.86   0.0 0
+AQU CONST_25       CBF     NBJ     CBD     CAK          73.63   0.0 0
+AQU CONST_26       CAO     CBC     CAN     CAL           0.00   0.0 0
+AQU CONST_27       CAO     CAM     CBB     CAL           0.00   0.0 0
+AQU CONST_28       CAN     CBC     CAO     CAM          -0.00   0.0 0
+AQU CONST_29       CAN     CAL     CBB     CAM          -0.00   0.0 0
+AQU CONST_30       CAQ     C5      C4      CAP          -0.00   0.0 0
+AQU CONST_31       CAQ     CAG     CAF     CAP           0.00   0.0 0
+AQU CONST_32       NAV     NBJ     CBD     CAR          99.94   0.0 0
+AQU CONST_33       CBF     NBJ     CBD     CAR        -108.57   0.0 0
+AQU CONST_34       NBJ     NAV     CBE     CAS          -0.00   0.0 0
+AQU CONST_35       NAV     NBJ     CBF     CAS          -0.00   0.0 0
+AQU CONST_36       CBD     NBJ     CBF     CAS        -151.66   0.0 0
+AQU CONST_37       CBF     CAS     CBE     NAV          -0.00   0.0 0
+AQU CONST_38       NBJ     CBD     CAR     CBA        -177.93   0.0 0
+AQU CONST_39       CBC     CAN     CAL     CBB           0.00   0.0 0
+AQU CONST_40       CBC     CAO     CAM     CBB           0.00   0.0 0
+AQU CONST_41       CBE     NAV     NBJ     CBD         160.50   0.0 0
+AQU CONST_42       NBJ     CBF     CAS     CBE           0.00   0.0 0
+AQU CONST_43       CBF     NBJ     NAV     CBE           0.00   0.0 0
+AQU CONST_44       NBJ     CBD     CAK     CAH         177.69   0.0 0
+AQU CONST_45       NAV     NBJ     CBD     CAK         -77.86   0.0 0
+AQU CONST_46       CBF     NBJ     CBD     CAK          73.63   0.0 0
+AQU CONST_47       NAV     NBJ     CBD     CAR          99.94   0.0 0
+AQU CONST_48       CBF     NBJ     CBD     CAR        -108.57   0.0 0
+AQU CONST_49       CBD     NBJ     CBF     CAS        -151.66   0.0 0
+AQU CONST_50       NBJ     CBD     CAR     CBA        -177.93   0.0 0
+AQU CONST_51       CBE     NAV     NBJ     CBD         160.50   0.0 0
+AQU CONST_52       NAY     C6      N1      C2         -170.20   0.0 0
+AQU CONST_53       NAY     C6      C5      C4          166.85   0.0 0
+AQU CONST_54       CAH     CAJ     CBA     NAD         176.16   0.0 0
+AQU CONST_55       CBD     CAR     CBA     NAD        -175.90   0.0 0
+AQU CONST_56       NAY     CBC     CAN     CAL         166.90   0.0 0
+AQU CONST_57       NAY     CBC     CAO     CAM        -169.82   0.0 0
+AQU CONST_58       NAW     CBB     CAL     CAN         173.36   0.0 0
+AQU CONST_59       NAW     CBB     CAM     CAO        -173.36   0.0 0
+AQU CONST_60       NAY     C6      C5      CAQ         -13.14   0.0 0
+AQU CONST_61       NAX     CBF     NBJ     NAV         175.89   0.0 0
+AQU CONST_62       CBE     CAS     CBF     NAX        -175.89   0.0 0
+AQU CONST_63       CBD     NBJ     CBF     NAX          24.23   0.0 0
+AQU CONST_64       CBK     CBE     CAS     CBF        -177.30   0.0 0
+AQU CONST_65       CBK     CBE     NAV     NBJ         177.30   0.0 0
+AQU CONST_66       HAP     CAP     C4      N3            0.01   0.0 0
+AQU CONST_67       H2      C2      N3      C4         -180.00   0.0 0
+AQU CONST_68       HAQ     CAQ     C5      C4          180.00   0.0 0
+AQU CONST_69       HAF     CAF     CAP     C4          179.99   0.0 0
+AQU CONST_70       HAG     CAG     CAQ     C5         -180.00   0.0 0
+AQU CONST_71       HAK     CAK     CAH     CAJ         180.00   0.0 0
+AQU CONST_72       HAR     CAR     CBA     CAJ         180.00   0.0 0
+AQU CONST_73       HAJ     CAJ     CAH     CAK        -180.00   0.0 0
+AQU CONST_74       HAM     CAM     CBB     CAL         180.00   0.0 0
+AQU CONST_75       HAL     CAL     CBB     CAM         180.00   0.0 0
+AQU CONST_76       HAO     CAO     CBC     CAN         180.00   0.0 0
+AQU CONST_77       HAN     CAN     CBC     CAO         180.00   0.0 0
+AQU CONST_78       HAS     CAS     CBE     NAV        -180.00   0.0 0
+AQU CONST_79       HAH     CAH     CAJ     CBA        -180.00   0.0 0
+AQU CONST_80       CAZ     NAW     CBB     CAL          93.37   0.0 0
+AQU CONST_81       CAZ     NAW     CBB     CAM         -93.27   0.0 0
+AQU CONST_82       CAZ     NAX     CBF     CAS         -54.76   0.0 0
+AQU CONST_83       NBJ     CBF     NAX     CAZ         130.07   0.0 0
+AQU CONST_84      HNAD     NAD     CBA     CAJ        -177.14   0.0 0
+AQU CONST_85      HNAA     NAD     CBA     CAJ           1.86   0.0 0
+AQU CONST_86      HNAW     NAW     CBB     CAL         -88.86   0.0 0
+AQU CONST_87      HNAX     NAX     CBF     CAS         125.91   0.0 0
+AQU CONST_88       CBB     NAW     CAZ     OAE           0.01   0.0 0
+AQU CONST_89       CBF     NAX     CAZ     OAE           0.01   0.0 0
+AQU CONST_90       CBB     NAW     CAZ     OAE           0.01   0.0 0
+AQU CONST_91       CBF     NAX     CAZ     OAE           0.01   0.0 0
+AQU CONST_92       CBF     NAX     CAZ     NAW        -176.66   0.0 0
+AQU CONST_93       CBB     NAW     CAZ     NAX         176.68   0.0 0
+AQU CONST_94       CBB     NAW     CAZ     OAE           0.01   0.0 0
+AQU CONST_95       CBF     NAX     CAZ     OAE           0.01   0.0 0
+AQU CONST_96       CBF     NAX     CAZ     NAW        -176.66   0.0 0
+AQU CONST_97       CBB     NAW     CAZ     NAX         176.68   0.0 0
+AQU Var_01         NAV     NBJ     CBD     CAK         -77.86  30.0 2
+AQU Var_02         CBC     NAY     C6      N1           27.83  30.0 2
+AQU Var_03         CAN     CBC     NAY     C6           94.78  30.0 2
+AQU Var_04         CAS     CBE     CBK     CAA          58.70  30.0 2
+AQU Var_05         CAZ     NAW     CBB     CAL          93.37  30.0 2
+AQU Var_06         CAZ     NAX     CBF     CAS         -54.76  30.0 3
+AQU Var_07         HAA     CAA     CBK     CBE         -60.95  30.0 3
+AQU Var_08         HAB     CAB     CBK     CBE        -167.65  30.0 3
+AQU Var_09         HAC     CAC     CBK     CBE         -65.73  30.0 3
+#
+loop_
+_chem_comp_plane_atom.comp_id
+_chem_comp_plane_atom.plane_id
+_chem_comp_plane_atom.atom_id
+_chem_comp_plane_atom.dist_esd
+AQU plan-1    CAS 0.020
+AQU plan-1    NAV 0.020
+AQU plan-1    NAX 0.020
+AQU plan-1    CBD 0.020
+AQU plan-1    CBE 0.020
+AQU plan-1    CBF 0.020
+AQU plan-1    NBJ 0.020
+AQU plan-1    HAS 0.020
+AQU plan-1    CBK 0.020
+AQU plan-2    CBA 0.020
+AQU plan-2   HNAD 0.020
+AQU plan-2   HNAA 0.020
+AQU plan-2    NAD 0.020
+AQU plan-3    CAH 0.020
+AQU plan-3    CAJ 0.020
+AQU plan-3    CAK 0.020
+AQU plan-3    CAR 0.020
+AQU plan-3    CBA 0.020
+AQU plan-3    CBD 0.020
+AQU plan-3    NBJ 0.020
+AQU plan-3    HAH 0.020
+AQU plan-3    HAJ 0.020
+AQU plan-3    HAK 0.020
+AQU plan-3    HAR 0.020
+AQU plan-3    NAD 0.020
+AQU plan-4    CAL 0.020
+AQU plan-4    CAM 0.020
+AQU plan-4    CAN 0.020
+AQU plan-4    CAO 0.020
+AQU plan-4    NAY 0.020
+AQU plan-4    CBB 0.020
+AQU plan-4    CBC 0.020
+AQU plan-4    HAL 0.020
+AQU plan-4    HAM 0.020
+AQU plan-4    HAN 0.020
+AQU plan-4    HAO 0.020
+AQU plan-4    NAW 0.020
+AQU plan-5     N1 0.020
+AQU plan-5     C2 0.020
+AQU plan-5     N3 0.020
+AQU plan-5     C4 0.020
+AQU plan-5     C5 0.020
+AQU plan-5     C6 0.020
+AQU plan-5    CAF 0.020
+AQU plan-5    CAG 0.020
+AQU plan-5    CAP 0.020
+AQU plan-5    CAQ 0.020
+AQU plan-5    NAY 0.020
+AQU plan-5     H2 0.020
+AQU plan-5    HAF 0.020
+AQU plan-5    HAG 0.020
+AQU plan-5    HAP 0.020
+AQU plan-5    HAQ 0.020
+AQU plan-6    OAE 0.020
+AQU plan-6    NAX 0.020
+AQU plan-6    CAZ 0.020
+AQU plan-6    CBB 0.020
+AQU plan-6    CBF 0.020
+AQU plan-6   HNAX 0.020
+AQU plan-6   HNAW 0.020
+AQU plan-6    NAW 0.020

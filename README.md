@@ -53,12 +53,15 @@ Structure preparation
 
 #### 3) Finalize
 
-   * Run structure from "2)" through run_finalise.py using command
+   * Run structure from "2)" through 02_run_update_pdb.py using command
+   phenix.ready_set is used to add hydrogens to amino acids and ligands
+   run_finalise.py is used to complete structures, remove altlocs and resset occupancies
+   all completed structrues by 02_run_update_pdb.py are in 02
 
    XXX This needs a careful and clear description what's being done and how. Adding H and missing
    non-H atoms? Remove altlocs? Reset occupancies? XXX
 
-   and store results in 03 folder. Structures in 03 are ready for quantum refinement.
+   After checking those completed structures in 02 by visualisaton, all proper completed structures are stored in 03 and  ready for quantum refinement.
 
 Current issues to be resolved ASAP:
 

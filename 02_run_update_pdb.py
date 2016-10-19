@@ -26,11 +26,11 @@ def _process_pdb_filename(pdb_file):
     cmd ="phenix.reduce -trim  "+modified_file +" >  "+pdb_file
     easy_run.call(cmd)
     if os.path.exists(modified_file): os.remove(modified_file)
-    cmd ="phenix.ready_set %(pdb_file)s add_h_to_water=true" % locals()
-    cmd += ' ligand_cache_directory=%s' % os.path.abspath(os.path.join(
-              "..",
-              "00_ligands_cif",
-              ))
+    cmd ="phenix.ready_set %(pdb_file)s  add_h_to_water=true" % locals()
+ #   cmd += ' ligand_cache_directory=%s' % os.path.abspath(os.path.join(
+ #             "..",
+ #             "00_ligands_cif",
+ #             ))
     print cmd
     easy_run.call(cmd)
     shutil.copyfile(updated_file, pdb_file)
@@ -47,10 +47,10 @@ def _process_pdb_filename(pdb_file):
   return None
 
 def run(
-    nproc=1,
+    nproc=8,
     only_code=None, 
     ):
-  cmd = "cp ../3_pdb/* ./"
+  cmd = "cp ../01/*.pdb ./"
   print cmd 
   os.system(cmd)
   try: nproc=int(nproc)
@@ -61,6 +61,11 @@ def run(
 
   pdb_files = os.listdir(pdb_dir)
   for pdb_file in pdb_files:
+    cmd='mv  '+ pdb_file +'  ' + pdb_file[:4]+'.pdb'
+    os.system(cmd)
+  pdb_files = os.listdir(pdb_dir)
+  for pdb_file in pdb_files:
+    print 'hi'
     if not pdb_file.endswith(".pdb"): continue
     if len(pdb_file.split('.'))!=2: continue
     if len(pdb_file.split('.')[0])!=4: continue
@@ -77,6 +82,9 @@ def run(
   if pool:
     pool.close()
     pool.join()
+  os.system("rm *.pickle")
+  os.system("rm *.eff")
+  os.system("rm *.dat")
 
 if __name__=="__main__":
   args = sys.argv[1:]
