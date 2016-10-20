@@ -362,7 +362,7 @@ def get_partial_point_charges(rg):
       # other atoms
       cif = atom_dict.get(atom.name.strip(), None)
       if cif is None:
-        print atom.quote()
+#        print atom.quote()
         if atom.name in [" H1 ", " H2 ", " H3 "]: # needs calculating...
           tmp.append([0]+list(atom.xyz))
           continue
@@ -428,7 +428,6 @@ def write_hierarchy(pdb_filename, pdb_inp, hierarchy, underscore):
   output = "%s_%s.pdb" % (pdb_filename.split(".")[0],
                           underscore,
                           )
-  print  output
   f=file(output, "wb")
   f.write(hierarchy.as_pdb_string(
     crystal_symmetry=pdb_inp.crystal_symmetry()),
@@ -436,7 +435,7 @@ def write_hierarchy(pdb_filename, pdb_inp, hierarchy, underscore):
   f.close()
   print "\n  Output written to: %s" % output
 
-def complete_pdb_hierachy(hierarchy):
+def complete_pdb_hierarchy(hierarchy):
   hierarchy = remove_alt_loc(hierarchy)
   from mmtbx.building import extend_sidechains
   n_changed = extend_sidechains.extend_protein_model(hierarchy,
@@ -448,7 +447,7 @@ def complete_pdb_hierachy(hierarchy):
   hierarchy.atoms().set_chemical_element_simple_if_necessary()
   hierarchy.sort_atoms_in_place()
 
-def calculate_pdb_hierachy_charge(hierarchy):
+def calculate_pdb_hierarchy_charge(hierarchy):
   charge = 0
   for residue in generate_residue_groups(hierarchy,
                                          assert_no_alt_loc=True,
@@ -458,7 +457,10 @@ def calculate_pdb_hierachy_charge(hierarchy):
     charge += tmp
   return charge
 
-def write_pdb_hierachy_qxyz_file(hierarchy, file_name="qxyz_cctbx.dat"):
+def write_pdb_hierarchy_qxyz_file(hierarchy, file_name="qxyz_cctbx.dat",charge_scaling_positions=None,scale=0):
+  qxyz_file = open(file_name,"w+")
+  qxyz_file.write(str(hierarchy.atoms_size())+ "  \n")
+  qxyz_file.write("  \n")
   qxyz = None
   for residue in generate_residue_groups(hierarchy,
                                          assert_no_alt_loc=True,
@@ -467,20 +469,51 @@ def write_pdb_hierachy_qxyz_file(hierarchy, file_name="qxyz_cctbx.dat"):
     if qxyz is None:
       qxyz = get_partial_point_charges(residue) 
     else: qxyz = qxyz + get_partial_point_charges(residue)
-    qxyz_file = open(file_name,"w+") 
+  scale_partial_point_charges(qxyz,charge_scaling_positions, scale=0)
+  for item in qxyz:
+    item_list = item + ["  \n"]
+    item_string = "  ".join(str(elm) for elm in item_list)
+    qxyz_file.write(item_string)
+  qxyz_file.close()
+
+def write_pdb_hierarchy_xyzq_file(hierarchy, file_name="xyzq_cctbx.dat", charge_scaling_positions=None, scale=0):
+  qxyz = None
+  xyzq_file = open(file_name,"w+")
+  for residue in generate_residue_groups(hierarchy,
+                                         assert_no_alt_loc=True,
+                                         exclude_water=True,
+                                        ):
+    if qxyz is None:
+      qxyz = get_partial_point_charges(residue)
+    else: qxyz = qxyz + get_partial_point_charges(residue)
+  scale_partial_point_charges(qxyz,charge_scaling_positions, scale=0)
+  for item in qxyz:
+    item_list = item[1:]+item[0:1] + ["  \n"]
+    item_string = "  ".join(str(elm) for elm in item_list)
+    xyzq_file.write(item_string)
+  xyzq_file.close()
+
+def scale_partial_point_charges(qxyz,charge_scaling_positions=None, scale=0):
+  def partial_charge_in_charge_scaling_positions(partial_charge,charge_scaling_positions):
+    scaling = False
+    for xyz in charge_scaling_positions:
+      same_point = abs(xyz[0] - partial_charge[1]) < 1.0E-3 and abs(xyz[1] - partial_charge[2]) < 1.0E-3 and abs(xyz[2] - partial_charge[3]) < 1.0E-3
+      if same_point:
+        scaling = True
+        break
+    return scaling 
+  if charge_scaling_positions != None:
     for item in qxyz:
-      item_list = item + ["  \n"]
-      item_string = "  ".join(str(elm) for elm in item_list)
-      qxyz_file.write(item_string)
-    qxyz_file.close()
+      if partial_charge_in_charge_scaling_positions(item,charge_scaling_positions):
+        item[0] =  item[0]*scale
 
 def run(pdb_filename):
   print "run",pdb_filename
   pdb_inp = iotbx.pdb.input(pdb_filename)
   hierarchy = pdb_inp.construct_hierarchy()
-  complete_pdb_hierachy(hierarchy)
-  write_pdb_hierachy_qxyz_file(hierarchy)
-  total_charge = calculate_pdb_hierachy_charge(hierarchy)
+  complete_pdb_hierarchy(hierarchy)
+  write_pdb_hierarchy_qxyz_file(hierarchy)
+  total_charge = calculate_pdb_hierarchy_charge(hierarchy)
   print "total_charge",total_charge
   write_hierarchy(pdb_filename, pdb_inp, hierarchy, "complete")
 
