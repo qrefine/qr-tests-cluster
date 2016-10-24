@@ -72,17 +72,12 @@ Current issues to be resolved ASAP:
   * Errors that have been postponed:
     * 1u0d - multiple models
     * 2jee - has a terminal amino acid with just a N
+    * 3nm9 - DNA not currently supported 
 
   * Errors:
-ligand or metal
-[1ok9 1pag 1va7 1y1l 2ghj 2iwe 2oy0 3nm9 4l21]:
-run_finalise.py throw error like 
-     Sorry: no charge found in the model file for ""HETATM 7669 ZN    ZN A1129 .*.    ZN  ""
-or:
-  AssertionError: residue "HETATM 8395  N   SAH A 301 .*.     N  " charge 2 is greater than 1
 
-No errors:
-[1fh5 2oeq 3dtj]
+  * No errors: but 100% sure that all is well.
+    * 1fh5 2oeq 3dtj 1ok9 1pag 1va7 1y1l 2ghj 2iwe 2oy0 4l21
 
 Structure refinement
 --------------------
