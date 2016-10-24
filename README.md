@@ -76,7 +76,7 @@ Current issues to be resolved ASAP:
 
   * Errors:
 
-  * No errors: but 100% sure that all is well.
+  * No errors: but not 100% sure that all is well.
     * 1fh5 2oeq 3dtj 1ok9 1pag 1va7 1y1l 2ghj 2iwe 2oy0 4l21
 
 Structure refinement
