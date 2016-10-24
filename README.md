@@ -69,11 +69,11 @@ phenix.reduce which has it's own problems.
 
 Current issues to be resolved ASAP:
 
-Errors that have been postponed:
-  * 1u0d - multiple models
-  * 2jee - has a terminal amino acid with just a N
+  * Errors that have been postponed:
+    * 1u0d - multiple models
+    * 2jee - has a terminal amino acid with just a N
 
-Errors:
+  * Errors:
 ligand or metal
 [1ok9 1pag 1va7 1y1l 2ghj 2iwe 2oy0 3nm9 4l21]:
 run_finalise.py throw error like 
@@ -82,9 +82,7 @@ or:
   AssertionError: residue "HETATM 8395  N   SAH A 301 .*.     N  " charge 2 is greater than 1
 
 No errors:
-[1fh5 2jee 2oeq 3dtj]
-
-No errors for 2jee, while 2jee_complete.pdb has missing atoms.
+[1fh5 2oeq 3dtj]
 
 Structure refinement
 --------------------

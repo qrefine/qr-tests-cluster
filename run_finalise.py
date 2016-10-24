@@ -26,6 +26,8 @@ from mmtbx.monomer_library import pdb_interpretation
 default_ion_charges = {
   "PT" : 2,
   "CL" : -1,
+  "CD" : 2,
+  "ZN" : 2,
   }
 allowable_amino_acid_charges = {
   "ARG" : 1,
@@ -135,6 +137,9 @@ def add_n_terminal_hydrogens_to_atom_group(ag):
   for i in range(0,3):
     name = " H%d " % (i+1)
     if ag.get_atom(name.strip()): continue
+    if ag.resname=='PRO':
+      if i==0:
+        continue
     atom = iotbx.pdb.hierarchy.atom()
     atom.name = name
     atom.element = "H"
@@ -165,14 +170,15 @@ def add_terminal_hydrogens(hierarchy,
                                        include_non_linked=True,
                                        backbone_only=False,
                                      ):
-    print three
     assert three.are_linked()
     if three.start: 
       rg = get_residue_group(three[0])
       add_n_terminal_hydrogens_to_residue_group(rg)
+      #hierarchy.reset_i_seq_if_necessary()
     elif three.end:
       rg = get_residue_group(three[2])
       add_c_terminal_oxygens_to_residue_group(rg)
+      #hierarchy.reset_i_seq_if_necessary()
     else:
       pass
 
@@ -291,7 +297,7 @@ def calculate_residue_charge(rg,
       return True
     return False
   def n_terminal(names):
-    return _terminal(names, [' H1 ', ' H2 ', ' H3 '])
+    return _terminal(names, [' H2 ', ' H3 '])
   def c_terminal(names):
     return _terminal(names, [' OXT'])
   def covalent_bond(i_seqs, inter_residue_bonds):
@@ -475,7 +481,10 @@ def remove_alt_loc(hierarchy):
   hierarchy.atoms().reset_i_seq()
   return hierarchy
 
-def get_processed_pdb(pdb_filename):
+def get_processed_pdb(pdb_filename=None,
+                      raw_records=None,
+                      pdb_inp=None,
+                    ):
   # need to add params
   mon_lib_srv = monomer_library.server.server()
   ener_lib = monomer_library.server.ener_lib()
@@ -483,6 +492,8 @@ def get_processed_pdb(pdb_filename):
     mon_lib_srv           = mon_lib_srv,
     ener_lib              = ener_lib,
     file_name             = pdb_filename,
+    pdb_inp               = pdb_inp,
+    raw_records           = raw_records,
     keep_monomer_mappings = True,
   #  log                   = null_out(),
   )
@@ -512,9 +523,9 @@ def write_hierarchy(pdb_filename, pdb_inp, hierarchy, underscore):
           )
   f.close()
   print "\n  Output written to: %s" % output
+  return output
 
 def complete_pdb_hierarchy(hierarchy, geometry_restraints_manager):
-  hierarchy = remove_alt_loc(hierarchy)
   from mmtbx.building import extend_sidechains
   n_changed = extend_sidechains.extend_protein_model(hierarchy,
                                                      hydrogens=True,
@@ -675,25 +686,41 @@ def run(pdb_filename):
     if not os.path.exists('%s.pdb' % pdb_filename):
       run_fetch_pdb(pdb_filename)
     pdb_filename = '%s.pdb' % pdb_filename
-  pdb_filename_h = pdb_filename.replace('.pdb', '.updated.pdb')
+  if pdb_filename.endswith('.updated.pdb'):
+    pdb_filename_h = pdb_filename
+  else:
+    pdb_filename_h = pdb_filename.replace('.pdb', '.updated.pdb')
   if not os.path.exists(pdb_filename_h):
     pdb_filename = run_ready_set(pdb_filename)
   else: pdb_filename = pdb_filename_h
   pdb_inp = iotbx.pdb.input(pdb_filename)
-  hierarchy = pdb_inp.construct_hierarchy()
   hetero_charges = get_hetero_charges(pdb_inp)
   if not hetero_charges:
     # some defaults
     hetero_charges = default_ion_charges
-
-  ppf = get_processed_pdb(pdb_filename)
+  hierarchy = pdb_inp.construct_hierarchy()
+  hierarchy = remove_alt_loc(hierarchy) # should use cctbx
+  if 1:
+    output = write_hierarchy(pdb_filename,
+                             pdb_inp,
+                             hierarchy,
+                             'no_alt_loc',
+                           )
+    ppf = get_processed_pdb(pdb_filename=output)
+  elif 0:
+    raw_records = []
+    for atom in hierarchy.atoms():
+      raw_records.append(atom.format_atom_record())
+    ppf = get_processed_pdb(raw_records=raw_records)
+  else:
+    ppf = get_processed_pdb(pdb_inp=hierarchy.as_pdb_input())
   inter_residue_bonds = get_inter_residue_bonds(ppf)
   complete_pdb_hierarchy(hierarchy, ppf.geometry_restraints_manager())
   # not required at the moment, no clutering
   if 0:
     write_pdb_hierarchy_qxyz_file(hierarchy,
-                                 hetero_charges=hetero_charges,
-                               )
+                                  hetero_charges=hetero_charges,
+                                )
   total_charge = calculate_pdb_hierarchy_charge(
     hierarchy,
     hetero_charges=hetero_charges,
