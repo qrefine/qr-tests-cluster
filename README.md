@@ -2,7 +2,7 @@
 
 #### a) Select structure-candidates.
 
-   * Select ~10-20 P1 structures from PDB and prepare them for quantim refinement.
+   * Select ~10-20 P1 structures from PDB and prepare them for quantum refinement.
    
 #### b) Pre-screen by preliminary SE refinement.
    
@@ -36,8 +36,12 @@ Structure preparation
    * File were downloaded using 
    phenix.fetch_pdb PDB_CODE --mtz
 
-   * Some models have unknown to Phenix ligands. Corresponding CIF files were created using 
-   phenix.ready_set file_name.pdb
+   * Some models have unknown to Phenix ligands. Corresponding CIF files were 
+created using 
+  phenix.ready_set file_name.pdb
+This also adds hydrogens with are needed for the run_finalise.py script. The
+output is file_name.updated.pdb which needs to be renamed? We can use 
+phenix.reduce which has it's own problems.
 
    * Some data file were missing R-free flags. They were added at subsequent (re-refinement).
 
@@ -65,9 +69,13 @@ Structure preparation
 
 Current issues to be resolved ASAP:
 
+Errors that have been postponed:
+  1u0d - multiple models
+  2jee - has a terminal amino acid with just a N
+
 Errors:
 ligand or metal
-[1ok9 1pag 1u0d 1va7 1y1l 2ghj 2iwe 2oy0 3nm9 4l21]:
+[1ok9 1pag 1va7 1y1l 2ghj 2iwe 2oy0 3nm9 4l21]:
 run_finalise.py throw error like 
      Sorry: no charge found in the model file for ""HETATM 7669 ZN    ZN A1129 .*.    ZN  ""
 or:
