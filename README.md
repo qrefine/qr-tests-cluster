@@ -70,7 +70,9 @@ phenix.reduce which has it's own problems.
 Current issues to be resolved ASAP:
 
 Errors that have been postponed:
+
   1u0d - multiple models
+
   2jee - has a terminal amino acid with just a N
 
 Errors:
