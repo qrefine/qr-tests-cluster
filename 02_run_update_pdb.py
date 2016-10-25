@@ -11,7 +11,7 @@ def callback(args):
 def _process_pdb_filename(pdb_file):
   updated_file=pdb_file[:-4]+".updated.pdb"
   complete_file=pdb_file[:-4]+"_complete.pdb"
-  if ( pdb_file.endswith("pdb")  and not os.path.exists(updated_file) ):
+  if ( pdb_file.endswith("pdb")  and not os.path.exists(complete_file) ):
    # pdb_file=pdb_dir+pdb_file
     print pdb_file
     # removing alt loc done in run_finalise.py
@@ -40,9 +40,9 @@ def _process_pdb_filename(pdb_file):
     easy_run.call(cmd)
     if not os.path.exists(complete_file):
       print 'run_finalise failed'
-      cmd = "rm   "+pdb_file[:-4]+"*"
+      cmd = "rm   "+pdb_file[:-4]+"*pdb"
       print cmd
-      os.system("rm   "+pdb_file[:-4]+"*")
+      os.system("rm   "+pdb_file[:-4]+"*pdb")
     return pdb_file
   return None
 
@@ -50,6 +50,7 @@ def run(
     nproc=8,
     only_code=None, 
     ):
+  os.system("rm *")
   cmd = "cp ../01/*.pdb ./"
   print cmd 
   os.system(cmd)
