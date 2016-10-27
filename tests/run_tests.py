@@ -2,6 +2,8 @@ import os, sys
 from libtbx import easy_run
 from iotbx import pdb
 
+import run_finalise
+
 pdbs = {"PRO_terminal" : """
 CRYST1   42.664   49.718   66.065 109.25  94.96  99.24 P 1           4
 ATOM    874  N   PRO A 115      -9.167  -7.159   4.783  1.00 30.39           N
@@ -58,9 +60,31 @@ def test_PRO_terminal_and_alt_loc():
     if atom.name.strip() in must_find:
       must_find.remove(atom.name.strip())
   assert not must_find
+  print 'OK'
+
+def test_1yjp_charge():
+  pdb_inp = pdb.input('1yjp.pdb')
+  hierarchy = pdb_inp.construct_hierarchy()
+  try:
+    charge = run_finalise.calculate_pdb_hierarchy_charge(hierarchy)
+    assert 0
+  except Exception, e:
+    assert e.message.find('no hydrogens')>-1
+  print 'OK'
+  tf='1yjp.pdb'
+  cmd = 'iotbx.python ../run_finalise.py %s' % tf
+  print cmd
+  easy_run.call(cmd)
+  pdb_inp = pdb.input(tf.replace('.pdb', '_complete.pdb'))
+  hierarchy = pdb_inp.construct_hierarchy()
+  charge = run_finalise.calculate_pdb_hierarchy_charge(hierarchy, verbose=1)
+  print 'charge',charge
+  assert charge==0, 'change of 1yjp should be zero not %s %s' % charge
+  print 'OK'
 
 def run():
   test_PRO_terminal_and_alt_loc()
+  test_1yjp_charge()
 
 if __name__=="__main__":
   args = sys.argv[1:]

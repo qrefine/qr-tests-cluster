@@ -538,11 +538,12 @@ def complete_pdb_hierarchy(hierarchy, geometry_restraints_manager):
   hierarchy.sort_atoms_in_place()
 
 def calculate_pdb_hierarchy_charge(hierarchy,
-                                  hetero_charges=None,
-                                  inter_residue_bonds=None,
-                                  verbose=False,
-                                 ):
+                                   hetero_charges=None,
+                                   inter_residue_bonds=None,
+                                   verbose=False,
+                                   ):
   charge = 0
+  if inter_residue_bonds is None: inter_residue_bonds=[]
   for residue in generate_residue_groups(hierarchy,
                                          assert_no_alt_loc=True,
                                          exclude_water=True,
