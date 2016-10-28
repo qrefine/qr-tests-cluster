@@ -296,8 +296,14 @@ def calculate_residue_charge(rg,
     else:
       return True
     return False
-  def n_terminal(names):
-    return _terminal(names, [' H2 ', ' H3 '])
+  def n_terminal(residue_name, atom_names):
+    if residue_name in ["PRO"]:
+      check_names = [' H2 ',' H3 ']
+    else:
+      check_names = [' H1 ',' H2 ',' H3 ']
+    return _terminal(atom_names, check_names)
+  def nh2_terminal(atom_names):
+    return _terminal(atom_names, [' HT1', ' HT2'])
   def c_terminal(names):
     return _terminal(names, [' OXT'])
   def covalent_bond(i_seqs, inter_residue_bonds):
@@ -355,14 +361,17 @@ def calculate_residue_charge(rg,
                                                               poly_hs,
                                                               diff_hs,
                                                             )
-
-    if n_terminal(atom_names):
+    if verbose: print atom_names
+    if n_terminal(ag.resname, atom_names):
+      diff_hs-=1
+    elif nh2_terminal(atom_names):
       diff_hs-=1
     elif c_terminal(atom_names):
       diff_hs-=1
       max_charge+=1
     if covalent_bond(atom_i_seqs, inter_residue_bonds):
       diff_hs+=1
+      assert 0
     charge+=diff_hs
 
     assert abs(diff_hs)<=max_charge, 'residue %s charge %s is greater than %s' % (
@@ -551,14 +560,17 @@ def calculate_pdb_hierarchy_charge(hierarchy,
     tmp = calculate_residue_charge(residue,
                                    hetero_charges=hetero_charges,
                                    inter_residue_bonds=inter_residue_bonds,
-                                 )
+                                   verbose=verbose,
+                                   )
     charge += tmp
     if verbose:
       if tmp:
-        print 'CHARGE',tmp,charge
+        print '-'*80
+        print 'NON-ZERO CHARGE',tmp,charge
         for atom in residue.atoms():
           print atom.quote()
         #resname = residue.resname
+        print '-'*80
   return charge
 
 def write_pdb_hierarchy_qxyz_file(hierarchy,
@@ -642,8 +654,9 @@ def get_hetero_charges(pdb_inp):
 
 def get_inter_residue_bonds(ppf):
   # must use this before changing the hierarchy
-  grm = ppf.geometry_restraints_manager()
   inter_residue_bonds = {}
+  grm = ppf.geometry_restraints_manager()
+  if not hasattr(grm, 'get_all_bond_proxies'): return inter_residue_bonds
   atoms = ppf.all_chain_proxies.pdb_hierarchy.atoms()
   for bond in grm.get_all_bond_proxies():
     if not hasattr(bond, 'get_proxies_with_origin_id'): continue
