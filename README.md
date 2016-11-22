@@ -4,25 +4,18 @@
 
    * Select ~10-20 P1 structures from PDB and prepare them for quantum refinement.
    
-#### b) Pre-screen by preliminary SE refinement.
-   
-   * Run SE (mozyeme) refinements without using clustering. Make sure qrefine outputs 
-   intermediate PDB files so that refinement can be stopped any time and best outcome 
-   selected.
-   
-#### c) Further SE refinement using clustering.
+#### b) Run cheap HF energy and gradients calculation using clustering.
 
-   * Once line-search is ready (Mark), pick up final or intermediate results from "b)" and
-   use it as input to run SE using clustering.
+   * pick up results from "a)" and  use it as input to run cheap HF calculation  using clustering.
    
-   XXX Using what programs?
-   
-#### d) Final HF based refinement.
+   * write only gradient-based LBFGS (the line-search version)   
 
-   * Analyse results of "c)" and pick one or two most favorable (showing most improvement)
+#### c) Final HF based refinement.
+
+   * Analyse results of "b)" and pick one or two most favorable (showing most improvement)
    to run HF based refinements.
 
-Details for each step a-b-c-d) follow below.
+Details for each step a-b-c) follow below.
 
 Structure preparation
 ---------------------
@@ -65,7 +58,9 @@ phenix.reduce which has it's own problems.
    XXX This needs a careful and clear description what's being done and how. Adding H and missing
    non-H atoms? Remove altlocs? Reset occupancies? XXX
 
-   After checking those completed structures in 02 by visualisaton, all proper completed structures are stored in 03 and  ready for quantum refinement.
+   All PDBs in folder 01 have no errors in running 02_run_update_pdb.py are listed in folder 02.  
+
+   After checking those completed structures in 02 by visualisaton and comparing their charges with MOZYME calculated charges, all properly completed structures are stored in 03 and  ready for quantum refinement.
 
 Current issues to be resolved ASAP:
 
@@ -75,9 +70,10 @@ Current issues to be resolved ASAP:
     * 3nm9 - DNA not currently supported 
 
   * Errors:
+    *  4drw, 3nm9,  2oy0 and 1y1l have different charges from MOZYME
 
   * No errors: but not 100% sure that all is well.
-    * 1fh5 2oeq 3dtj 1ok9 1pag 1va7 1y1l 2ghj 2iwe 2oy0 4l21
+    *  1va7 2oeq  4xa1 3tz9  3dtj   2ghj
 
 Testing
 -------
