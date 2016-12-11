@@ -578,6 +578,8 @@ def write_charge_and_coordinates_from_hierarchy(hierarchy,
                                                 qxyz_order='qxyz',
                                                 hetero_charges=None,
                                                 exclude_water=True,
+                                                charge_scaling_positions=None,
+                                                scale=0
                                                 ):
   qxyz = None
   for residue in generate_residue_groups(hierarchy,
@@ -590,6 +592,7 @@ def write_charge_and_coordinates_from_hierarchy(hierarchy,
       qxyz = qxyz + get_partial_point_charges(residue,
                                               hetero_charges=hetero_charges)
   if qxyz is None: return
+  scale_partial_point_charges(qxyz,charge_scaling_positions, scale=0)
   qxyz_file = open(file_name,"w+")
   if qxyz_order=='qxyz': # tetrachem?
     qxyz_file.write(str(hierarchy.atoms_size())+ "  \n")
@@ -613,26 +616,32 @@ def write_pdb_hierarchy_qxyz_file(hierarchy,
                                   file_name="qxyz_cctbx.dat",
                                   hetero_charges=None,
                                   exclude_water=True,
+                                  charge_scaling_positions=None,
+                                  scale=0,
                                  ):
   write_charge_and_coordinates_from_hierarchy(hierarchy,
                                               file_name=file_name,
                                               qxyz_order='qxyz',
                                               hetero_charges=hetero_charges,
                                               exclude_water=exclude_water,
+                                              charge_scaling_positions=None,
+	                                      scale=0,
                                               )
 
 def write_pdb_hierarchy_xyzq_file(hierarchy,
                                   file_name="xyzq_cctbx.dat",
                                   hetero_charges=None,
                                   exclude_water=True,
-                                  #charge_scaling_positions=None,
-                                  #scale=0,
+                                  charge_scaling_positions=None,
+                                  scale=0,
                                   ):
   write_charge_and_coordinates_from_hierarchy(hierarchy,
                                               file_name=file_name,
                                               qxyz_order='xyzq',
                                               hetero_charges=hetero_charges,
                                               exclude_water=exclude_water,
+                                              charge_scaling_positions=None,
+                                              scale=0,
                                               )
 def scale_partial_point_charges(qxyz,
                                 charge_scaling_positions=None,
