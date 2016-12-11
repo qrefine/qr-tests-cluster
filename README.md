@@ -75,6 +75,9 @@ Current issues to be resolved ASAP:
   * No errors: but not 100% sure that all is well.
     *  1va7 2oeq  4xa1 3tz9  3dtj   2ghj
 
+  * Waters
+    * Do we make a policy about the inclusion of water below a certain resolution? 
+
 Testing
 -------
 
