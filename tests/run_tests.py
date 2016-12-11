@@ -1,6 +1,7 @@
 import os, sys
 from libtbx import easy_run
 from iotbx import pdb
+from StringIO import StringIO
 
 import run_finalise
 
@@ -144,7 +145,50 @@ ATOM     94  HXT GLY A  99       8.983   6.901  23.568  1.00 80.00           H
 TER
 END
 """,
+  'water' : '''
+HETATM    1  O   HOH A   1      -0.210   0.000  -0.296  1.00 20.00      A    O  
+HETATM    2  H1  HOH A   1       0.733   0.000  -0.296  1.00 20.00      A    H  
+HETATM    3  H2  HOH A   1      -0.524   0.000   0.593  1.00 20.00      A    H  
+''',
         }
+
+def test_qxyz_xyzq():
+  tf='water.pdb'
+  f=file(tf, "wb")
+  f.write(pdbs["water"])
+  f.close()
+  pdb_inp = pdb.input(tf)
+  hierarchy = pdb_inp.construct_hierarchy()
+  run_finalise.write_pdb_hierarchy_qxyz_file(hierarchy,
+                                             'test_water.dat',
+                                             )
+  assert not os.path.exists('test_water.dat')
+  run_finalise.write_pdb_hierarchy_qxyz_file(hierarchy,
+                                             'test_water.dat',
+                                             exclude_water=False,
+                                             )
+  tst_str = '''\
+3  
+  
+-0.408  -0.21  0.0  -0.296    
+0.204  0.733  0.0  -0.296    
+0.204  -0.524  0.0  0.593'''
+  lines = open('test_water.dat', 'rb').read()
+  print lines
+  assert lines.strip()==tst_str
+  os.remove('test_water.dat')
+  run_finalise.write_pdb_hierarchy_xyzq_file(hierarchy,
+                                             'test_water.dat',
+                                             exclude_water=False,
+                                             )
+  tst_str = '''\
+-0.21  0.0  -0.296  -0.408    
+0.733  0.0  -0.296  0.204    
+-0.524  0.0  0.593  0.204'''
+  lines = open('test_water.dat', 'rb').read()
+  print lines
+  assert lines.strip()==tst_str
+  os.remove('test_water.dat')
 
 def test_PRO_terminal_and_alt_loc():
   tf = 'PRO_terminal.pdb'
@@ -214,6 +258,7 @@ def test_helix():
   print 'OK'
 
 def run():
+  test_qxyz_xyzq()
   test_PRO_terminal_and_alt_loc()
   test_1yjp_charge()
   test_helix()
