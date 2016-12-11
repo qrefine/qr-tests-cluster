@@ -150,7 +150,56 @@ HETATM    1  O   HOH A   1      -0.210   0.000  -0.296  1.00 20.00      A    O
 HETATM    2  H1  HOH A   1       0.733   0.000  -0.296  1.00 20.00      A    H  
 HETATM    3  H2  HOH A   1      -0.524   0.000   0.593  1.00 20.00      A    H  
 ''',
+  'pro' : '''
+ATOM      1  N   PRO A   2     -25.598  25.222  75.213  1.00101.82           N
+ATOM      2  CA  PRO A   2     -25.442  24.229  76.278  1.00101.04           C
+ATOM      3  C   PRO A   2     -24.538  24.735  77.395  1.00102.01           C
+ATOM      4  O   PRO A   2     -24.789  25.799  77.962  1.00106.79           O
+ATOM      5  CB  PRO A   2     -24.800  23.031  75.558  1.00103.62           C
+ATOM      6  CG  PRO A   2     -24.532  23.488  74.125  1.00 98.65           C
+ATOM      7  CD  PRO A   2     -24.661  24.975  74.108  1.00 98.90           C
+ATOM      8  H2  PRO A   2     -26.468  25.439  75.129  1.00101.82           H
+ATOM      9  H3  PRO A   2     -25.124  25.959  75.418  1.00101.82           H
+ATOM     10  HA  PRO A   2     -26.304  23.972  76.641  1.00101.04           H
+ATOM     11  HB2 PRO A   2     -23.977  22.703  75.922  1.00103.62           H
+ATOM     12  HB3 PRO A   2     -25.448  22.309  75.544  1.00103.62           H
+ATOM     13  HG2 PRO A   2     -23.635  23.224  73.866  1.00 98.65           H
+ATOM     14  HG3 PRO A   2     -25.186  23.086  73.532  1.00 98.65           H
+ATOM     15  HD2 PRO A   2     -23.805  25.394  74.287  1.00 98.90           H
+ATOM     16  HD3 PRO A   2     -25.039  25.275  73.267  1.00 98.90           H
+''',
+  'gly' : '''
+ATOM      1  N   GLY A   1      -9.009   4.612   6.102  1.00 16.77           N
+ATOM      2  CA  GLY A   1      -9.052   4.207   4.651  1.00 16.57           C
+ATOM      3  C   GLY A   1      -8.015   3.140   4.419  1.00 16.16           C
+ATOM      4  O   GLY A   1      -7.523   2.521   5.381  1.00 16.78           O
+ATOM      5  H1  GLY A   1      -9.778   5.000   6.325  1.00 16.77           H
+ATOM      6  H2  GLY A   1      -8.884   3.890   6.608  1.00 16.77           H
+ATOM      7  H3  GLY A   1      -8.340   5.184   6.231  1.00 16.77           H
+ATOM      8  HA2 GLY A   1      -9.928   3.856   4.426  1.00 16.57           H
+ATOM      9  HA3 GLY A   1      -8.858   4.970   4.084  1.00 16.57           H
+''',
         }
+
+def test_qxyz_non_zero():
+  def _check_non_zero_charge(filename):
+    for line in open(filename, 'rb').readlines():
+      tmp = line.split()
+      if len(tmp)<2: continue
+      assert float(tmp[0])!=0, 'no partial charge %s' % line
+  for residue in ['pro',
+                  'gly',
+                  ]:
+    tf='%s.pdb' % residue
+    f=file(tf, "wb")
+    f.write(pdbs[residue])
+    f.close()
+    pdb_inp = pdb.input(tf)
+    hierarchy = pdb_inp.construct_hierarchy()
+    run_finalise.write_pdb_hierarchy_qxyz_file(hierarchy,
+                                               'test_%s.dat' % residue,
+                                             )
+    _check_non_zero_charge('test_%s.dat' % residue)
 
 def test_qxyz_xyzq():
   tf='water.pdb'
@@ -258,6 +307,7 @@ def test_helix():
   print 'OK'
 
 def run():
+  test_qxyz_non_zero()
   test_qxyz_xyzq()
   test_PRO_terminal_and_alt_loc()
   test_1yjp_charge()

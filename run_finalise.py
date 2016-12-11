@@ -456,7 +456,7 @@ def get_partial_point_charges(rg, hetero_charges=None):
       cif = atom_dict.get(atom.name.strip(), None)
       if cif is None:
         if atom.name in [" H1 ", " H2 ", " H3 "]: # needs calculating...
-          tmp.append([0]+list(atom.xyz))
+          tmp.append([0.26]+list(atom.xyz))
           continue
         if atom.name in v2_to_3:
           cif = atom_dict.get(v2_to_3[atom.name].strip())
