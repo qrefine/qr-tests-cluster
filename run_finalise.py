@@ -573,50 +573,67 @@ def calculate_pdb_hierarchy_charge(hierarchy,
         print '-'*80
   return charge
 
-def write_pdb_hierarchy_qxyz_file(hierarchy,
-                                  hetero_charges=None,
-                                  file_name="qxyz_cctbx.dat",
-                                  #charge_scaling_positions=None,
-                                  #scale=0,
-  ):
-  qxyz_file = open(file_name,"w+")
-  qxyz_file.write(str(hierarchy.atoms_size())+ "  \n")
-  qxyz_file.write("  \n")
+def write_charge_and_coordinates_from_hierarchy(hierarchy,
+                                                file_name,
+                                                qxyz_order='qxyz',
+                                                hetero_charges=None,
+                                                exclude_water=True,
+                                                ):
   qxyz = None
   for residue in generate_residue_groups(hierarchy,
                                          assert_no_alt_loc=True,
-                                         exclude_water=True,
+                                         exclude_water=exclude_water,
                                         ):
     if qxyz is None:
       qxyz = get_partial_point_charges(residue, hetero_charges=hetero_charges) 
-    else: qxyz = qxyz + get_partial_point_charges(residue,
-                                                  hetero_charges=hetero_charges)
+    else: 
+      qxyz = qxyz + get_partial_point_charges(residue,
+                                              hetero_charges=hetero_charges)
+  if qxyz is None: return
+  qxyz_file = open(file_name,"w+")
+  if qxyz_order=='qxyz': # tetrachem?
+    qxyz_file.write(str(hierarchy.atoms_size())+ "  \n")
+    qxyz_file.write("  \n")
+  elif qxyz_order=='xyzq':
+    pass
+  else:
+    raise Sorry('invalid qxyz_order parameter "%s"' % qxyz_order)
   for item in qxyz:
-    item_list = item + ["  \n"]
+    if qxyz_order=='qxyz':
+      item_list = item + ["  \n"]
+    elif qxyz_order=='xyzq':
+      item_list = item[1:]+item[0:1] + ["  \n"]
+    else:
+      raise Sorry('invalid qxyz_order parameter "%s"' % qxyz_order)
     item_string = "  ".join(str(elm) for elm in item_list)
     qxyz_file.write(item_string)
   qxyz_file.close()
 
+def write_pdb_hierarchy_qxyz_file(hierarchy,
+                                  file_name="qxyz_cctbx.dat",
+                                  hetero_charges=None,
+                                  exclude_water=True,
+                                 ):
+  write_charge_and_coordinates_from_hierarchy(hierarchy,
+                                              file_name=file_name,
+                                              qxyz_order='qxyz',
+                                              hetero_charges=hetero_charges,
+                                              exclude_water=exclude_water,
+                                              )
+
 def write_pdb_hierarchy_xyzq_file(hierarchy,
                                   file_name="xyzq_cctbx.dat",
-                                  charge_scaling_positions=None,
-                                  scale=0):
-  qxyz = None
-  xyzq_file = open(file_name,"w+")
-  for residue in generate_residue_groups(hierarchy,
-                                         assert_no_alt_loc=True,
-                                         exclude_water=True,
-                                        ):
-    if qxyz is None:
-      qxyz = get_partial_point_charges(residue)
-    else: qxyz = qxyz + get_partial_point_charges(residue)
-  scale_partial_point_charges(qxyz,charge_scaling_positions, scale=0)
-  for item in qxyz:
-    item_list = item[1:]+item[0:1] + ["  \n"]
-    item_string = "  ".join(str(elm) for elm in item_list)
-    xyzq_file.write(item_string)
-  xyzq_file.close()
-
+                                  hetero_charges=None,
+                                  exclude_water=True,
+                                  #charge_scaling_positions=None,
+                                  #scale=0,
+                                  ):
+  write_charge_and_coordinates_from_hierarchy(hierarchy,
+                                              file_name=file_name,
+                                              qxyz_order='xyzq',
+                                              hetero_charges=hetero_charges,
+                                              exclude_water=exclude_water,
+                                              )
 def scale_partial_point_charges(qxyz,
                                 charge_scaling_positions=None,
                                 scale=0):
