@@ -306,7 +306,23 @@ def test_helix():
   assert charge==1, 'charge of helix should be one not %s' % charge
   print 'OK'
 
+def test_charge_for_charmm_pdbs():
+  from run_finalise import calculate_pdb_hierarchy_charge
+  charge_dict = {'3kyi': '-12', '2oy0': '16', '1y1l': '-8', '3dtj': '0', '3tzq': '-10', '4rnf': '-13', '2jee': '-32', '4k2r': '-1', '5d12': '-11', '1il5': '0', '1va7': '-8', '2oeq': '-5', '4drw': '-16', '4xa1': '-45', '2ghj': '46'}
+  pdb_dir = './charmm_pdbs/'
+  pdb_files = os.listdir(pdb_dir)
+  for pdb_file in pdb_files:
+    if pdb_file.endswith(".pdb"):
+      pdb_file_path = pdb_dir + pdb_file
+      pdb_inp = pdb.input(pdb_file_path)                                                                             
+      hierarchy = pdb_inp.construct_hierarchy()
+      charge = calculate_pdb_hierarchy_charge(hierarchy)
+      print pdb_file[:-4], " charmm charge: ",charge_dict[pdb_file[:-4]], " run_finalise charge: ",charge
+      assert charge==charge_dict[pdb_file[:-4]]
+
+
 def run():
+  test_charge_for_charmm_pdbs()
   test_qxyz_non_zero()
   test_qxyz_xyzq()
   test_PRO_terminal_and_alt_loc()
