@@ -23,6 +23,17 @@ from mmtbx import monomer_library
 from mmtbx.monomer_library import pdb_interpretation
 #from libtbx.utils import null_out
 
+skip = [ # see README.md for reasons
+  '1il5.pdb',
+  '2jee.pdb',
+  #'1u0d.pdb',
+  '3nm9.pdb',
+  '3kyi.pdb',
+  '4k2r.pdb',
+  '4rnf.pdb',
+  '5d12.pdb',
+  ]
+
 default_ion_charges = {
   "PT" : 2,
   "CL" : -1,
@@ -151,37 +162,6 @@ def add_n_terminal_hydrogens_to_atom_group(ag):
 def add_n_terminal_hydrogens_to_residue_group(rg):
   for ag in rg.atom_groups(): add_n_terminal_hydrogens_to_atom_group(ag)
 
-def add_terminal_hydrogens(hierarchy,
-                           geometry_restraints_manager,
-                           add_to_chain_breaks=False,
-                           ):
-  # add N terminal hydrogens because Reduce only does it to resseq=1
-  # needs to be alt.loc. aware for non-quantum-refine
-  from mmtbx.conformation_dependent_library import generate_protein_threes
-  atoms = hierarchy.atoms()
-  def get_residue_group(residue):
-    for atom in residue.atoms():
-      atom = atoms[atom.i_seq]
-      break
-    return atom.parent().parent()
-  ###
-  for three in generate_protein_threes(hierarchy,
-                                       geometry_restraints_manager,
-                                       include_non_linked=True,
-                                       backbone_only=False,
-                                     ):
-    assert three.are_linked()
-    if three.start: 
-      rg = get_residue_group(three[0])
-      add_n_terminal_hydrogens_to_residue_group(rg)
-      #hierarchy.reset_i_seq_if_necessary()
-    elif three.end:
-      rg = get_residue_group(three[2])
-      add_c_terminal_oxygens_to_residue_group(rg)
-      #hierarchy.reset_i_seq_if_necessary()
-    else:
-      pass
-
 def add_n_terminal_hydrogens(hierarchy,
                              #residue_selection=None,
                              add_to_chain_breaks=False,
@@ -236,12 +216,13 @@ def add_c_terminal_oxygens_to_atom_group(ag):
       atom.xyz = ro2[i]
       ag.append_atom(atom)
 
-def add_c_terminal_oxygens_to_residue_group(rg):
+def add_c_terminal_oxygens_to_residue_group(rg,
+                                            use_capping_hydrogens=False,
+                                          ):
   for ag in rg.atom_groups(): add_c_terminal_oxygens_to_atom_group(ag)
 
 def add_c_terminal_oxygens(hierarchy,
-                             #residue_selection=None,
-                            ):
+                          ):
   for chain_i, chain in enumerate(hierarchy.chains()):
     for res_i, residue_group in enumerate(chain.residue_groups()):
       if len(residue_group.atom_groups())>1: continue
@@ -250,11 +231,53 @@ def add_c_terminal_oxygens(hierarchy,
                                                "modified_amino_acid",
                                              ]:
         continue
+      if capping_hydrogens:
+        assert 0
       if res_i==len(chain.residue_groups())-1: # need better switch
         add_c_terminal_oxygens_to_atom_group(atom_group)
   hierarchy.atoms_reset_serial()
   hierarchy.atoms().reset_i_seq()
   return hierarchy
+
+def add_terminal_hydrogens(hierarchy,
+                           geometry_restraints_manager,
+                           add_to_chain_breaks=False,
+                           use_capping_hydrogens=False, # instead of terminal H
+                           use_capping_only_on_chain_breaks=False,
+                           # useful for Q|R
+                           ):
+  # add N terminal hydrogens because Reduce only does it to resseq=1
+  # needs to be alt.loc. aware for non-quantum-refine
+  from mmtbx.conformation_dependent_library import generate_protein_threes
+  atoms = hierarchy.atoms()
+  def get_residue_group(residue):
+    for atom in residue.atoms():
+      atom = atoms[atom.i_seq]
+      break
+    return atom.parent().parent()
+  ###
+  for three in generate_protein_threes(hierarchy,
+                                       geometry_restraints_manager,
+                                       include_non_linked=True,
+                                       backbone_only=False,
+                                     ):
+    assert three.are_linked()
+    if three.start: 
+      rg = get_residue_group(three[0])
+      add_n_terminal_hydrogens_to_residue_group(
+        rg,
+#        use_capping_hydrogens=use_capping_hydrogens,
+      )
+      #hierarchy.reset_i_seq_if_necessary()
+    elif three.end:
+      rg = get_residue_group(three[2])
+      add_c_terminal_oxygens_to_residue_group(
+        rg,
+        use_capping_hydrogens=use_capping_hydrogens,
+      )
+      #hierarchy.reset_i_seq_if_necessary()
+    else:
+      pass
 
 def display_residue_group(rg):
   return '  residue_group: resseq="%s" icode="%s"' % (rg.resseq, rg.icode)
@@ -371,7 +394,6 @@ def calculate_residue_charge(rg,
       max_charge+=1
     if covalent_bond(atom_i_seqs, inter_residue_bonds):
       diff_hs+=1
-      assert 0
     charge+=diff_hs
 
     assert abs(diff_hs)<=max_charge, 'residue %s charge %s is greater than %s' % (
@@ -680,6 +702,7 @@ def get_hetero_charges(pdb_inp):
 
 def get_inter_residue_bonds(ppf):
   # must use this before changing the hierarchy
+  # used for S-S bonds etc...
   inter_residue_bonds = {}
   grm = ppf.geometry_restraints_manager()
   if not hasattr(grm, 'get_all_bond_proxies'): return inter_residue_bonds
@@ -691,8 +714,9 @@ def get_inter_residue_bonds(ppf):
       r1 = atoms[p.i_seqs[0]]
       r2 = atoms[p.i_seqs[1]]
       # exclude peptide links
-      # but maybe should inlcude all for completeness
+      # but maybe should include all for completeness
       if r1.name.strip()=='C' and r2.name.strip()=='N': continue
+      outl = 'bonding %s %s' % ( r1.quote(),r2.quote())
       r1=r1.parent().parent()
       r2=r2.parent().parent()
       if r1.resseq!=r2.resseq:
@@ -700,6 +724,7 @@ def get_inter_residue_bonds(ppf):
         for i in range(2):
           inter_residue_bonds.setdefault(p.i_seqs[i], [])
           inter_residue_bonds[p.i_seqs[i]].append(inter_residue_bonds[p.i_seqs])
+        print outl
   return inter_residue_bonds
 
 def run_ready_set(pdb_filename):
@@ -712,7 +737,8 @@ def run_ready_set(pdb_filename):
   ero.show_stdout(std)
   for line in std.getvalue().splitlines():
     print line
-  return pdb_filename.replace('.pdb', '.updated.pdb') # maybe read from stdout
+  return os.path.basename(pdb_filename).replace('.pdb', '.updated.pdb') 
+  # maybe read from stdout
 
 def run_fetch_pdb(code):
   cmd = 'phenix.fetch_pdb %s' % code
@@ -720,8 +746,25 @@ def run_fetch_pdb(code):
   print cmd
   easy_run.call(cmd)
 
+def loop_over_dir(d):
+  i=0
+  for filename in os.listdir(d):
+    if not filename.endswith('.pdb'): continue
+    i+=1
+    print '%s\n %3d %s\n%s' % ('*'*80, i, os.path.join(d, filename), '*'*80)
+    if filename in skip:
+      print 'skipping'
+      continue
+    if os.path.exists(filename.replace('.pdb', '.updated.pdb')):
+      run(filename.replace('.pdb', '.updated.pdb'))
+    else:
+      run(os.path.join(d, filename))
+
 def run(pdb_filename):
   print "run",pdb_filename
+  if os.path.isdir(pdb_filename):
+    loop_over_dir(pdb_filename)
+    return
   if pdb_filename.find(".pdb")==-1:
     if not os.path.exists('%s.pdb' % pdb_filename):
       run_fetch_pdb(pdb_filename)

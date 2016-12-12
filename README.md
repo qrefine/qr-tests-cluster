@@ -69,11 +69,18 @@ Current issues to be resolved ASAP:
     * 2jee - has a terminal amino acid with just a N
     * 3nm9 - DNA not currently supported 
 
+  * Known errors
+    * 1il5 - bug in mmtbx related to finding peptide connectivity
+    * 4k2r
+    * 5d12
+    * 3kyi - nonstandard amino acid has strange charge
+    * 4rnf - bug in cctbx geometry restraints
+
   * Errors:
-    *  4drw, 3nm9,  2oy0 and 1y1l have different charges from MOZYME
+    *  4drw, 3nm9, 2oy0 and 1y1l have different charges from MOZYME
 
   * No errors: but not 100% sure that all is well.
-    *  1va7 2oeq  4xa1 3tz9  3dtj   2ghj
+    *  1va7, 2oeq, 4xa1, 3tz9, 3dtj, 2ghj
 
   * Waters
     * Do we make a policy about the inclusion of water below a certain resolution? 
@@ -82,6 +89,9 @@ Testing
 -------
 
 Testing is very simple. Run tests/run_tests.py and check for Sorry's.
+
+  * Tests to add:
+    * Check S-S bonds are accounted for correctly
 
 Structure refinement
 --------------------
