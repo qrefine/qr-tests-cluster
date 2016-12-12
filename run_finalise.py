@@ -138,7 +138,7 @@ def add_n_terminal_hydrogens_to_atom_group(ag):
   c = ag.get_atom("C")
   if c is None: return
   if ag.get_atom("H"): # maybe needs to be smarter
-    for atom in ag.atoms(): print atom.quote()
+    #for atom in ag.atoms(): print atom.quote()
     ag.remove_atom(ag.get_atom('H'))
   # add H1
   rh3 = construct_xyz(n, 0.9,
@@ -261,15 +261,16 @@ def add_terminal_hydrogens(hierarchy,
                                        include_non_linked=True,
                                        backbone_only=False,
                                      ):
+    print three
     assert three.are_linked()
     if three.start: 
       rg = get_residue_group(three[0])
       add_n_terminal_hydrogens_to_residue_group(
         rg,
-#        use_capping_hydrogens=use_capping_hydrogens,
+    #    use_capping_hydrogens=use_capping_hydrogens,
       )
       #hierarchy.reset_i_seq_if_necessary()
-    elif three.end:
+    if three.end:
       rg = get_residue_group(three[2])
       add_c_terminal_oxygens_to_residue_group(
         rg,
@@ -327,8 +328,12 @@ def calculate_residue_charge(rg,
     return _terminal(atom_names, check_names)
   def nh2_terminal(atom_names):
     return _terminal(atom_names, [' HT1', ' HT2'])
-  def c_terminal(names):
-    return _terminal(names, [' OXT'])
+  def nh3_terminal(atom_names):
+    return _terminal(atom_names, [' HT1', ' HT2', ' HT3'])
+  def c_terminal(atom_names):
+    rc = _terminal(atom_names, [' OXT'])
+    if not rc: rc = _terminal(atom_names, [' OT1', ' OT2'])
+    return rc
   def covalent_bond(i_seqs, inter_residue_bonds):
     for i_seq in i_seqs:
       if i_seq in inter_residue_bonds:
@@ -370,7 +375,7 @@ def calculate_residue_charge(rg,
       hydrogens = get_aa_polymer_hydrogens(resname)
       if len(hydrogens)!=0:
         if verbose:
-          for atom in rg.atoms(): print atom.quote()
+          for atom in rg.atoms(): print 'H',atom.quote()
         raise Sorry("no hydrogens: %s" % display_residue_group(rg))
   ag = rg.atom_groups()[0]
   charge = get_aa_charge(ag.resname)
@@ -387,14 +392,35 @@ def calculate_residue_charge(rg,
     if verbose: print atom_names
     if n_terminal(ag.resname, atom_names):
       diff_hs-=1
+      if verbose:
+        print 'n_terminal'
+        print 'charge: %s poly_hs: %s diff_hs: %s' % (charge,
+                                                              poly_hs,
+                                                              diff_hs,
+                                                            )
+    elif nh3_terminal(atom_names):
+      diff_hs-=1
+      if verbose: print 'nh3_terminal'
     elif nh2_terminal(atom_names):
       diff_hs-=1
+      if verbose: print 'nh2_terminal'
     elif c_terminal(atom_names):
       diff_hs-=1
       max_charge+=1
+      if verbose:
+        print 'c_terminal'
+        print 'charge: %s poly_hs: %s diff_hs: %s' % (charge,
+                                                    poly_hs,
+                                                    diff_hs,
+      )
     if covalent_bond(atom_i_seqs, inter_residue_bonds):
       diff_hs+=1
     charge+=diff_hs
+    if verbose:
+      print 'charge: %s poly_hs: %s diff_hs: %s' % (charge,
+                                                    poly_hs,
+                                                    diff_hs,
+      )
 
     assert abs(diff_hs)<=max_charge, 'residue %s charge %s is greater than %s' % (
       rg.atoms()[0].quote(),
@@ -556,13 +582,19 @@ def write_hierarchy(pdb_filename, pdb_inp, hierarchy, underscore):
   print "\n  Output written to: %s" % output
   return output
 
-def complete_pdb_hierarchy(hierarchy, geometry_restraints_manager):
+def complete_pdb_hierarchy(hierarchy,
+                           geometry_restraints_manager,
+                           use_capping_hydrogens=False,
+                          ):
   from mmtbx.building import extend_sidechains
   n_changed = extend_sidechains.extend_protein_model(hierarchy,
                                                      hydrogens=True,
                                                    )
   remove_acid_side_chain_hydrogens(hierarchy)
-  add_terminal_hydrogens(hierarchy, geometry_restraints_manager) # in place
+  add_terminal_hydrogens(hierarchy,
+                         geometry_restraints_manager,
+                         use_capping_hydrogens=use_capping_hydrogens,
+                        ) # in place
   #add_n_terminal_hydrogens(hierarchy) # in place
   #add_c_terminal_oxygens(hierarchy) # in place
   hierarchy.atoms().set_chemical_element_simple_if_necessary()
@@ -798,7 +830,10 @@ def run(pdb_filename):
   else:
     ppf = get_processed_pdb(pdb_inp=hierarchy.as_pdb_input())
   inter_residue_bonds = get_inter_residue_bonds(ppf)
-  complete_pdb_hierarchy(hierarchy, ppf.geometry_restraints_manager())
+  complete_pdb_hierarchy(hierarchy,
+                         ppf.geometry_restraints_manager(),
+                         use_capping_hydrogens=True,
+                        )
   # not required at the moment, no clutering
   if 0:
     write_pdb_hierarchy_qxyz_file(hierarchy,
