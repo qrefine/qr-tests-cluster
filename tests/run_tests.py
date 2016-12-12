@@ -318,7 +318,7 @@ def test_charge_for_charmm_pdbs():
       hierarchy = pdb_inp.construct_hierarchy()
       charge = calculate_pdb_hierarchy_charge(hierarchy)
       print pdb_file[:-4], " charmm charge: ",charge_dict[pdb_file[:-4]], " run_finalise charge: ",charge
-      assert charge==charge_dict[pdb_file[:-4]]
+      assert charge==int(charge_dict[pdb_file[:-4]])
 
 
 def run():
