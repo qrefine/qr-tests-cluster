@@ -3,6 +3,8 @@ from libtbx import easy_run
 from iotbx import pdb
 from StringIO import StringIO
 
+import iotbx
+
 import run_finalise
 
 pdbs = {"PRO_terminal" : """
@@ -43,6 +45,22 @@ ATOM    906  O  BSER A 118      -4.263 -16.472  -0.176  0.50 39.26           O
 ATOM    907  CB BSER A 118      -6.980 -17.441  -1.256  0.50 37.71           C
 ATOM    908  OG BSER A 118      -8.020 -16.788  -1.972  0.50 34.61           O
 """,
+  'GLY_terminal' : '''
+HETATM    1  N   GLY A   1      -2.476  -2.684  -3.356  1.00 20.00      A    N+1
+HETATM    5  CA  GLY A   1      -2.620  -1.390  -2.713  1.00 20.00      A    C  
+HETATM    8  C   GLY A   1      -1.777  -1.333  -1.440  1.00 20.00      A    C  
+HETATM    9  O   GLY A   1      -1.349  -2.331  -0.968  1.00 20.00      A    O  
+HETATM   10  N   ALA A   2      -1.518  -0.057  -0.799  1.00 20.00      A    N  
+HETATM   12  CA  ALA A   2      -0.808  -0.011   0.467  1.00 20.00      A    C  
+HETATM   14  CB  ALA A   2      -1.723   0.085   1.686  1.00 20.00      A    C  
+HETATM   18  C   ALA A   2       0.356   0.977   0.488  1.00 20.00      A    C  
+HETATM   19  O   ALA A   2       0.271   2.005  -0.094  1.00 20.00      A    O  
+HETATM   20  N   ALA A   3       1.566   0.657   1.223  1.00 20.00      A    N  
+HETATM   22  CA  ALA A   3       2.684   1.584   1.220  1.00 20.00      A    C  
+HETATM   24  CB  ALA A   3       3.994   0.806   1.318  1.00 20.00      A    C  
+HETATM   28  C   ALA A   3       2.525   2.581   2.367  1.00 20.00      A    C  
+HETATM   29  O   ALA A   3       2.383   2.166   3.546  1.00 20.00      A    O  
+''',
   'helix' : """
 CRYST1   16.291   18.744   30.715  90.00  90.00  90.00 P 1
 SCALE1      0.061384  0.000000  0.000000        0.00000
@@ -239,10 +257,10 @@ def test_qxyz_xyzq():
   assert lines.strip()==tst_str
   os.remove('test_water.dat')
 
-def test_PRO_terminal_and_alt_loc():
-  tf = 'PRO_terminal.pdb'
+def test_terminal_and_alt_loc(residue):
+  tf = '%s_terminal.pdb' % residue
   f=file(tf, "wb")
-  f.write(pdbs["PRO_terminal"])
+  f.write(pdbs["%s_terminal" % residue])
   f.close()
   cmd = 'iotbx.python ../run_finalise.py %s' % tf
   print cmd
@@ -250,12 +268,21 @@ def test_PRO_terminal_and_alt_loc():
   pdb_inp = pdb.input(tf.replace('.pdb', '_complete.pdb'))
   hierarchy = pdb_inp.construct_hierarchy()
   must_find = ['H2', 'H3', 'OXT']
+  if residue!='PRO': must_find.append('H1')
   for atom in hierarchy.atoms():
-    assert atom.name.strip()!='H1'
+    if residue=='PRO': assert atom.name.strip()!='H1'
     if atom.name.strip() in must_find:
       must_find.remove(atom.name.strip())
-  assert not must_find
+  assert not must_find, 'must find %s is not empty' % must_find
   print 'OK'
+
+def test_PRO_terminal_and_alt_loc():
+  test_terminal_and_alt_loc('PRO')
+
+def test_GLY_terminal_and_alt_loc():
+  #pdbs['GLY_terminal'] = pdbs['PRO_terminal'][625:]
+  test_terminal_and_alt_loc('GLY')
+  assert 0
 
 def test_1yjp_charge():
   pdb_inp = pdb.input('1yjp.pdb')
@@ -276,6 +303,33 @@ def test_1yjp_charge():
   print 'charge',charge
   assert charge==0, 'charge of 1yjp should be zero not %s' % charge
   print 'OK'
+
+def test_terminal_charge(residue, charge=0):
+  # must run after other PRO
+  tf = '%s_terminal.complete.pdb' % residue
+  ppf = run_finalise.get_processed_pdb(pdb_filename=tf)
+  inter_residue_bonds = run_finalise.get_inter_residue_bonds(ppf)
+  # should the hierarchy come from ppf???
+  pdb_inp = iotbx.pdb.input(tf)
+  hierarchy = pdb_inp.construct_hierarchy()
+  hetero_charges = run_finalise.get_hetero_charges(pdb_inp)
+  if not hetero_charges:
+    # some defaults
+    hetero_charges = run_finalise.default_ion_charges
+  total_charge = run_finalise.calculate_pdb_hierarchy_charge(
+    hierarchy,
+    hetero_charges=hetero_charges,
+    inter_residue_bonds=inter_residue_bonds,
+    verbose=True,
+  )
+  print 'total_charge',total_charge
+  assert total_charge==20
+
+def test_PRO_terminal_charge():
+  test_terminal_charge('PRO')
+
+def test_GLY_terminal_charge():
+  test_terminal_charge('GLY')
 
 def test_helix():
   tf = 'helix.pdb'
@@ -308,24 +362,50 @@ def test_helix():
 
 def test_charge_for_charmm_pdbs():
   from run_finalise import calculate_pdb_hierarchy_charge
-  charge_dict = {'3kyi': '-12', '2oy0': '16', '1y1l': '-8', '3dtj': '0', '3tz9': '-10', '4rnf': '-13', '2jee': '-32', '4k2r': '-1', '5d12': '-11', '1il5': '0', '1va7': '-8', '2oeq': '-5', '4drw': '-16', '4xa1': '-45', '2ghj': '46'}
-  pdb_dir = './charmm_pdbs/'
+  charge_dict = {'3kyi': -12,
+                 '2oy0': 16,
+                 '1y1l': -8,
+                 '3dtj': 0,
+                 '3tz9': -10,
+                 '4rnf': -13,
+                 '2jee': -32,
+                 '4k2r': -1,
+                 '5d12': -11,
+                 '1il5': 0,
+                 '1va7': -8,
+                 '2oeq': -5,
+                 '4drw': -16,
+                 '4xa1': -45,
+                 '2ghj': 46,
+  }
+  pdb_dir = 'charmm_pdbs'
   pdb_files = os.listdir(pdb_dir)
   for pdb_file in pdb_files:
+    if pdb_file[:-4] not in charge_dict: continue
     if pdb_file.endswith(".pdb"):
-      pdb_file_path = pdb_dir + pdb_file
-      pdb_inp = pdb.input(pdb_file_path)
-      hierarchy = pdb_inp.construct_hierarchy()
-      charge = calculate_pdb_hierarchy_charge(hierarchy)
-      print pdb_file[:-4], " charmm charge: ",charge_dict[pdb_file[:-4]], " run_finalise charge: ",charge
-      assert charge==int(charge_dict[pdb_file[:-4]])
-
+      pdb_file_path = os.path.join(pdb_dir, pdb_file)
+      charge = run_finalise.get_total_charge_from_file_name(
+        pdb_file_path,
+        verbose=True,
+      )
+      print ' PDB %s - charmm charge: %2d, run_finalise charge: %2d'  % (
+        pdb_file[:-4],
+        charge_dict[pdb_file[:-4]],
+        charge,
+        )
+      assert charge==charge_dict[pdb_file[:-4]], 'no matchy matchy'
 
 def run():
   test_charge_for_charmm_pdbs()
+  assert 0
+  test_GLY_terminal_and_alt_loc()
+  test_GLY_terminal_charge()
+  assert 0
+  test_PRO_terminal_and_alt_loc()
+  test_PRO_terminal_charge()
+  assert 0
   test_qxyz_non_zero()
   test_qxyz_xyzq()
-  test_PRO_terminal_and_alt_loc()
   test_1yjp_charge()
   test_helix()
 
