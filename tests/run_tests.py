@@ -375,7 +375,27 @@ def test_charge_for_charmm_pdbs():
                  '4drw': -16,
                  '4xa1': -45,
                  '2ghj': 46,
-  }
+                 '1ok9': -14, 
+		 '3nak': 0, 
+		 '2x10': -22, 
+		 '3oe9': 27, 
+		 '4fsx': -42, 
+		 '4p7h': -19,
+		 '5diz': -25, 
+		 '3uds': -8, 
+		 '3uj4': 0, 
+		 '4ctd': -44,
+                 '1byz': -4, 
+                 '1lzt': 8, 
+		 '1vfy': -1, 
+		 '1m24': -2, 
+		 '1i07': 4, 
+		 '1opd': -6, 
+  		 '1vbw': 8, 
+		 '1rfs': -4, 
+		 '1ly2': 7, 
+		 '1a7y': 0, 
+		 '1v7s': 8}
   pdb_dir = 'charmm_pdbs'
   pdb_files = os.listdir(pdb_dir)
   for pdb_file in pdb_files:
