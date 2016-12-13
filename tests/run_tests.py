@@ -383,6 +383,7 @@ def test_charge_for_charmm_pdbs():
   for pdb_file in pdb_files:
     if pdb_file[:-4] not in charge_dict: continue
     if pdb_file.endswith(".pdb"):
+      print pdb_file
       pdb_file_path = os.path.join(pdb_dir, pdb_file)
       charge = run_finalise.get_total_charge_from_file_name(
         pdb_file_path,
