@@ -130,7 +130,9 @@ def construct_xyz(ba, bv,
     rh_list.append(rh)
   return rh_list
 
-def add_n_terminal_hydrogens_to_atom_group(ag):
+def add_n_terminal_hydrogens_to_atom_group(ag,
+                                           use_capping_hydrogens=False,
+                                          ):
   n = ag.get_atom("N")
   if n is None: return
   ca = ag.get_atom("CA")
@@ -145,7 +147,10 @@ def add_n_terminal_hydrogens_to_atom_group(ag):
                       ca, 109.5,
                       c, 120.,
                      )
-  for i in range(0,3):
+  number_of_hydrogens=3
+  if use_capping_hydrogens:
+    number_of_hydrogens-=1
+  for i in range(0, number_of_hydrogens):
     name = " H%d " % (i+1)
     if ag.get_atom(name.strip()): continue
     if ag.resname=='PRO':
@@ -159,8 +164,12 @@ def add_n_terminal_hydrogens_to_atom_group(ag):
     atom.b = n.b
     ag.append_atom(atom)
 
-def add_n_terminal_hydrogens_to_residue_group(rg):
-  for ag in rg.atom_groups(): add_n_terminal_hydrogens_to_atom_group(ag)
+def add_n_terminal_hydrogens_to_residue_group(rg, use_capping_hydrogens=False):
+  for ag in rg.atom_groups():
+    add_n_terminal_hydrogens_to_atom_group(
+      ag,
+      use_capping_hydrogens=use_capping_hydrogens,
+    )
 
 def add_n_terminal_hydrogens(hierarchy,
                              #residue_selection=None,
@@ -182,23 +191,32 @@ def add_n_terminal_hydrogens(hierarchy,
   hierarchy.atoms().reset_i_seq()
   return hierarchy
 
-def add_c_terminal_oxygens_to_atom_group(ag):
+def add_c_terminal_oxygens_to_atom_group(ag,
+                                         use_capping_hydrogens=False,
+                                        ):
   #
   # do we need ANISOU
   #
-  if ag.get_atom("OXT"): return
+  atom_name=' OXT'
+  atom_element = 'O'
+  bond_length=1.231
+  if use_capping_hydrogens:
+    atom_name=" HC "
+    atom_element="H"
+    bond_length=1.
+  if ag.get_atom(atom_name.strip()): return
   c = ag.get_atom("C")
   if c is None: return
   ca = ag.get_atom("CA")
   if ca is None: return
   n = ag.get_atom("N")
   if n is None: return
-  ro2 = construct_xyz(c, 1.231,
+  ro2 = construct_xyz(c, bond_length,
                       ca, 120.,
                       n, 160.,
                       period=2,
                      )
-  oxys = [' O  ', ' OXT'] 
+  oxys = [' O  ', atom_name] 
   for i in range(0,2):
     name = oxys[i]
     atom = ag.get_atom(name.strip())
@@ -210,7 +228,7 @@ def add_c_terminal_oxygens_to_atom_group(ag):
     else:
       atom = iotbx.pdb.hierarchy.atom()
       atom.name = name
-      atom.element = "O"
+      atom.element = atom_element
       atom.occ = c.occ
       atom.b = c.b
       atom.xyz = ro2[i]
@@ -219,10 +237,15 @@ def add_c_terminal_oxygens_to_atom_group(ag):
 def add_c_terminal_oxygens_to_residue_group(rg,
                                             use_capping_hydrogens=False,
                                           ):
-  for ag in rg.atom_groups(): add_c_terminal_oxygens_to_atom_group(ag)
+  for ag in rg.atom_groups():
+    add_c_terminal_oxygens_to_atom_group(
+      ag,
+      use_capping_hydrogens=use_capping_hydrogens,
+    )
 
 def add_c_terminal_oxygens(hierarchy,
                           ):
+  assert 0
   for chain_i, chain in enumerate(hierarchy.chains()):
     for res_i, residue_group in enumerate(chain.residue_groups()):
       if len(residue_group.atom_groups())>1: continue
@@ -263,15 +286,20 @@ def add_terminal_hydrogens(hierarchy,
                                      ):
     print three
     assert three.are_linked()
-    if three.start: 
+    # should this be moved to cctbx???
+    if three.end and len(three)==1:
+      three.start = True
+    if three.start:
+      print 'start'*10
       rg = get_residue_group(three[0])
       add_n_terminal_hydrogens_to_residue_group(
         rg,
-    #    use_capping_hydrogens=use_capping_hydrogens,
+        use_capping_hydrogens=use_capping_hydrogens,
       )
       #hierarchy.reset_i_seq_if_necessary()
     if three.end:
-      rg = get_residue_group(three[2])
+      print 'end'*10
+      rg = get_residue_group(three[-1])
       add_c_terminal_oxygens_to_residue_group(
         rg,
         use_capping_hydrogens=use_capping_hydrogens,
@@ -325,7 +353,11 @@ def calculate_residue_charge(rg,
       check_names = [' H2 ',' H3 ']
     else:
       check_names = [' H1 ',' H2 ',' H3 ']
-    return _terminal(atom_names, check_names)
+    rc = _terminal(atom_names, check_names)
+    if not rc and residue_name in ['PRO']: # CHARMM...
+      check_names = [' H 1', ' H 2']
+      rc = _terminal(atom_names, check_names)
+    return rc
   def nh2_terminal(atom_names):
     return _terminal(atom_names, [' HT1', ' HT2'])
   def nh3_terminal(atom_names):
@@ -599,8 +631,6 @@ def complete_pdb_hierarchy(hierarchy,
                          geometry_restraints_manager,
                          use_capping_hydrogens=use_capping_hydrogens,
                         ) # in place
-  #add_n_terminal_hydrogens(hierarchy) # in place
-  #add_c_terminal_oxygens(hierarchy) # in place
   hierarchy.atoms().set_chemical_element_simple_if_necessary()
   hierarchy.sort_atoms_in_place()
 

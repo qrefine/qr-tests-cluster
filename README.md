@@ -64,6 +64,10 @@ phenix.reduce which has it's own problems.
 
 Current issues to be resolved ASAP:
 
+  * Errors that can't be fixed:
+    * 4drw - contains a nonstandard amino acid using the code HSD which is a
+             carbohydrate in the Chemical Comp.
+
   * Errors that have been postponed:
     * 1u0d - multiple models
     * 2jee - has a terminal amino acid with just a N

@@ -237,21 +237,21 @@ def test_qxyz_xyzq():
   tst_str = '''\
 3  
   
--0.408  -0.21  0.0  -0.296    
-0.204  0.733  0.0  -0.296    
-0.204  -0.524  0.0  0.593'''
+-0.364  -0.21  0.0  -0.296    
+0.182  0.733  0.0  -0.296    
+0.182  -0.524  0.0  0.593'''
   lines = open('test_water.dat', 'rb').read()
   print lines
-  assert lines.strip()==tst_str
+  assert lines.strip()==tst_str, '%s %s' % (tst_str, lines)
   os.remove('test_water.dat')
   run_finalise.write_pdb_hierarchy_xyzq_file(hierarchy,
                                              'test_water.dat',
                                              exclude_water=False,
                                              )
   tst_str = '''\
--0.21  0.0  -0.296  -0.408    
-0.733  0.0  -0.296  0.204    
--0.524  0.0  0.593  0.204'''
+-0.21  0.0  -0.296  -0.364    
+0.733  0.0  -0.296  0.182    
+-0.524  0.0  0.593  0.182'''
   lines = open('test_water.dat', 'rb').read()
   print lines
   assert lines.strip()==tst_str
@@ -280,9 +280,7 @@ def test_PRO_terminal_and_alt_loc():
   test_terminal_and_alt_loc('PRO')
 
 def test_GLY_terminal_and_alt_loc():
-  #pdbs['GLY_terminal'] = pdbs['PRO_terminal'][625:]
   test_terminal_and_alt_loc('GLY')
-  assert 0
 
 def test_1yjp_charge():
   pdb_inp = pdb.input('1yjp.pdb')
@@ -306,7 +304,7 @@ def test_1yjp_charge():
 
 def test_terminal_charge(residue, charge=0):
   # must run after other PRO
-  tf = '%s_terminal.complete.pdb' % residue
+  tf = '%s_terminal_complete.pdb' % residue
   ppf = run_finalise.get_processed_pdb(pdb_filename=tf)
   inter_residue_bonds = run_finalise.get_inter_residue_bonds(ppf)
   # should the hierarchy come from ppf???
@@ -323,7 +321,7 @@ def test_terminal_charge(residue, charge=0):
     verbose=True,
   )
   print 'total_charge',total_charge
-  assert total_charge==20
+  assert total_charge==charge
 
 def test_PRO_terminal_charge():
   test_terminal_charge('PRO')
@@ -387,7 +385,6 @@ def test_charge_for_charmm_pdbs():
       pdb_file_path = os.path.join(pdb_dir, pdb_file)
       charge = run_finalise.get_total_charge_from_file_name(
         pdb_file_path,
-        verbose=True,
       )
       print ' PDB %s - charmm charge: %2d, run_finalise charge: %2d'  % (
         pdb_file[:-4],
@@ -398,13 +395,10 @@ def test_charge_for_charmm_pdbs():
 
 def run():
   test_charge_for_charmm_pdbs()
-  assert 0
   test_GLY_terminal_and_alt_loc()
   test_GLY_terminal_charge()
-  assert 0
   test_PRO_terminal_and_alt_loc()
   test_PRO_terminal_charge()
-  assert 0
   test_qxyz_non_zero()
   test_qxyz_xyzq()
   test_1yjp_charge()
