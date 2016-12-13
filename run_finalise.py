@@ -379,6 +379,7 @@ def calculate_residue_charge(rg,
         raise Sorry("no hydrogens: %s" % display_residue_group(rg))
   ag = rg.atom_groups()[0]
   charge = get_aa_charge(ag.resname)
+  rc = get_aa_charge(ag.resname)
   if ( get_class(ag.resname) in ["common_amino_acid", "modified_amino_acid"] or
        ag.resname in ['DVA', # need complete list of D-amino and non-standard
                       ]
@@ -439,7 +440,7 @@ def calculate_residue_charge(rg,
                           "HM7",
                         ]:
       assert 0
-  return charge
+  return charge, rc
 
 def junk():
   protein_interpreter = protein_atom_name_interpreters.get(ag.resname)
@@ -586,6 +587,9 @@ def complete_pdb_hierarchy(hierarchy,
                            geometry_restraints_manager,
                            use_capping_hydrogens=False,
                           ):
+  for ag in hierarchy.atom_groups():
+    if get_class(ag.resname) in ['common_rna_dna']:
+      raise Sorry('')
   from mmtbx.building import extend_sidechains
   n_changed = extend_sidechains.extend_protein_model(hierarchy,
                                                      hydrogens=True,
@@ -611,21 +615,56 @@ def calculate_pdb_hierarchy_charge(hierarchy,
                                          assert_no_alt_loc=True,
                                          exclude_water=True,
                                         ):
-    tmp = calculate_residue_charge(residue,
-                                   hetero_charges=hetero_charges,
-                                   inter_residue_bonds=inter_residue_bonds,
-                                   verbose=verbose,
-                                   )
+    tmp, rc = calculate_residue_charge(residue,
+                                       hetero_charges=hetero_charges,
+                                       inter_residue_bonds=inter_residue_bonds,
+                                       verbose=verbose,
+                                     )
     charge += tmp
     if verbose:
       if tmp:
-        print '-'*80
-        print 'NON-ZERO CHARGE',tmp,charge
-        for atom in residue.atoms():
-          print atom.quote()
-        #resname = residue.resname
-        print '-'*80
+        outl = '-'*80
+        outl += '\nNON-ZERO CHARGE current %2d base %2d total %2d' % (tmp,rc,charge)
+        for i, atom in enumerate(residue.atoms()):
+          if i==0:
+            outl += ' "%s"' % (atom.parent().id_str())
+            if tmp!=rc: outl += ' DIFF %2d' % (tmp-rc)
+          assert abs(tmp-rc)<=2, outl
+          outl += "\n%s" % atom.quote()
+        outl += '\n%s' % ('-'*80)
+        print outl
   return charge
+
+def get_total_charge_from_file_name(pdb_filename,
+                                    hetero_charges=None,
+                                    inter_residue_bonds=None,
+                                    verbose=False,
+                                   ):
+  from run_finalise import get_processed_pdb
+  from run_finalise import get_hetero_charges, default_ion_charges
+  from run_finalise import get_inter_residue_bonds
+  from run_finalise import calculate_pdb_hierarchy_charge
+  ppf = get_processed_pdb(pdb_filename=pdb_filename)
+  pdb_inp = ppf.all_chain_proxies.pdb_inp
+  cs = pdb_inp.crystal_symmetry_from_cryst1()
+  assert cs, 'There is no CRYST1 record in the input file'
+  if not hetero_charges:
+    hetero_charges = get_hetero_charges(ppf.all_chain_proxies.pdb_inp)
+    if not hetero_charges:
+      # some defaults
+      hetero_charges = default_ion_charges
+  if not inter_residue_bonds:
+    inter_residue_bonds = get_inter_residue_bonds(ppf)
+  if verbose:
+    for key, item in inter_residue_bonds.items():
+      if type(key)!=type(0) and len(key)==2: print key, item
+  total_charge = calculate_pdb_hierarchy_charge(
+    ppf.all_chain_proxies.pdb_hierarchy,
+    hetero_charges=hetero_charges,
+    inter_residue_bonds=inter_residue_bonds,
+    verbose=verbose,
+  )
+  return total_charge
 
 def write_charge_and_coordinates_from_hierarchy(hierarchy,
                                                 file_name,
