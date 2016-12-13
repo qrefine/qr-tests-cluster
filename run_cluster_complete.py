@@ -20,6 +20,7 @@ def run(pdb_filename):
   complete_pdb_hierarchy(hierarchy,
                          ppf.geometry_restraints_manager(),
                          use_capping_hydrogens=True,
+                         append_to_end_of_model=True,
                         )
   output = write_hierarchy(pdb_filename,
                            pdb_inp,

@@ -132,7 +132,9 @@ def construct_xyz(ba, bv,
 
 def add_n_terminal_hydrogens_to_atom_group(ag,
                                            use_capping_hydrogens=False,
+                                           append_to_end_of_model=False,
                                           ):
+  rc=[]
   n = ag.get_atom("N")
   if n is None: return
   ca = ag.get_atom("CA")
@@ -162,19 +164,31 @@ def add_n_terminal_hydrogens_to_atom_group(ag,
     atom.xyz = rh3[i]
     atom.occ = n.occ
     atom.b = n.b
-    ag.append_atom(atom)
+    if append_to_end_of_model and i+1==number_of_hydrogens:
+      rc.append(atom)
+    else:
+      ag.append_atom(atom)
+  #for atom in rc: print atom.quote()
+  return rc
 
-def add_n_terminal_hydrogens_to_residue_group(rg, use_capping_hydrogens=False):
+def add_n_terminal_hydrogens_to_residue_group(rg,
+                                              use_capping_hydrogens=False,
+                                              append_to_end_of_model=False,
+                                             ):
+  rc=[]
   for ag in rg.atom_groups():
-    add_n_terminal_hydrogens_to_atom_group(
+    rc += add_n_terminal_hydrogens_to_atom_group(
       ag,
       use_capping_hydrogens=use_capping_hydrogens,
+      append_to_end_of_model=append_to_end_of_model,
     )
+  return rc
 
 def add_n_terminal_hydrogens(hierarchy,
                              #residue_selection=None,
                              add_to_chain_breaks=False,
                             ):
+  assert 0
   # add N terminal hydrogens because Reduce only does it to resseq=1
   # needs to be alt.loc. aware for non-quantum-refine
   for chain_i, chain in enumerate(hierarchy.chains()):
@@ -193,10 +207,12 @@ def add_n_terminal_hydrogens(hierarchy,
 
 def add_c_terminal_oxygens_to_atom_group(ag,
                                          use_capping_hydrogens=False,
+                                         append_to_end_of_model=False,
                                         ):
   #
   # do we need ANISOU
   #
+  rc = []
   atom_name=' OXT'
   atom_element = 'O'
   bond_length=1.231
@@ -232,16 +248,24 @@ def add_c_terminal_oxygens_to_atom_group(ag,
       atom.occ = c.occ
       atom.b = c.b
       atom.xyz = ro2[i]
-      ag.append_atom(atom)
+      if append_to_end_of_model:
+        rc.append(atom)
+      else:
+        ag.append_atom(atom)
+  return rc
 
 def add_c_terminal_oxygens_to_residue_group(rg,
                                             use_capping_hydrogens=False,
+                                            append_to_end_of_model=False,
                                           ):
+  rc=[]
   for ag in rg.atom_groups():
-    add_c_terminal_oxygens_to_atom_group(
+    rc += add_c_terminal_oxygens_to_atom_group(
       ag,
       use_capping_hydrogens=use_capping_hydrogens,
+      append_to_end_of_model=append_to_end_of_model,
     )
+  return rc
 
 def add_c_terminal_oxygens(hierarchy,
                           ):
@@ -262,13 +286,14 @@ def add_c_terminal_oxygens(hierarchy,
   hierarchy.atoms().reset_i_seq()
   return hierarchy
 
-def add_terminal_hydrogens(hierarchy,
-                           geometry_restraints_manager,
-                           add_to_chain_breaks=False,
-                           use_capping_hydrogens=False, # instead of terminal H
-                           use_capping_only_on_chain_breaks=False,
-                           # useful for Q|R
-                           ):
+def add_terminal_hydrogens(
+    hierarchy,
+    geometry_restraints_manager,
+    add_to_chain_breaks=False,
+    use_capping_hydrogens=False,  # instead of terminal H
+    append_to_end_of_model=False, # useful for Q|R
+    #use_capping_only_on_chain_breaks=False,
+    ):
   # add N terminal hydrogens because Reduce only does it to resseq=1
   # needs to be alt.loc. aware for non-quantum-refine
   from mmtbx.conformation_dependent_library import generate_protein_threes
@@ -279,34 +304,53 @@ def add_terminal_hydrogens(hierarchy,
       break
     return atom.parent().parent()
   ###
+  additional_hydrogens=[]
   for three in generate_protein_threes(hierarchy,
                                        geometry_restraints_manager,
                                        include_non_linked=True,
                                        backbone_only=False,
                                      ):
-    print three
     assert three.are_linked()
-    # should this be moved to cctbx???
-    if three.end and len(three)==1:
-      three.start = True
     if three.start:
       print 'start'*10
       rg = get_residue_group(three[0])
-      add_n_terminal_hydrogens_to_residue_group(
+      rc = add_n_terminal_hydrogens_to_residue_group(
         rg,
         use_capping_hydrogens=use_capping_hydrogens,
+        append_to_end_of_model=append_to_end_of_model,
       )
+      if rc: additional_hydrogens.append(rc)
       #hierarchy.reset_i_seq_if_necessary()
     if three.end:
       print 'end'*10
       rg = get_residue_group(three[-1])
-      add_c_terminal_oxygens_to_residue_group(
+      rc = add_c_terminal_oxygens_to_residue_group(
         rg,
         use_capping_hydrogens=use_capping_hydrogens,
+        append_to_end_of_model=append_to_end_of_model,
       )
+      if rc: additional_hydrogens.append(rc)
       #hierarchy.reset_i_seq_if_necessary()
     else:
       pass
+
+  if append_to_end_of_model and additional_hydrogens:
+    tmp = []
+    for group in additional_hydrogens:
+      for atom in group:
+        tmp.append(atom)
+    _add_atoms_to_end_of_hierarchy(hierarchy, tmp)
+
+def _add_atoms_to_end_of_hierarchy(hierarchy, atoms):
+  ag = iotbx.pdb.hierarchy.atom_group()
+  for atom in atoms:
+    ag.append_atom(atom)
+  rg = iotbx.pdb.hierarchy.residue_group()
+  rg.append_atom_group(ag)
+  chain = iotbx.pdb.hierarchy.chain()
+  chain.append_residue_group(rg)
+  model = hierarchy.models()[0]
+  model.append_chain(chain)
 
 def display_residue_group(rg):
   return '  residue_group: resseq="%s" icode="%s"' % (rg.resseq, rg.icode)
@@ -356,6 +400,9 @@ def calculate_residue_charge(rg,
     rc = _terminal(atom_names, check_names)
     if not rc and residue_name in ['PRO']: # CHARMM...
       check_names = [' H 1', ' H 2']
+      rc = _terminal(atom_names, check_names)
+    if not rc and residue_name in ['PRO']: # BABEL...
+      check_names = [' HN1', ' HN2']
       rc = _terminal(atom_names, check_names)
     return rc
   def nh2_terminal(atom_names):
@@ -618,6 +665,7 @@ def write_hierarchy(pdb_filename, pdb_inp, hierarchy, underscore):
 def complete_pdb_hierarchy(hierarchy,
                            geometry_restraints_manager,
                            use_capping_hydrogens=False,
+                           append_to_end_of_model=False,
                           ):
   for ag in hierarchy.atom_groups():
     if get_class(ag.resname) in ['common_rna_dna']:
@@ -630,6 +678,7 @@ def complete_pdb_hierarchy(hierarchy,
   add_terminal_hydrogens(hierarchy,
                          geometry_restraints_manager,
                          use_capping_hydrogens=use_capping_hydrogens,
+                         append_to_end_of_model=append_to_end_of_model,
                         ) # in place
   hierarchy.atoms().set_chemical_element_simple_if_necessary()
   hierarchy.sort_atoms_in_place()
