@@ -89,13 +89,19 @@ Current issues to be resolved ASAP:
   * Waters
     * Do we make a policy about the inclusion of water below a certain resolution? 
 
+  * Program completeness
+    * need complete list of D-peptides
+    * need complete list of nonstandard peptides
+
 Testing
 -------
 
 Testing is very simple. Run tests/run_tests.py and check for Sorry's.
 
   * Tests to add:
-    * Check S-S bonds are accounted for correctly
+    * Carbohydrates are correctly charged - taken from Chemical Components but
+      polymerisation is not checked
+    * Test that a ligand has partial charges
 
 Structure refinement
 --------------------
