@@ -226,6 +226,7 @@ def test_qxyz_xyzq():
   f.close()
   pdb_inp = pdb.input(tf)
   hierarchy = pdb_inp.construct_hierarchy()
+  if  os.path.exists('test_water.dat'): os.remove('test_water.dat')
   run_finalise.write_pdb_hierarchy_qxyz_file(hierarchy,
                                              'test_water.dat',
                                              )
