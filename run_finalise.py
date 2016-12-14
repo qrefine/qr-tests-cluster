@@ -220,7 +220,7 @@ def add_c_terminal_oxygens_to_atom_group(ag,
     atom_name=" HC "
     atom_element="H"
     bond_length=1.
-  if ag.get_atom(atom_name.strip()): return
+  if ag.get_atom(atom_name.strip()): return []
   c = ag.get_atom("C")
   if c is None: return
   ca = ag.get_atom("CA")
@@ -686,6 +686,7 @@ def complete_pdb_hierarchy(hierarchy,
 def calculate_pdb_hierarchy_charge(hierarchy,
                                    hetero_charges=None,
                                    inter_residue_bonds=None,
+                                   check=None,
                                    verbose=False,
                                    ):
   charge = 0
@@ -699,6 +700,17 @@ def calculate_pdb_hierarchy_charge(hierarchy,
                                        inter_residue_bonds=inter_residue_bonds,
                                        verbose=verbose,
                                      )
+    if check:
+      print residue
+      key = 'PRO%s' % residue.parent().id
+      key += '.%s' % residue.resseq.strip()
+      key += '.%s' % residue.atom_groups()[0].resname
+      key = key.replace('HIS', 'HSD')
+      print key
+      print ' CHARMM %f Phenix %f' % (check[key], tmp)
+      if 1:
+        print inter_residue_bonds
+      assert abs(check[key]-tmp)<0.001
     charge += tmp
     if verbose:
       if tmp:
@@ -725,7 +737,10 @@ def get_total_charge_from_pdb(pdb_filename=None,
   from run_finalise import get_hetero_charges, default_ion_charges
   from run_finalise import get_inter_residue_bonds
   from run_finalise import calculate_pdb_hierarchy_charge
-  ppf = get_processed_pdb(pdb_filename=pdb_filename,raw_records=raw_records,pdb_inp=pdb_inp)
+  ppf = get_processed_pdb(pdb_filename=pdb_filename,
+                          raw_records=raw_records,
+                          pdb_inp=pdb_inp,
+                        )
   pdb_inp = ppf.all_chain_proxies.pdb_inp
   cs = pdb_inp.crystal_symmetry_from_cryst1()
   assert cs, 'There is no CRYST1 record in the input file'
@@ -743,6 +758,7 @@ def get_total_charge_from_pdb(pdb_filename=None,
     ppf.all_chain_proxies.pdb_hierarchy,
     hetero_charges=hetero_charges,
     inter_residue_bonds=inter_residue_bonds,
+    check=check,
     verbose=verbose,
   )
   return total_charge
@@ -868,15 +884,15 @@ def get_inter_residue_bonds(ppf):
       # exclude peptide links
       # but maybe should include all for completeness
       if r1.name.strip()=='C' and r2.name.strip()=='N': continue
-      outl = 'bonding %s %s' % ( r1.quote(),r2.quote())
+      #outl = 'bonding %s %s' % ( r1.quote(),r2.quote())
       r1=r1.parent().parent()
       r2=r2.parent().parent()
-      if r1.resseq!=r2.resseq:
+      if r1.id_str()!=r2.id_str():
         inter_residue_bonds[p.i_seqs] = True
         for i in range(2):
           inter_residue_bonds.setdefault(p.i_seqs[i], [])
           inter_residue_bonds[p.i_seqs[i]].append(inter_residue_bonds[p.i_seqs])
-        print outl
+        #print outl
   return inter_residue_bonds
 
 def run_ready_set(pdb_filename):
@@ -952,7 +968,7 @@ def run(pdb_filename):
   inter_residue_bonds = get_inter_residue_bonds(ppf)
   complete_pdb_hierarchy(hierarchy,
                          ppf.geometry_restraints_manager(),
-                         use_capping_hydrogens=True,
+                         #use_capping_hydrogens=True,
                         )
   # not required at the moment, no clutering
   if 0:
