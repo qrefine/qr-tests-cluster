@@ -413,7 +413,26 @@ def test_charge_for_charmm_pdbs():
         )
       assert charge==charge_dict[pdb_file[:-4]], 'no matchy matchy'
 
+def test_capping_of_cluster_complete():
+  pdb_dir = 'babel_pdbs/'
+  babel_dir = pdb_dir + 'capping/'
+  cluster_dir = pdb_dir + 'clusters/'
+  cluster_files = os.listdir(cluster_dir)
+  for cluster_file in cluster_files:
+    if cluster_file.endswith(".pdb"):
+      print cluster_file
+      cluster_file_path = os.path.join(cluster_dir, cluster_file)
+      cmd = "phenix.python run_cluster_complete.py %s " % cluster_file_path 
+      easy_run.call(cmd)    
+      result_file = cluster_file_path[:-4] + "_capping.pdb" 
+      babel_file = babel_dir + cluster_file[:-4] + "_babel.pdb" 
+      result_size = len(pdb.input(result_file).atoms())    
+      babel_size =  len(pdb.input(babel_file).atoms())
+      print 'atom size after babel capping: %d, after run_cluster_complete: %d' %(babel_size, result_size)
+      assert result_size ==  babel_size
+
 def run():
+  test_capping_of_cluster_complete()
   test_charge_for_charmm_pdbs()
   test_GLY_terminal_and_alt_loc()
   test_GLY_terminal_charge()
