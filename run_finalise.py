@@ -686,6 +686,7 @@ def complete_pdb_hierarchy(hierarchy,
 def calculate_pdb_hierarchy_charge(hierarchy,
                                    hetero_charges=None,
                                    inter_residue_bonds=None,
+                                   check=None,
                                    verbose=False,
                                    ):
   charge = 0
@@ -699,6 +700,17 @@ def calculate_pdb_hierarchy_charge(hierarchy,
                                        inter_residue_bonds=inter_residue_bonds,
                                        verbose=verbose,
                                      )
+    if check:
+      print residue
+      key = 'PRO%s' % residue.parent().id
+      key += '.%s' % residue.resseq.strip()
+      key += '.%s' % residue.atom_groups()[0].resname
+      key = key.replace('HIS', 'HSD')
+      print key
+      print ' CHARMM %f Phenix %f' % (check[key], tmp)
+      if 1:
+        print inter_residue_bonds
+      assert abs(check[key]-tmp)<0.001
     charge += tmp
     if verbose:
       if tmp:
@@ -717,6 +729,7 @@ def calculate_pdb_hierarchy_charge(hierarchy,
 def get_total_charge_from_file_name(pdb_filename,
                                     hetero_charges=None,
                                     inter_residue_bonds=None,
+                                    check=None,
                                     verbose=False,
                                    ):
   from run_finalise import get_processed_pdb
@@ -741,6 +754,7 @@ def get_total_charge_from_file_name(pdb_filename,
     ppf.all_chain_proxies.pdb_hierarchy,
     hetero_charges=hetero_charges,
     inter_residue_bonds=inter_residue_bonds,
+    check=check,
     verbose=verbose,
   )
   return total_charge
@@ -866,15 +880,15 @@ def get_inter_residue_bonds(ppf):
       # exclude peptide links
       # but maybe should include all for completeness
       if r1.name.strip()=='C' and r2.name.strip()=='N': continue
-      outl = 'bonding %s %s' % ( r1.quote(),r2.quote())
+      #outl = 'bonding %s %s' % ( r1.quote(),r2.quote())
       r1=r1.parent().parent()
       r2=r2.parent().parent()
-      if r1.resseq!=r2.resseq:
+      if r1.id_str()!=r2.id_str():
         inter_residue_bonds[p.i_seqs] = True
         for i in range(2):
           inter_residue_bonds.setdefault(p.i_seqs[i], [])
           inter_residue_bonds[p.i_seqs[i]].append(inter_residue_bonds[p.i_seqs])
-        print outl
+        #print outl
   return inter_residue_bonds
 
 def run_ready_set(pdb_filename):
