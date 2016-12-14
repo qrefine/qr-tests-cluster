@@ -732,6 +732,7 @@ def get_total_charge_from_pdb(pdb_filename=None,
                               hetero_charges=None,
                               inter_residue_bonds=None,
                               verbose=False,
+                              check = None,
                                    ):
   from run_finalise import get_processed_pdb
   from run_finalise import get_hetero_charges, default_ion_charges

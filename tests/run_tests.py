@@ -404,7 +404,7 @@ def test_charge_for_charmm_pdbs():
     if pdb_file.endswith(".pdb"):
       print pdb_file
       pdb_file_path = os.path.join(pdb_dir, pdb_file)
-      charge = run_finalise.get_total_charge_from_file_name(
+      charge = run_finalise.get_total_charge_from_pdb(
         pdb_file_path,
       )
       print ' PDB %s - charmm charge: %2d, run_finalise charge: %2d'  % (
@@ -434,7 +434,6 @@ def test_capping_of_cluster_complete():
 
 def run():
   test_capping_of_cluster_complete()
-  test_charge_for_charmm_pdbs()
   test_GLY_terminal_and_alt_loc()
   test_GLY_terminal_charge()
   test_PRO_terminal_and_alt_loc()
@@ -443,6 +442,7 @@ def run():
   test_qxyz_xyzq()
   test_1yjp_charge()
   test_helix()
+  test_charge_for_charmm_pdbs()
 
 if __name__=="__main__":
   args = sys.argv[1:]
