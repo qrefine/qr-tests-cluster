@@ -220,7 +220,7 @@ def add_c_terminal_oxygens_to_atom_group(ag,
     atom_name=" HC "
     atom_element="H"
     bond_length=1.
-  if ag.get_atom(atom_name.strip()): return
+  if ag.get_atom(atom_name.strip()): return []
   c = ag.get_atom("C")
   if c is None: return
   ca = ag.get_atom("CA")
@@ -964,7 +964,7 @@ def run(pdb_filename):
   inter_residue_bonds = get_inter_residue_bonds(ppf)
   complete_pdb_hierarchy(hierarchy,
                          ppf.geometry_restraints_manager(),
-                         use_capping_hydrogens=True,
+                         #use_capping_hydrogens=True,
                         )
   # not required at the moment, no clutering
   if 0:
