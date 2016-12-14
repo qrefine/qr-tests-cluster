@@ -714,16 +714,18 @@ def calculate_pdb_hierarchy_charge(hierarchy,
         print outl
   return charge
 
-def get_total_charge_from_file_name(pdb_filename,
-                                    hetero_charges=None,
-                                    inter_residue_bonds=None,
-                                    verbose=False,
+def get_total_charge_from_pdb(pdb_filename=None,
+		              raw_records=None,
+                              pdb_inp=None,
+                              hetero_charges=None,
+                              inter_residue_bonds=None,
+                              verbose=False,
                                    ):
   from run_finalise import get_processed_pdb
   from run_finalise import get_hetero_charges, default_ion_charges
   from run_finalise import get_inter_residue_bonds
   from run_finalise import calculate_pdb_hierarchy_charge
-  ppf = get_processed_pdb(pdb_filename=pdb_filename)
+  ppf = get_processed_pdb(pdb_filename=pdb_filename,raw_records=raw_records,pdb_inp=pdb_inp)
   pdb_inp = ppf.all_chain_proxies.pdb_inp
   cs = pdb_inp.crystal_symmetry_from_cryst1()
   assert cs, 'There is no CRYST1 record in the input file'
