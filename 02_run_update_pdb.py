@@ -66,7 +66,6 @@ def run(
     os.system(cmd)
   pdb_files = os.listdir(pdb_dir)
   for pdb_file in pdb_files:
-    print 'hi'
     if not pdb_file.endswith(".pdb"): continue
     if len(pdb_file.split('.'))!=2: continue
     if len(pdb_file.split('.')[0])!=4: continue

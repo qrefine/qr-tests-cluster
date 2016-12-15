@@ -414,6 +414,16 @@ def test_charge_for_charmm_pdbs():
         )
       assert charge==charge_dict[pdb_file[:-4]], 'no matchy matchy'
 
+
+def test_charge_of_neutral_terminal():
+  charge = 0
+  charge_neutral_nterminal = run_finalise.get_total_charge_from_pdb("./babel_pdbs/clusters/neutral_nterminal.pdb") 
+  assert charge == charge_neutral_nterminal, 'no matchy matchy'
+  charge_neutral_cterminal = run_finalise.get_total_charge_from_pdb("./babel_pdbs/clusters/neutral_cterminal.pdb") 
+  assert charge == charge_neutral_cterminal, 'no matchy matchy'
+
+ 
+
 def test_capping_of_cluster_complete():
   pdb_dir = 'babel_pdbs/'
   babel_dir = pdb_dir + 'capping/'
@@ -433,6 +443,7 @@ def test_capping_of_cluster_complete():
       assert result_size ==  babel_size
 
 def run():
+  test_charge_of_neutral_terminal()
   test_capping_of_cluster_complete()
   test_GLY_terminal_and_alt_loc()
   test_GLY_terminal_charge()
