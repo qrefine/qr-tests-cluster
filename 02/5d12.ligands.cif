@@ -1,0 +1,344 @@
+#
+data_comp_list
+loop_
+_chem_comp.id
+_chem_comp.three_letter_code
+_chem_comp.name
+_chem_comp.group
+_chem_comp.number_atoms_all
+_chem_comp.number_atoms_nh
+_chem_comp.desc_level
+G97 G97 "Unknown                  " ligand 43 27 . 
+#
+data_comp_G97
+#
+loop_
+_chem_comp_atom.comp_id
+_chem_comp_atom.atom_id
+_chem_comp_atom.type_symbol
+_chem_comp_atom.type_energy
+_chem_comp_atom.charge
+_chem_comp_atom.partial_charge
+_chem_comp_atom.x
+_chem_comp_atom.y
+_chem_comp_atom.z
+G97        CAH     C   CR16   0 .          2.6709   -2.4814    0.5824
+G97        CAE     C   CR16   0 .          4.0572   -2.5698    0.5874
+G97        CAD     C   CR16   0 .          4.7853   -2.0138    1.6320
+G97        CAF     C   CR16   0 .          4.1271   -1.3693    2.6719
+G97        CAI     C   CR16   0 .          2.7404   -1.2805    2.6675
+G97        CAW     C   CR6    0 .          2.0116   -1.8366    1.6226
+G97        C2      C   CR6    0 .          0.6304   -1.6452    1.5585
+G97        N1      N   N      0 .         -0.6387   -2.0451    1.2550
+G97        N3      N   N      0 .          1.1059   -0.4627    1.0817
+G97        C4      C   CR66   0 .          0.3255    0.3155    0.3094
+G97        CAM     C   CR16   0 .          0.8351    1.5285   -0.2219
+G97        CAU     C   CR6    0 .          0.0432    2.3098   -1.0510
+G97        NAQ     N   NH1    0 .          0.2146    3.7572   -1.2249
+G97        CAT     C   C      0 .          1.0885    4.2676   -2.2761
+G97        OAB     O   O      0 .          1.6614    3.5119   -2.9913
+G97        CAC     C   C1     0 .          1.2943    5.7820   -2.4353
+G97        CAA     C   C2     0 .          1.0621    6.3624   -3.6016
+G97        CAK     C   CR16   0 .         -1.2444    1.9059   -1.3599
+G97        CAL     C   CR16   0 .         -1.7433    0.7192   -0.8402
+G97        C5      C   CR66   0 .         -0.9342   -0.0795    0.0071
+G97        C6      C   CR6    0 .         -1.4137   -1.2801    0.4926
+G97        NAR     N   NH1    0 .         -2.7640   -1.4479    1.0444
+G97        CAV     C   CR5    0 .         -3.5677   -2.6226    0.6770
+G97        CAJ     C   CR15   0 .         -4.5916   -3.1598    1.4135
+G97        CAG     C   CR15   0 .         -5.1336   -4.1911    0.6941
+G97        NAS     N   NR15   0 .         -4.4642   -4.2886   -0.4536
+G97        NAN     N   N      0 .         -3.4811   -3.3036   -0.4640
+G97        HAH     H   HCR6   0 .          2.1005   -2.9174   -0.2365
+G97        HAE     H   HCR6   0 .          4.5726   -3.0743   -0.2265
+G97        HAD     H   HCR6   0 .          5.8705   -2.0832    1.6357
+G97        HAF     H   HCR6   0 .          4.6976   -0.9338    3.4901
+G97        HAI     H   HCR6   0 .          2.2252   -0.7759    3.4818
+G97        HAM     H   HCR6   0 .          1.8348    1.8614    0.0459
+G97        HNAQ    H   HNH1   0 .         -0.2571    4.3977   -0.6077
+G97        HAC     H   H      0 .          1.6314    6.3777   -1.5881
+G97        HAA     H   H      0 .          0.7259    5.7683   -4.4465
+G97        HAAA    H   H      0 .          1.2074    7.4330   -3.7139
+G97        HAK     H   HCR6   0 .         -1.8660    2.5192   -2.0108
+G97        HAL     H   HCR6   0 .         -2.7542    0.4023   -1.0829
+G97        HNAR    H   HNH1   0 .         -3.1441   -0.7521    1.6662
+G97        HAJ     H   HCR5   0 .         -4.9156   -2.8265    2.3937
+G97        HAG     H   HCR5   0 .         -5.9675   -4.8225    1.0060
+G97        HNAS    H   HNR5   0 .         -4.6385   -4.9564   -1.1839
+#
+loop_
+_chem_comp_bond.comp_id
+_chem_comp_bond.atom_id_1
+_chem_comp_bond.atom_id_2
+_chem_comp_bond.type
+_chem_comp_bond.value_dist
+_chem_comp_bond.value_dist_esd
+_chem_comp_bond.value_dist_neutron
+G97  CAE     CAH    aromatic      1.389 0.020     1.389
+G97  CAH     CAW    aromatic      1.390 0.020     1.390
+G97  CAH     HAH    single        0.930 0.020     1.080
+G97  CAE     CAD    aromatic      1.389 0.020     1.389
+G97  CAE     HAE    single        0.930 0.020     1.080
+G97  CAD     CAF    aromatic      1.389 0.020     1.389
+G97  CAD     HAD    single        0.930 0.020     1.080
+G97  CAF     CAI    aromatic      1.389 0.020     1.389
+G97  CAF     HAF    single        0.930 0.020     1.080
+G97  CAW     CAI    aromatic      1.390 0.020     1.390
+G97  CAI     HAI    single        0.930 0.020     1.080
+G97  CAW     C2     single        1.396 0.020     1.396
+G97  N1      C2     aromatic      1.365 0.020     1.365
+G97  C2      N3     aromatic      1.361 0.020     1.361
+G97  N1      C6     aromatic      1.329 0.020     1.329
+G97  N3      C4     aromatic      1.346 0.020     1.346
+G97  C5      C4     aromatic      1.354 0.020     1.354
+G97  C4      CAM    aromatic      1.419 0.020     1.419
+G97  CAM     CAU    aromatic      1.387 0.020     1.387
+G97  CAM     HAM    single        0.930 0.020     1.080
+G97  CAK     CAU    aromatic      1.384 0.020     1.384
+G97  CAU     NAQ    single        1.468 0.020     1.468
+G97  NAQ     CAT    single        1.459 0.020     1.459
+G97  NAQ     HNAQ   single        0.860 0.020     1.020
+G97  OAB     CAT    double        1.188 0.020     1.188
+G97  CAT     CAC    single        1.537 0.020     1.537
+G97  CAC     CAA    double        1.323 0.020     1.323
+G97  CAC     HAC    single        0.930 0.020     1.080
+G97  CAA     HAA    single        0.930 0.020     1.080
+G97  CAA     HAAA   single        0.930 0.020     1.080
+G97  CAL     CAK    aromatic      1.388 0.020     1.388
+G97  CAK     HAK    single        0.930 0.020     1.080
+G97  C5      CAL    aromatic      1.418 0.020     1.418
+G97  CAL     HAL    single        0.930 0.020     1.080
+G97  C6      C5     aromatic      1.381 0.020     1.381
+G97  NAR     C6     single        1.468 0.020     1.468
+G97  CAV     NAR    single        1.470 0.020     1.470
+G97  NAR     HNAR   single        0.860 0.020     1.020
+G97  NAN     CAV    aromatic      1.332 0.020     1.332
+G97  CAJ     CAV    aromatic      1.371 0.020     1.371
+G97  CAG     CAJ    aromatic      1.369 0.020     1.369
+G97  CAJ     HAJ    single        0.930 0.020     1.080
+G97  NAS     CAG    aromatic      1.332 0.020     1.332
+G97  CAG     HAG    single        0.930 0.020     1.080
+G97  NAS     NAN    aromatic      1.392 0.020     1.392
+G97  NAS     HNAS   single        0.860 0.020     1.020
+#
+loop_
+_chem_comp_angle.comp_id
+_chem_comp_angle.atom_id_1
+_chem_comp_angle.atom_id_2
+_chem_comp_angle.atom_id_3
+_chem_comp_angle.value_angle
+_chem_comp_angle.value_angle_esd
+G97  HAH     CAH     CAW          120.00 3.000
+G97  HAH     CAH     CAE          119.99 3.000
+G97  CAW     CAH     CAE          120.01 3.000
+G97  HAE     CAE     CAD          120.00 3.000
+G97  HAE     CAE     CAH          119.99 3.000
+G97  CAD     CAE     CAH          120.01 3.000
+G97  HAD     CAD     CAF          120.00 3.000
+G97  HAD     CAD     CAE          119.99 3.000
+G97  CAF     CAD     CAE          120.01 3.000
+G97  HAF     CAF     CAI          120.00 3.000
+G97  HAF     CAF     CAD          120.00 3.000
+G97  CAI     CAF     CAD          120.01 3.000
+G97  HAI     CAI     CAW          120.00 3.000
+G97  HAI     CAI     CAF          120.00 3.000
+G97  CAW     CAI     CAF          120.01 3.000
+G97  C2      CAW     CAI          119.90 3.000
+G97  C2      CAW     CAH          119.90 3.000
+G97  CAI     CAW     CAH          119.96 3.000
+G97  N3      C2      N1           120.11 3.000
+G97  N3      C2      CAW           77.85 3.000
+G97  N1      C2      CAW          152.89 3.000
+G97  C6      N1      C2           120.07 3.000
+G97  C4      N3      C2           120.06 3.000
+G97  C5      C4      CAM          119.99 3.000
+G97  CAM     C4      N3           120.06 3.000
+G97  C5      C4      N3           119.92 3.000
+G97  HAM     CAM     CAU          119.98 3.000
+G97  HAM     CAM     C4           119.98 3.000
+G97  CAU     CAM     C4           120.01 3.000
+G97  CAK     CAU     NAQ          111.71 3.000
+G97  NAQ     CAU     CAM          124.01 3.000
+G97  CAK     CAU     CAM          120.00 3.000
+G97  HNAQ    NAQ     CAT          119.98 3.000
+G97  HNAQ    NAQ     CAU          119.99 3.000
+G97  CAT     NAQ     CAU          120.01 3.000
+G97  CAC     CAT     OAB          120.00 3.000
+G97  CAC     CAT     NAQ          119.97 3.000
+G97  OAB     CAT     NAQ          120.00 3.000
+G97  HAC     CAC     CAA          120.00 3.000
+G97  HAC     CAC     CAT          120.00 3.000
+G97  CAA     CAC     CAT          120.01 3.000
+G97  HAAA    CAA     HAA          120.00 3.000
+G97  HAAA    CAA     CAC          120.00 3.000
+G97  HAA     CAA     CAC          120.00 3.000
+G97  HAK     CAK     CAL          120.00 3.000
+G97  HAK     CAK     CAU          120.00 3.000
+G97  CAL     CAK     CAU          120.00 3.000
+G97  HAL     CAL     C5           119.99 3.000
+G97  HAL     CAL     CAK          119.99 3.000
+G97  C5      CAL     CAK          120.01 3.000
+G97  C6      C5      CAL          120.11 3.000
+G97  C6      C5      C4           119.88 3.000
+G97  CAL     C5      C4           119.98 3.000
+G97  NAR     C6      C5           123.42 3.000
+G97  NAR     C6      N1           104.77 3.000
+G97  C5      C6      N1           119.96 3.000
+G97  HNAR    NAR     CAV          119.99 3.000
+G97  HNAR    NAR     C6           119.99 3.000
+G97  CAV     NAR     C6           120.01 3.000
+G97  NAN     CAV     CAJ          107.96 3.000
+G97  CAJ     CAV     NAR          125.96 3.000
+G97  NAN     CAV     NAR          125.97 3.000
+G97  HAJ     CAJ     CAG          126.02 3.000
+G97  HAJ     CAJ     CAV          126.02 3.000
+G97  CAG     CAJ     CAV          107.97 3.000
+G97  HAG     CAG     NAS          126.00 3.000
+G97  HAG     CAG     CAJ          126.01 3.000
+G97  NAS     CAG     CAJ          107.99 3.000
+G97  HNAS    NAS     NAN          125.98 3.000
+G97  HNAS    NAS     CAG          125.98 3.000
+G97  NAN     NAS     CAG          108.03 3.000
+G97  NAS     NAN     CAV          108.04 3.000
+#
+loop_
+_chem_comp_tor.comp_id
+_chem_comp_tor.id
+_chem_comp_tor.atom_id_1
+_chem_comp_tor.atom_id_2
+_chem_comp_tor.atom_id_3
+_chem_comp_tor.atom_id_4
+_chem_comp_tor.value_angle
+_chem_comp_tor.value_angle_esd
+_chem_comp_tor.period
+G97 CONST_01      CAF     CAD     CAE     CAH            0.00   0.0 0
+G97 CONST_02      CAF     CAI     CAW     CAH            0.00   0.0 0
+G97 CONST_03      N1      C2      CAW     CAH           39.45   0.0 0
+G97 CONST_04      N3      C2      CAW     CAH          -95.42   0.0 0
+G97 CONST_05      CAI     CAW     CAH     CAE           -0.00   0.0 0
+G97 CONST_06      C2      CAW     CAH     CAE          174.36   0.0 0
+G97 CONST_07      CAI     CAF     CAD     CAE           -0.00   0.0 0
+G97 CONST_08      CAW     CAH     CAE     CAD            0.00   0.0 0
+G97 CONST_09      CAW     CAI     CAF     CAD           -0.00   0.0 0
+G97 CONST_10      C2      CAW     CAI     CAF         -174.36   0.0 0
+G97 CONST_11      N1      C2      CAW     CAI         -146.18   0.0 0
+G97 CONST_12      N3      C2      CAW     CAI           78.94   0.0 0
+G97 CONST_13      C6      N1      C2      CAW         -126.79   0.0 0
+G97 CONST_14      C4      N3      C2      CAW          158.08   0.0 0
+G97 CONST_15      C5      C6      N1      C2             0.00   0.0 0
+G97 CONST_16      C5      C4      N3      C2             0.00   0.0 0
+G97 CONST_17      CAM     C4      N3      C2          -178.04   0.0 0
+G97 CONST_18      C4      N3      C2      N1            -0.00   0.0 0
+G97 CONST_19      C4      C5      C6      N1             0.00   0.0 0
+G97 CONST_20      CAL     C5      C6      N1           178.04   0.0 0
+G97 CONST_21      C6      N1      C2      N3            -0.00   0.0 0
+G97 CONST_22      CAL     C5      C4      N3          -178.04   0.0 0
+G97 CONST_23      C6      C5      C4      N3            -0.00   0.0 0
+G97 CONST_24      CAU     CAM     C4      N3           178.04   0.0 0
+G97 CONST_25      CAK     CAL     C5      C4             0.00   0.0 0
+G97 CONST_26      CAK     CAU     CAM     C4            -0.00   0.0 0
+G97 CONST_27      CAL     C5      C4      CAM           -0.00   0.0 0
+G97 CONST_28      C6      C5      C4      CAM          178.04   0.0 0
+G97 CONST_29      CAL     CAK     CAU     CAM           -0.00   0.0 0
+G97 CONST_30      C5      C4      CAM     CAU            0.00   0.0 0
+G97 CONST_31      C5      CAL     CAK     CAU            0.00   0.0 0
+G97 CONST_32      C6      C5      CAL     CAK         -178.04   0.0 0
+G97 CONST_33      CAG     NAS     NAN     CAV            0.00   0.0 0
+G97 CONST_34      NAS     CAG     CAJ     CAV            0.00   0.0 0
+G97 CONST_35      NAS     NAN     CAV     CAJ           -0.00   0.0 0
+G97 CONST_36      NAN     NAS     CAG     CAJ           -0.00   0.0 0
+G97 CONST_37      NAN     CAV     CAJ     CAG            0.00   0.0 0
+G97 CONST_38      N1      C2      CAW     CAH           39.45   0.0 0
+G97 CONST_39      N3      C2      CAW     CAH          -95.42   0.0 0
+G97 CONST_40      C2      CAW     CAH     CAE          174.36   0.0 0
+G97 CONST_41      C2      CAW     CAI     CAF         -174.36   0.0 0
+G97 CONST_42      N1      C2      CAW     CAI         -146.18   0.0 0
+G97 CONST_43      N3      C2      CAW     CAI           78.94   0.0 0
+G97 CONST_44      C6      N1      C2      CAW         -126.79   0.0 0
+G97 CONST_45      C4      N3      C2      CAW          158.08   0.0 0
+G97 CONST_46      NAR     C6      N1      C2          -144.04   0.0 0
+G97 CONST_47      NAR     C6      C5      C4           137.13   0.0 0
+G97 CONST_48      NAQ     CAU     CAM     C4           154.80   0.0 0
+G97 CONST_49      CAL     CAK     CAU     NAQ         -157.68   0.0 0
+G97 CONST_50      NAR     C6      C5      CAL          -44.82   0.0 0
+G97 CONST_51      NAS     NAN     CAV     NAR         -176.44   0.0 0
+G97 CONST_52      CAG     CAJ     CAV     NAR          176.44   0.0 0
+G97 CONST_53      HAD     CAD     CAE     CAH          180.00   0.0 0
+G97 CONST_54      HAI     CAI     CAW     CAH         -179.99   0.0 0
+G97 CONST_55      HAF     CAF     CAD     CAE          180.00   0.0 0
+G97 CONST_56      HAH     CAH     CAE     CAD         -180.00   0.0 0
+G97 CONST_57      HAE     CAE     CAD     CAF         -180.00   0.0 0
+G97 CONST_58      HAM     CAM     C4      N3            -3.90   0.0 0
+G97 CONST_59      HAL     CAL     C5      C4           180.00   0.0 0
+G97 CONST_60      HAK     CAK     CAU     CAM         -180.00   0.0 0
+G97 CONST_61      HNAS    NAS     NAN     CAV          180.00   0.0 0
+G97 CONST_62      HAG     CAG     CAJ     CAV          180.00   0.0 0
+G97 CONST_63      HAJ     CAJ     CAG     NAS          180.00   0.0 0
+G97 CONST_64      CAT     NAQ     CAU     CAM           90.46   0.0 0
+G97 CONST_65      CAK     CAU     NAQ     CAT         -112.92   0.0 0
+G97 CONST_66      HNAQ    NAQ     CAU     CAM          -88.38   0.0 0
+G97 CONST_67      OAB     CAT     NAQ     CAU           -0.00   0.0 0
+G97 CONST_68      CAC     CAT     NAQ     CAU         -178.50   0.0 0
+G97 CONST_69      OAB     CAT     NAQ     CAU           -0.00   0.0 0
+G97 CONST_70      CAC     CAT     NAQ     CAU         -178.50   0.0 0
+G97 Var_01        N1      C2      CAW     CAH           39.45  30.0 1
+G97 Var_02        CAV     NAR     C6      N1           -81.40  30.0 1
+G97 Var_03        NAN     CAV     NAR     C6           -28.29  30.0 2
+G97 Var_04        CAT     NAQ     CAU     CAM           90.46  30.0 2
+G97 Var_05        CAA     CAC     CAT     NAQ         -125.29  30.0 2
+G97 Var_06        HAA     CAA     CAC     CAT           -0.00   0.0 2
+#
+loop_
+_chem_comp_plane_atom.comp_id
+_chem_comp_plane_atom.plane_id
+_chem_comp_plane_atom.atom_id
+_chem_comp_plane_atom.dist_esd
+G97 plan-1  NAR    0.020
+G97 plan-1  CAV    0.020
+G97 plan-1  CAJ    0.020
+G97 plan-1  CAG    0.020
+G97 plan-1  NAS    0.020
+G97 plan-1  NAN    0.020
+G97 plan-1  HAJ    0.020
+G97 plan-1  HAG    0.020
+G97 plan-1  HNAS   0.020
+G97 plan-2  CAH    0.020
+G97 plan-2  CAE    0.020
+G97 plan-2  CAD    0.020
+G97 plan-2  CAF    0.020
+G97 plan-2  CAI    0.020
+G97 plan-2  CAW    0.020
+G97 plan-2  C2     0.020
+G97 plan-2  HAH    0.020
+G97 plan-2  HAE    0.020
+G97 plan-2  HAD    0.020
+G97 plan-2  HAF    0.020
+G97 plan-2  HAI    0.020
+G97 plan-3  CAW    0.020
+G97 plan-3  C2     0.020
+G97 plan-3  N1     0.020
+G97 plan-3  N3     0.020
+G97 plan-3  C4     0.020
+G97 plan-3  CAM    0.020
+G97 plan-3  CAU    0.020
+G97 plan-3  NAQ    0.020
+G97 plan-3  CAK    0.020
+G97 plan-3  CAL    0.020
+G97 plan-3  C5     0.020
+G97 plan-3  C6     0.020
+G97 plan-3  NAR    0.020
+G97 plan-3  HAM    0.020
+G97 plan-3  HAK    0.020
+G97 plan-3  HAL    0.020
+G97 plan-4  CAU    0.020
+G97 plan-4  NAQ    0.020
+G97 plan-4  CAT    0.020
+G97 plan-4  OAB    0.020
+G97 plan-4  CAC    0.020
+G97 plan-4  HNAQ   0.020
+G97 plan-5  CAT    0.020
+G97 plan-5  CAC    0.020
+G97 plan-5  CAA    0.020
+G97 plan-5  HAC    0.020
+G97 plan-5  HAA    0.020
+G97 plan-5  HAAA   0.020

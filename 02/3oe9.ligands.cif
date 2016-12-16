@@ -1,0 +1,362 @@
+#
+data_comp_list
+loop_
+_chem_comp.id
+_chem_comp.three_letter_code
+_chem_comp.name
+_chem_comp.group
+_chem_comp.number_atoms_all
+_chem_comp.number_atoms_nh
+_chem_comp.desc_level
+ITD ITD "Unknown                  " ligand 61 27 . 
+#
+data_comp_ITD
+#
+loop_
+_chem_comp_atom.comp_id
+_chem_comp_atom.atom_id
+_chem_comp_atom.type_symbol
+_chem_comp_atom.type_energy
+_chem_comp_atom.charge
+_chem_comp_atom.partial_charge
+_chem_comp_atom.x
+_chem_comp_atom.y
+_chem_comp_atom.z
+ITD        C1      C   CH3    0 .         -6.1352   -0.1991    3.6160
+ITD        N1      N   N      0 .         -4.6816    1.7705    3.7406
+ITD        S1      S   S2     0 .         -2.2832    3.0212    3.5137
+ITD        C2      C   CR5    0 .         -5.1791    0.7073    2.8438
+ITD        N2      N   N      0 .         -2.7369    0.4808    3.0412
+ITD        S2      S   S2     0 .          0.4789    1.1054    0.2155
+ITD        C3      C   CH3    0 .         -5.8297    1.3438    1.6176
+ITD        N3      N   NH1    0 .          1.5591   -1.4993   -0.0863
+ITD        C4      C   CR55   0 .         -3.2776    1.6739    3.8816
+ITD        N4      N   N      0 .          1.6932   -0.0077   -1.8863
+ITD        C5      C   CR15   0 .         -1.2073    2.5119    2.4644
+ITD        C6      C   CH2    0 .         -3.9059   -0.1356    2.3876
+ITD        C7      C   CR5    0 .         -1.4347    1.0607    2.1692
+ITD        C8      C   CH2    0 .         -1.1437    0.5104    0.7747
+ITD        C9      C   C      0 .          1.3201   -0.2111   -0.7110
+ITD        C10     C   CH1    0 .          2.6107   -1.6397    0.9221
+ITD        C11     C   CH2    0 .          2.1573   -2.6572    1.9709
+ITD        C12     C   CH2    0 .          2.0638   -4.0697    1.3978
+ITD        C13     C   CH2    0 .          3.3603   -4.4967    0.7047
+ITD        C14     C   CH2    0 .          3.8138   -3.4792   -0.3443
+ITD        C15     C   CH2    0 .          3.9075   -2.0669    0.2286
+ITD        C16     C   CH1    0 .          1.4522    1.2914   -2.5163
+ITD        C17     C   CH2    0 .          0.6426    1.0772   -3.7983
+ITD        C18     C   CH2    0 .          0.4860    2.3669   -4.6006
+ITD        C19     C   CH2    0 .          1.8322    3.0402   -4.8760
+ITD        C20     C   CH2    0 .          2.6415    3.2545   -3.5944
+ITD        C21     C   CH2    0 .          2.7982    1.9646   -2.7918
+ITD        H1      H   HCH3   0 .         -6.9810    0.3840    3.9691
+ITD        H1A     H   HCH3   0 .         -6.4892   -0.9918    2.9632
+ITD        H1B     H   HCH3   0 .         -5.6155   -0.6341    4.4649
+ITD        H3      H   HCH3   0 .         -6.0635    0.5718    0.8900
+ITD        H3A     H   HCH3   0 .         -5.1449    2.0620    1.1761
+ITD        H3B     H   HCH3   0 .         -6.7437    1.8501    1.9145
+ITD        HN3     H   HNH1   0 .          1.0195   -2.2961   -0.3607
+ITD        H5      H   HCR5   0 .         -0.1995    2.9088    2.4859
+ITD        H6      H   HCH2   0 .         -3.7947   -0.0638    1.3110
+ITD        H6A     H   HCH2   0 .         -4.0110   -1.1591    2.7311
+ITD        H8      H   HCH2   0 .         -1.1396   -0.5739    0.8074
+ITD        H8A     H   HCH2   0 .         -1.9101    0.8485    0.0853
+ITD        H10     H   HCH1   0 .          2.7707   -0.6843    1.4069
+ITD        H11     H   HCH2   0 .          2.8685   -2.6573    2.7900
+ITD        H11A    H   HCH2   0 .          1.1817   -2.3649    2.3445
+ITD        H12     H   HCH2   0 .          1.8531   -4.7627    2.2054
+ITD        H12A    H   HCH2   0 .          1.2534   -4.1031    0.6775
+ITD        H13     H   HCH2   0 .          4.1396   -4.6012    1.4520
+ITD        H13A    H   HCH2   0 .          3.1998   -5.4533    0.2191
+ITD        H14     H   HCH2   0 .          3.1026   -3.4790   -1.1634
+ITD        H14A    H   HCH2   0 .          4.7894   -3.7716   -0.7178
+ITD        H15     H   HCH2   0 .          4.7179   -2.0336    0.9490
+ITD        H15A    H   HCH2   0 .          4.1181   -1.3739   -0.5790
+ITD        H16     H   HCH1   0 .          0.8800    1.9155   -1.8405
+ITD        H17     H   HCH2   0 .         -0.3420    0.7069   -3.5336
+ITD        H17A    H   HCH2   0 .          1.1482    0.3406   -4.4135
+ITD        H18     H   HCH2   0 .         -0.1418    3.0532   -4.0424
+ITD        H18A    H   HCH2   0 .          0.0093    2.1355   -5.5472
+ITD        H19     H   HCH2   0 .          2.4053    2.4150   -5.5524
+ITD        H19A    H   HCH2   0 .          1.6538    4.0028   -5.3434
+ITD        H20     H   HCH2   0 .          2.1358    3.9912   -2.9792
+ITD        H20A    H   HCH2   0 .          3.6261    3.6248   -3.8591
+ITD        H21     H   HCH2   0 .          3.4260    1.2783   -3.3499
+ITD        H21A    H   HCH2   0 .          3.2749    2.1961   -1.8453
+#
+loop_
+_chem_comp_bond.comp_id
+_chem_comp_bond.atom_id_1
+_chem_comp_bond.atom_id_2
+_chem_comp_bond.type
+_chem_comp_bond.value_dist
+_chem_comp_bond.value_dist_esd
+_chem_comp_bond.value_dist_neutron
+ITD  C1      C2     single        1.527 0.020     1.527
+ITD  N1      C2     single        1.477 0.020     1.477
+ITD  N1      C4     double        1.414 0.020     1.414
+ITD  S1      C5     single        1.587 0.020     1.587
+ITD  C2      C6     single        1.594 0.020     1.594
+ITD  N2      C7     single        1.671 0.020     1.671
+ITD  S2      C9     single        1.816 0.020     1.816
+ITD  C3      C2     single        1.527 0.020     1.527
+ITD  N3      C10    single        1.464 0.020     1.464
+ITD  C4      S1     single        1.714 0.020     1.714
+ITD  C4      N2     single        1.556 0.020     1.556
+ITD  N4      C9     double        1.250 0.020     1.250
+ITD  C6      N2     single        1.474 0.020     1.474
+ITD  C7      C5     double        1.498 0.020     1.498
+ITD  C7      C8     single        1.527 0.020     1.527
+ITD  C8      S2     single        1.816 0.020     1.816
+ITD  C9      N3     single        1.452 0.020     1.452
+ITD  C10     C11    single        1.530 0.020     1.530
+ITD  C11     C12    single        1.527 0.020     1.527
+ITD  C13     C12    single        1.531 0.020     1.531
+ITD  C14     C13    single        1.530 0.020     1.530
+ITD  C15     C10    single        1.531 0.020     1.531
+ITD  C15     C14    single        1.527 0.020     1.527
+ITD  C16     N4     single        1.464 0.020     1.464
+ITD  C17     C16    single        1.531 0.020     1.531
+ITD  C18     C17    single        1.527 0.020     1.527
+ITD  C19     C18    single        1.530 0.020     1.530
+ITD  C19     C20    single        1.531 0.020     1.531
+ITD  C20     C21    single        1.527 0.020     1.527
+ITD  C21     C16    single        1.530 0.020     1.530
+ITD  C1      H1     single        0.939 0.020     1.096
+ITD  C1      H1A    single        0.939 0.020     1.096
+ITD  C1      H1B    single        0.939 0.020     1.096
+ITD  C3      H3     single        0.939 0.020     1.096
+ITD  C3      H3A    single        0.939 0.020     1.096
+ITD  C3      H3B    single        0.939 0.020     1.096
+ITD  N3      HN3    single        0.868 0.020     1.013
+ITD  C5      H5     single        0.930 0.020     1.086
+ITD  C6      H6     single        0.939 0.020     1.096
+ITD  C6      H6A    single        0.939 0.020     1.096
+ITD  C8      H8     single        0.939 0.020     1.096
+ITD  C8      H8A    single        0.939 0.020     1.096
+ITD  C10     H10    single        0.939 0.020     1.096
+ITD  C11     H11    single        0.939 0.020     1.096
+ITD  C11     H11A   single        0.939 0.020     1.096
+ITD  C12     H12    single        0.939 0.020     1.096
+ITD  C12     H12A   single        0.939 0.020     1.096
+ITD  C13     H13    single        0.939 0.020     1.096
+ITD  C13     H13A   single        0.939 0.020     1.096
+ITD  C14     H14    single        0.939 0.020     1.096
+ITD  C14     H14A   single        0.939 0.020     1.096
+ITD  C15     H15    single        0.939 0.020     1.096
+ITD  C15     H15A   single        0.939 0.020     1.096
+ITD  C16     H16    single        0.939 0.020     1.096
+ITD  C17     H17    single        0.939 0.020     1.096
+ITD  C17     H17A   single        0.939 0.020     1.096
+ITD  C18     H18    single        0.939 0.020     1.096
+ITD  C18     H18A   single        0.939 0.020     1.096
+ITD  C19     H19    single        0.939 0.020     1.096
+ITD  C19     H19A   single        0.939 0.020     1.096
+ITD  C20     H20    single        0.939 0.020     1.096
+ITD  C20     H20A   single        0.939 0.020     1.096
+ITD  C21     H21    single        0.939 0.020     1.096
+ITD  C21     H21A   single        0.939 0.020     1.096
+#
+loop_
+_chem_comp_angle.comp_id
+_chem_comp_angle.atom_id_1
+_chem_comp_angle.atom_id_2
+_chem_comp_angle.atom_id_3
+_chem_comp_angle.value_angle
+_chem_comp_angle.value_angle_esd
+ITD  H1B     C1      H1A          109.47 3.000
+ITD  H1B     C1      H1           109.47 3.000
+ITD  H1A     C1      H1           109.47 3.000
+ITD  H1B     C1      C2           109.47 3.000
+ITD  H1A     C1      C2           109.47 3.000
+ITD  H1      C1      C2           109.47 3.000
+ITD  C4      N1      C2           110.22 3.000
+ITD  C5      S1      C4           106.44 3.000
+ITD  C6      C2      C3           109.33 3.000
+ITD  C3      C2      N1           109.33 3.000
+ITD  C6      C2      N1           106.59 3.000
+ITD  C3      C2      C1           112.74 3.000
+ITD  C6      C2      C1           109.33 3.000
+ITD  N1      C2      C1           109.33 3.000
+ITD  C7      N2      C6           122.11 3.000
+ITD  C6      N2      C4           106.53 3.000
+ITD  C7      N2      C4           106.65 3.000
+ITD  C9      S2      C8           109.47 3.000
+ITD  H3B     C3      H3A          109.47 3.000
+ITD  H3B     C3      H3           109.47 3.000
+ITD  H3A     C3      H3           109.47 3.000
+ITD  H3B     C3      C2           109.47 3.000
+ITD  H3A     C3      C2           109.47 3.000
+ITD  H3      C3      C2           109.47 3.000
+ITD  HN3     N3      C10          119.99 3.000
+ITD  HN3     N3      C9           119.99 3.000
+ITD  C10     N3      C9           119.99 3.000
+ITD  N2      C4      S1           106.56 3.000
+ITD  N2      C4      N1           110.08 3.000
+ITD  S1      C4      N1           120.05 3.000
+ITD  C16     N4      C9           120.00 3.000
+ITD  H5      C5      C7           120.00 3.000
+ITD  H5      C5      S1           120.00 3.000
+ITD  C7      C5      S1           109.77 3.000
+ITD  H6A     C6      H6           112.75 3.000
+ITD  H6A     C6      N2           109.33 3.000
+ITD  H6      C6      N2           109.33 3.000
+ITD  H6A     C6      C2           109.33 3.000
+ITD  H6      C6      C2           109.33 3.000
+ITD  N2      C6      C2           106.58 3.000
+ITD  C8      C7      C5           120.00 3.000
+ITD  C8      C7      N2           120.00 3.000
+ITD  C5      C7      N2           110.58 3.000
+ITD  H8A     C8      H8           109.47 3.000
+ITD  H8A     C8      C7           109.47 3.000
+ITD  H8      C8      C7           109.47 3.000
+ITD  H8A     C8      S2           109.47 3.000
+ITD  H8      C8      S2           109.47 3.000
+ITD  C7      C8      S2           109.47 3.000
+ITD  N4      C9      N3           120.00 3.000
+ITD  N3      C9      S2           120.00 3.000
+ITD  N4      C9      S2           120.00 3.000
+ITD  H10     C10     C15          108.88 3.000
+ITD  H10     C10     C11          108.88 3.000
+ITD  C15     C10     C11          112.08 3.000
+ITD  H10     C10     N3           109.26 3.000
+ITD  C15     C10     N3           108.85 3.000
+ITD  C11     C10     N3           108.86 3.000
+ITD  H11A    C11     H11          109.25 3.000
+ITD  H11A    C11     C12          108.87 3.000
+ITD  H11     C11     C12          108.87 3.000
+ITD  H11A    C11     C10          108.87 3.000
+ITD  H11     C11     C10          108.87 3.000
+ITD  C12     C11     C10          112.08 3.000
+ITD  H12A    C12     H12          109.25 3.000
+ITD  H12A    C12     C13          108.87 3.000
+ITD  H12     C12     C13          108.87 3.000
+ITD  H12A    C12     C11          108.87 3.000
+ITD  H12     C12     C11          108.87 3.000
+ITD  C13     C12     C11          112.09 3.000
+ITD  H13A    C13     H13          109.25 3.000
+ITD  H13A    C13     C14          108.87 3.000
+ITD  H13     C13     C14          108.87 3.000
+ITD  H13A    C13     C12          108.87 3.000
+ITD  H13     C13     C12          108.87 3.000
+ITD  C14     C13     C12          112.09 3.000
+ITD  H14A    C14     H14          109.25 3.000
+ITD  H14A    C14     C15          108.87 3.000
+ITD  H14     C14     C15          108.87 3.000
+ITD  H14A    C14     C13          108.87 3.000
+ITD  H14     C14     C13          108.87 3.000
+ITD  C15     C14     C13          112.08 3.000
+ITD  H15A    C15     H15          109.25 3.000
+ITD  H15A    C15     C14          108.87 3.000
+ITD  H15     C15     C14          108.87 3.000
+ITD  H15A    C15     C10          108.87 3.000
+ITD  H15     C15     C10          108.87 3.000
+ITD  C14     C15     C10          112.08 3.000
+ITD  H16     C16     C21          108.88 3.000
+ITD  H16     C16     C17          108.88 3.000
+ITD  C21     C16     C17          112.08 3.000
+ITD  H16     C16     N4           109.26 3.000
+ITD  C21     C16     N4           108.85 3.000
+ITD  C17     C16     N4           108.85 3.000
+ITD  H17A    C17     H17          109.25 3.000
+ITD  H17A    C17     C18          108.87 3.000
+ITD  H17     C17     C18          108.87 3.000
+ITD  H17A    C17     C16          108.87 3.000
+ITD  H17     C17     C16          108.87 3.000
+ITD  C18     C17     C16          112.08 3.000
+ITD  H18A    C18     H18          109.25 3.000
+ITD  H18A    C18     C19          108.87 3.000
+ITD  H18     C18     C19          108.87 3.000
+ITD  H18A    C18     C17          108.87 3.000
+ITD  H18     C18     C17          108.87 3.000
+ITD  C19     C18     C17          112.08 3.000
+ITD  H19A    C19     H19          109.25 3.000
+ITD  H19A    C19     C20          108.87 3.000
+ITD  H19     C19     C20          108.87 3.000
+ITD  H19A    C19     C18          108.87 3.000
+ITD  H19     C19     C18          108.87 3.000
+ITD  C20     C19     C18          112.09 3.000
+ITD  H20A    C20     H20          109.25 3.000
+ITD  H20A    C20     C21          108.87 3.000
+ITD  H20     C20     C21          108.87 3.000
+ITD  H20A    C20     C19          108.87 3.000
+ITD  H20     C20     C19          108.87 3.000
+ITD  C21     C20     C19          112.09 3.000
+ITD  H21A    C21     H21          109.25 3.000
+ITD  H21A    C21     C20          108.87 3.000
+ITD  H21     C21     C20          108.87 3.000
+ITD  H21A    C21     C16          108.87 3.000
+ITD  H21     C21     C16          108.87 3.000
+ITD  C20     C21     C16          112.08 3.000
+#
+loop_
+_chem_comp_tor.comp_id
+_chem_comp_tor.id
+_chem_comp_tor.atom_id_1
+_chem_comp_tor.atom_id_2
+_chem_comp_tor.atom_id_3
+_chem_comp_tor.atom_id_4
+_chem_comp_tor.value_angle
+_chem_comp_tor.value_angle_esd
+_chem_comp_tor.period
+ITD CONST_01      N2      C6      C2      N1            -0.03   0.0 0
+ITD CONST_02      C7      N2      C4      N1           131.77   0.0 0
+ITD CONST_03      C6      N2      C4      N1            -0.10   0.0 0
+ITD CONST_04      C2      N1      C4      S1           124.28   0.0 0
+ITD CONST_05      C7      N2      C4      S1             0.09   0.0 0
+ITD CONST_06      C6      N2      C4      S1          -131.78   0.0 0
+ITD CONST_07      N2      C4      N1      C2             0.08   0.0 0
+ITD CONST_08      C7      N2      C6      C2          -122.54   0.0 0
+ITD CONST_09      C4      N2      C6      C2             0.08   0.0 0
+ITD CONST_10      C6      C2      N1      C4            -0.03   0.0 0
+ITD CONST_11      C16     N4      C9      S2            -0.00   0.0 0
+ITD CONST_12      C10     N3      C9      S2           -74.61   0.0 0
+ITD CONST_13      C16     N4      C9      N3          -180.00   0.0 0
+ITD CONST_14      C10     N3      C9      N4           105.39   0.0 0
+ITD CONST_15      HN3     N3      C9      S2           106.83   0.0 0
+ITD Var_01        C13     C12     C11     C10           52.96  30.0 1
+ITD Var_02        C13     C14     C15     C10          -52.95  30.0 1
+ITD Var_03        C14     C13     C12     C11          -52.95  30.0 1
+ITD Var_04        C15     C14     C13     C12           52.96  30.0 1
+ITD Var_05        C19     C18     C17     C16           52.95  30.0 1
+ITD Var_06        C19     C20     C21     C16          -52.96  30.0 1
+ITD Var_07        C20     C19     C18     C17          -52.96  30.0 1
+ITD Var_08        C21     C20     C19     C18           52.95  30.0 1
+ITD Var_09        N2      C6      C2      C1          -118.10  30.0 1
+ITD Var_10        S2      C8      C7      N2          -169.86  30.0 3
+ITD Var_11        H1      C1      C2      N1            60.96  30.0 3
+ITD Var_12        H3      C3      C2      N1           171.67  30.0 3
+#
+loop_
+_chem_comp_plane_atom.comp_id
+_chem_comp_plane_atom.plane_id
+_chem_comp_plane_atom.atom_id
+_chem_comp_plane_atom.dist_esd
+ITD plan-1  N1     0.020
+ITD plan-1  S1     0.020
+ITD plan-1  C2     0.020
+ITD plan-1  N2     0.020
+ITD plan-1  C4     0.020
+ITD plan-1  C5     0.020
+ITD plan-1  C6     0.020
+ITD plan-1  C7     0.020
+ITD plan-1  C8     0.020
+ITD plan-1  H5     0.020
+ITD plan-2  S2     0.020
+ITD plan-2  N3     0.020
+ITD plan-2  N4     0.020
+ITD plan-2  C9     0.020
+ITD plan-2  C10    0.020
+ITD plan-2  C16    0.020
+ITD plan-2  HN3    0.020
+#
+loop_
+_chem_comp_chir.comp_id
+_chem_comp_chir.id
+_chem_comp_chir.atom_id_centre
+_chem_comp_chir.atom_id_1
+_chem_comp_chir.atom_id_2
+_chem_comp_chir.atom_id_3
+_chem_comp_chir.volume_sign
+ITD chir_01  C10     N3      C11     C15    negativ
+ITD chir_02  C16     N4      C17     C21    positiv
