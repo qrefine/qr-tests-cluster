@@ -1111,7 +1111,7 @@ def run(pdb_filename):
                          #use_capping_hydrogens=True,
                         )
   # not required at the moment, no clutering
-  if 1:
+  if 0:
     write_pdb_hierarchy_qxyz_file(hierarchy,
                                   hetero_charges=hetero_charges,
                                 )
