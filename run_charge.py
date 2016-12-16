@@ -2,7 +2,7 @@ import os, sys
 
 import iotbx
 
-from run_finalise import get_total_charge_from_file_name
+from run_finalise import get_total_charge_from_pdb
 
 def run(pdb_filename):
   print "run",pdb_filename
@@ -22,9 +22,9 @@ def run(pdb_filename):
       data[key]+=float(tmp[6])
     print data
 
-  total_charge = get_total_charge_from_file_name(pdb_filename,
-                                                 check=data,
-                                                 verbose=True,
+  total_charge = get_total_charge_from_pdb(pdb_filename,
+                                           check=data,
+                                           verbose=True,
   )
   print "total_charge",total_charge
 
