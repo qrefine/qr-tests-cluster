@@ -164,7 +164,8 @@ def add_n_terminal_hydrogens_to_atom_group(ag,
                       ca, 109.5,
                       c, 120.,
                      )
-  possible = ['H', 'H1', 'H2', 'H3']
+  # this could be smarter
+  possible = ['H', 'H1', 'H2', 'H3', 'HT1', 'HT2'] 
   h_count = 0
   for h in possible:
     if ag.get_atom(h): h_count+=1
@@ -432,9 +433,10 @@ def add_terminal_hydrogens(
                                          ):
     ptr=0
     assert three.are_linked()
-    for i in range(len(three)):
-      rg = get_residue_group(three[i])
-      add_cys_hg_to_residue_group(rg)
+    if use_capping_hydrogens:
+      for i in range(len(three)):
+        rg = get_residue_group(three[i])
+        add_cys_hg_to_residue_group(rg)
     if three.start:
       ptr+=1
       assert ptr==1
@@ -689,6 +691,8 @@ def get_partial_point_charges(rg, hetero_charges=None):
       resname = d_amino_acids.get(ag.resname, None)
       if resname is not None:
         restraints = mon_lib_server.get_comp_comp_id_direct(resname)
+    if restraints is None:
+      assert restraints, 'no restraints for "%s" found' % ag.resname
     atom_dict = restraints.atom_dict()
     for atom in ag.atoms():
       # ions
@@ -920,7 +924,10 @@ def write_charge_and_coordinates_from_hierarchy(hierarchy,
     pass
   else:
     raise Sorry('invalid qxyz_order parameter "%s"' % qxyz_order)
-  for item in qxyz:
+  outl = ""
+  for i, item in enumerate(qxyz):
+    if item[0]==0 or item[0] is None:
+      outl += ' %s has zero/None partial charge\n' % hierarchy.atoms()[i].quote()
     if qxyz_order=='qxyz':
       item_list = item + ["  \n"]
     elif qxyz_order=='xyzq':
@@ -930,6 +937,10 @@ def write_charge_and_coordinates_from_hierarchy(hierarchy,
     item_string = "  ".join(str(elm) for elm in item_list)
     qxyz_file.write(item_string)
   qxyz_file.close()
+
+  if outl:
+    print 'WARNINGS'
+    print outl
 
 def write_pdb_hierarchy_qxyz_file(hierarchy,
                                   file_name="qxyz_cctbx.dat",
@@ -1069,6 +1080,7 @@ def run(pdb_filename):
     pdb_filename_h = pdb_filename
   else:
     pdb_filename_h = pdb_filename.replace('.pdb', '.updated.pdb')
+  print 'pdb_filename_h',pdb_filename_h
   if not os.path.exists(pdb_filename_h):
     pdb_filename = run_ready_set(pdb_filename)
   else: pdb_filename = pdb_filename_h
@@ -1099,7 +1111,7 @@ def run(pdb_filename):
                          #use_capping_hydrogens=True,
                         )
   # not required at the moment, no clutering
-  if 0:
+  if 1:
     write_pdb_hierarchy_qxyz_file(hierarchy,
                                   hetero_charges=hetero_charges,
                                 )
