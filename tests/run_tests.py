@@ -453,7 +453,6 @@ def test_charge_for_charmm_pdbs():
         )
       assert charge==charge_dict[pdb_file[:-4]], 'no matchy matchy'
 
-
 def test_charge_of_neutral_terminal():
   charge = 0
   charge_neutral_nterminal = run_finalise.get_total_charge_from_pdb("./babel_pdbs/clusters/neutral_nterminal.pdb") 
@@ -461,21 +460,20 @@ def test_charge_of_neutral_terminal():
   charge_neutral_cterminal = run_finalise.get_total_charge_from_pdb("./babel_pdbs/clusters/neutral_cterminal.pdb") 
   assert charge == charge_neutral_cterminal, 'no matchy matchy'
 
- 
-
 def test_capping_of_cluster_complete():
-  pdb_dir = 'babel_pdbs/'
-  babel_dir = pdb_dir + 'capping/'
-  cluster_dir = pdb_dir + 'clusters/'
+  pdb_dir = 'babel_pdbs'
+  babel_dir = os.path.join(pdb_dir, 'capping')
+  cluster_dir = os.path.join(pdb_dir, 'clusters')
   cluster_files = os.listdir(cluster_dir)
   for cluster_file in cluster_files:
+    if cluster_file.find('capping')>-1: continue
     if cluster_file.endswith(".pdb"):
       print cluster_file
       cluster_file_path = os.path.join(cluster_dir, cluster_file)
       cmd = "phenix.python run_cluster_complete.py %s " % cluster_file_path 
       easy_run.call(cmd)    
       result_file = cluster_file_path[:-4] + "_capping.pdb" 
-      babel_file = babel_dir + cluster_file[:-4] + "_babel.pdb" 
+      babel_file = os.path.join(babel_dir, cluster_file[:-4] + "_babel.pdb")
       result_size = len(pdb.input(result_file).atoms())    
       babel_size =  len(pdb.input(babel_file).atoms())
       print 'atom size after babel capping: %d, after run_cluster_complete: %d' %(babel_size, result_size)

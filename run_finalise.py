@@ -1,6 +1,7 @@
 # LIBTBX_SET_DISPATCHER_NAME phenix.development.ready_set
 import os, sys
 import math
+from string import letters
 
 import iotbx
 import iotbx.pdb
@@ -130,6 +131,20 @@ def construct_xyz(ba, bv,
     rh_list.append(rh)
   return rh_list
 
+def _add_atom_to_residue_group(atom, ag):
+  tag = iotbx.pdb.hierarchy.atom_group()
+  tag.resname = ag.resname
+  tag.append_atom(atom)
+  rg = iotbx.pdb.hierarchy.residue_group()
+  rg.resseq = ag.parent().resseq
+  rg.append_atom_group(tag)
+  for i, c in enumerate(letters):
+    if c==ag.parent().parent().id:
+      break
+  atom.tmp = i
+  for atom in rg.atoms(): print atom.format_atom_record()
+  return rg
+
 def add_n_terminal_hydrogens_to_atom_group(ag,
                                            use_capping_hydrogens=False,
                                            append_to_end_of_model=False,
@@ -141,7 +156,7 @@ def add_n_terminal_hydrogens_to_atom_group(ag,
   if ca is None: return
   c = ag.get_atom("C")
   if c is None: return
-  if ag.get_atom("H"): # maybe needs to be smarter
+  if ag.get_atom("H"): # maybe needs to be smarter or actually work
     #for atom in ag.atoms(): print atom.quote()
     ag.remove_atom(ag.get_atom('H'))
   # add H1
@@ -149,9 +164,15 @@ def add_n_terminal_hydrogens_to_atom_group(ag,
                       ca, 109.5,
                       c, 120.,
                      )
+  possible = ['H', 'H1', 'H2', 'H3']
+  h_count = 0
+  for h in possible:
+    if ag.get_atom(h): h_count+=1
   number_of_hydrogens=3
   if use_capping_hydrogens:
     number_of_hydrogens-=1
+  print 'h_count',h_count,number_of_hydrogens
+  if h_count>=number_of_hydrogens: return []
   for i in range(0, number_of_hydrogens):
     name = " H%d " % (i+1)
     if ag.get_atom(name.strip()): continue
@@ -165,7 +186,8 @@ def add_n_terminal_hydrogens_to_atom_group(ag,
     atom.occ = n.occ
     atom.b = n.b
     if append_to_end_of_model and i+1==number_of_hydrogens:
-      rc.append(atom)
+      rg = _add_atom_to_residue_group(atom, ag)
+      rc.append(rg)
     else:
       ag.append_atom(atom)
   #for atom in rc: print atom.quote()
@@ -217,6 +239,7 @@ def add_c_terminal_oxygens_to_atom_group(ag,
   atom_element = 'O'
   bond_length=1.231
   if use_capping_hydrogens:
+    if ag.get_atom(atom_name.strip()): return []
     atom_name=" HC "
     atom_element="H"
     bond_length=1.
@@ -236,9 +259,6 @@ def add_c_terminal_oxygens_to_atom_group(ag,
   for i in range(0,2):
     name = oxys[i]
     atom = ag.get_atom(name.strip())
-    #if atom:
-    #  print name, atom.format_atom_record(), ro2[i]
-    #  print 'd2',d_squared(atom.xyz, ro2[i])
     if atom:
       atom.xyz = ro2[i]
     else:
@@ -249,7 +269,8 @@ def add_c_terminal_oxygens_to_atom_group(ag,
       atom.b = c.b
       atom.xyz = ro2[i]
       if append_to_end_of_model:
-        rc.append(atom)
+        rg = _add_atom_to_residue_group(atom, ag)
+        rc.append(rg)
       else:
         ag.append_atom(atom)
   return rc
@@ -286,6 +307,108 @@ def add_c_terminal_oxygens(hierarchy,
   hierarchy.atoms().reset_i_seq()
   return hierarchy
 
+def add_cys_hg_to_atom_group(ag,
+                             append_to_end_of_model=False,
+                            ):
+  #
+  # do we need ANISOU
+  #
+  rc = []
+  atom_name=' HG '
+  atom_element = 'H'
+  bond_length=1.
+  if ag.get_atom(atom_name.strip()): return []
+  sg = ag.get_atom("SG")
+  if sg is None: return
+  cb = ag.get_atom("CB")
+  if cb is None: return
+  ca = ag.get_atom("CA")
+  if ca is None: return
+  ro2 = construct_xyz(sg, bond_length,
+                      cb, 120.,
+                      ca, 160.,
+                      period=1,
+                     )
+  atom = iotbx.pdb.hierarchy.atom()
+  atom.name = atom_name
+  atom.element = atom_element
+  atom.occ = sg.occ
+  atom.b = sg.b
+  atom.xyz = ro2[0]
+  if append_to_end_of_model:
+    rg = _add_atom_to_residue_group(atom, ag)
+    rc.append(rg)
+  else:
+    ag.append_atom(atom)
+  return rc
+
+def add_cys_hg_to_residue_group(rg,
+                                append_to_end_of_model=False,
+                               ):
+  rc=[]
+  for ag in rg.atom_groups():
+    if ag.resname not in ['CYS']: continue
+    rc += add_cys_hg_to_atom_group(
+      ag,
+      append_to_end_of_model=append_to_end_of_model,
+    )
+  return rc
+
+def generate_residues_via_conformer(hierarchy,
+                                    backbone_only=False,
+                                    verbose=False,
+                                    ):
+  backbone_asc = hierarchy.atom_selection_cache()
+  backbone_sel = backbone_asc.selection("name ca or name c or name n or name o or name cb")
+  backbone_hierarchy = hierarchy.select(backbone_sel)
+  get_class = iotbx.pdb.common_residue_names_get_class
+  loop_hierarchy=hierarchy
+  if backbone_only: loop_hierarchy=backbone_hierarchy
+  for model in loop_hierarchy.models():
+    if verbose: print 'model: "%s"' % model.id
+    for chain in model.chains():
+      if verbose: print 'chain: "%s"' % chain.id
+      for conformer in chain.conformers():
+        if verbose: print '  conformer: altloc="%s"' % (
+          conformer.altloc)
+#        while threes: del threes[0]
+#        threes.start=None
+#        threes.end=None
+#        list_of_threes = []
+        for residue in conformer.residues():
+          if verbose:
+            if residue.resname not in ["HOH"]:
+              print '    residue: resname="%s" resid="%s"' % (
+                residue.resname, residue.resid())
+          if verbose: print '      residue class : %s' % get_class(residue.resname)
+          if get_class(residue.resname) not in ["common_amino_acid"]:
+            continue
+          yield residue
+
+def generate_protein_fragments(hierarchy,
+                               geometry,
+                               backbone_only=False,
+                               verbose=False,
+                               ):
+  from mmtbx.conformation_dependent_library.multi_residue_class import \
+    ThreeProteinResidues, RestraintsRegistry
+  registry = RestraintsRegistry()
+  threes = ThreeProteinResidues(geometry, registry=registry)
+  for residue in generate_residues_via_conformer(hierarchy,
+                                                 backbone_only=backbone_only,
+                                                 verbose=verbose,
+                                                 ):
+    list.append(threes, residue)
+    sub_unit = threes.provide_second_sub_unit_if_unlinked()
+    if sub_unit:
+      threes.start = True
+      threes.end = True
+      yield threes
+      threes = sub_unit
+  threes.start = True
+  threes.end = True
+  yield threes
+
 def add_terminal_hydrogens(
     hierarchy,
     geometry_restraints_manager,
@@ -296,7 +419,6 @@ def add_terminal_hydrogens(
     ):
   # add N terminal hydrogens because Reduce only does it to resseq=1
   # needs to be alt.loc. aware for non-quantum-refine
-  from mmtbx.conformation_dependent_library import generate_protein_threes
   atoms = hierarchy.atoms()
   def get_residue_group(residue):
     for atom in residue.atoms():
@@ -305,14 +427,16 @@ def add_terminal_hydrogens(
     return atom.parent().parent()
   ###
   additional_hydrogens=[]
-  for three in generate_protein_threes(hierarchy,
-                                       geometry_restraints_manager,
-                                       include_non_linked=True,
-                                       backbone_only=False,
-                                     ):
+  for three in generate_protein_fragments(hierarchy,
+                                          geometry_restraints_manager,
+                                          backbone_only=False,
+                                         ):
     assert three.are_linked()
+    for i in range(len(three)):
+      rg = get_residue_group(three[i])
+      add_cys_hg_to_residue_group(rg)
     if three.start:
-      print 'start'*10
+      print 'start'*10,three
       rg = get_residue_group(three[0])
       rc = add_n_terminal_hydrogens_to_residue_group(
         rg,
@@ -322,7 +446,7 @@ def add_terminal_hydrogens(
       if rc: additional_hydrogens.append(rc)
       #hierarchy.reset_i_seq_if_necessary()
     if three.end:
-      print 'end'*10
+      print 'end'*10,three
       rg = get_residue_group(three[-1])
       rc = add_c_terminal_oxygens_to_residue_group(
         rg,
@@ -341,16 +465,18 @@ def add_terminal_hydrogens(
         tmp.append(atom)
     _add_atoms_to_end_of_hierarchy(hierarchy, tmp)
 
-def _add_atoms_to_end_of_hierarchy(hierarchy, atoms):
-  ag = iotbx.pdb.hierarchy.atom_group()
-  for atom in atoms:
-    ag.append_atom(atom)
-  rg = iotbx.pdb.hierarchy.residue_group()
-  rg.append_atom_group(ag)
-  chain = iotbx.pdb.hierarchy.chain()
-  chain.append_residue_group(rg)
+def _add_atoms_to_end_of_hierarchy(hierarchy, rgs):
+  chains = {}
+  for rg in rgs:
+    for atom in rg.atoms():
+      cid = atom.tmp
+      if cid not in chains:
+        chains[cid] = iotbx.pdb.hierarchy.chain()
+        chains[cid].id = letters[cid]
+      chains[cid].append_residue_group(rg)
   model = hierarchy.models()[0]
-  model.append_chain(chain)
+  for i, chain in sorted(chains.items()):
+    model.append_chain(chain)
 
 def display_residue_group(rg):
   return '  residue_group: resseq="%s" icode="%s"' % (rg.resseq, rg.icode)
@@ -893,7 +1019,6 @@ def get_inter_residue_bonds(ppf):
         for i in range(2):
           inter_residue_bonds.setdefault(p.i_seqs[i], [])
           inter_residue_bonds[p.i_seqs[i]].append(inter_residue_bonds[p.i_seqs])
-        #print outl
   return inter_residue_bonds
 
 def run_ready_set(pdb_filename):
