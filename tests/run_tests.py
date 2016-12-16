@@ -456,9 +456,15 @@ def test_charge_for_charmm_pdbs():
 def test_charge_of_neutral_terminal():
   charge = 0
   charge_neutral_nterminal = run_finalise.get_total_charge_from_pdb("./babel_pdbs/clusters/neutral_nterminal.pdb") 
-  assert charge == charge_neutral_nterminal, 'no matchy matchy'
+  assert charge == charge_neutral_nterminal, 'no match %s %s' % (
+    charge,
+    charge_neutral_nterminal,
+    )
   charge_neutral_cterminal = run_finalise.get_total_charge_from_pdb("./babel_pdbs/clusters/neutral_cterminal.pdb") 
-  assert charge == charge_neutral_cterminal, 'no matchy matchy'
+  assert charge == charge_neutral_cterminal, 'no match %s %s' % (
+    charge,
+    charge_neutral_cterminal,
+    )
 
 def test_capping_of_cluster_complete():
   pdb_dir = 'babel_pdbs'

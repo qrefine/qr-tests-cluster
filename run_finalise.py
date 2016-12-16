@@ -142,7 +142,7 @@ def _add_atom_to_residue_group(atom, ag):
     if c==ag.parent().parent().id:
       break
   atom.tmp = i
-  for atom in rg.atoms(): print atom.format_atom_record()
+  #for atom in rg.atoms(): print atom.format_atom_record()
   return rg
 
 def add_n_terminal_hydrogens_to_atom_group(ag,
@@ -171,7 +171,6 @@ def add_n_terminal_hydrogens_to_atom_group(ag,
   number_of_hydrogens=3
   if use_capping_hydrogens:
     number_of_hydrogens-=1
-  print 'h_count',h_count,number_of_hydrogens
   if h_count>=number_of_hydrogens: return []
   for i in range(0, number_of_hydrogens):
     name = " H%d " % (i+1)
@@ -431,12 +430,14 @@ def add_terminal_hydrogens(
                                           geometry_restraints_manager,
                                           backbone_only=False,
                                          ):
+    ptr=0
     assert three.are_linked()
     for i in range(len(three)):
       rg = get_residue_group(three[i])
       add_cys_hg_to_residue_group(rg)
     if three.start:
-      print 'start'*10,three
+      ptr+=1
+      assert ptr==1
       rg = get_residue_group(three[0])
       rc = add_n_terminal_hydrogens_to_residue_group(
         rg,
@@ -446,7 +447,8 @@ def add_terminal_hydrogens(
       if rc: additional_hydrogens.append(rc)
       #hierarchy.reset_i_seq_if_necessary()
     if three.end:
-      print 'end'*10,three
+      ptr-=1
+      assert ptr==0
       rg = get_residue_group(three[-1])
       rc = add_c_terminal_oxygens_to_residue_group(
         rg,
