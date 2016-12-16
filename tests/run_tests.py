@@ -489,16 +489,16 @@ def test_capping_of_cluster_complete():
       assert result_size ==  babel_size
 
 def run():
-  #test_charge_of_neutral_terminal()
-  #test_capping_of_cluster_complete()
-  #test_GLY_terminal_and_alt_loc()
-  #test_GLY_terminal_charge()
-  #test_PRO_terminal_and_alt_loc()
-  #test_PRO_terminal_charge()
-  #test_qxyz_non_zero()
-  #test_qxyz_xyzq()
-  #test_1yjp_charge()
-  #test_helix()
+  test_charge_of_neutral_terminal()
+  test_capping_of_cluster_complete()
+  test_GLY_terminal_and_alt_loc()
+  test_GLY_terminal_charge()
+  test_PRO_terminal_and_alt_loc()
+  test_PRO_terminal_charge()
+  test_qxyz_non_zero()
+  test_qxyz_xyzq()
+  test_1yjp_charge()
+  test_helix()
   test_charge_for_charmm_pdbs()
 
 if __name__=="__main__":
