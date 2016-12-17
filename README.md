@@ -2,7 +2,7 @@
 
 #### a) Select structure-candidates.
 
-   * Select ~10-20 P1 structures from PDB and prepare them for quantum refinement.
+   * Select 25 P1 structures from PDB and prepare them for quantum refinement.
    
 #### b) Run cheap HF energy and gradients calculation using clustering.
 
@@ -59,32 +59,30 @@ phenix.reduce which has it's own problems.
    non-H atoms? Remove altlocs? Reset occupancies? XXX
 
    All PDBs in folder 01 have no errors in running 02_run_update_pdb.py are listed in folder 02.  
+   9  out of 25 structures in folder 01 pass 02_run_update_pdb.py successfully. 
 
-   After checking those completed structures in 02 by visualisaton and comparing their charges with MOZYME calculated charges, all properly completed structures are stored in 03 and  ready for quantum refinement.
 
 Current issues to be resolved ASAP:
 
   * Errors that can't be fixed:
     * 4drw - contains a nonstandard amino acid using the code HSD which is a
              carbohydrate in the Chemical Comp.
+        
 
   * Errors that have been postponed:
     * 1u0d - multiple models
     * 2jee - has a terminal amino acid with just a N
-    * 3nm9 - DNA not currently supported 
+   
 
   * Known errors
-    * 1il5 - bug in mmtbx related to finding peptide connectivity
     * 4k2r
     * 5d12
     * 3kyi - nonstandard amino acid has strange charge
     * 4rnf - bug in cctbx geometry restraints
 
-  * Errors:
-    *  4drw, 3nm9, 2oy0 and 1y1l have different charges from MOZYME
 
   * No errors: but not 100% sure that all is well.
-    *  1va7, 2oeq, 4xa1, 3tz9, 3dtj, 2ghj
+    *  1va7, 2oeq, 4xa1, 3tz9, 3dtj, 2ghj, 4drw, 3nm9, 2oy0 and 1il5
 
   * Waters
     * Do we make a policy about the inclusion of water below a certain resolution? 
