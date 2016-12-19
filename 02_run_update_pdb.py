@@ -50,7 +50,8 @@ def run(
     nproc=8,
     only_code=None, 
     ):
-  os.system("rm *")
+  filenames = os.listdir('.')
+  assert not filenames, 'script must be run in a empty directory'
   cmd = "cp ../01/*.pdb ./"
   print cmd 
   os.system(cmd)
