@@ -564,11 +564,11 @@ def calculate_residue_charge(rg,
         if charge is None:
           raise Sorry('no charge found in the model file or hetero_charges for "%s"' % atom.quote())
         else:
-          return charge
+          return charge, charge
       else:
         raise Sorry('no charge found in the model file for "%s"' % atom.quote())
     else:
-      return atom.charge_as_int()
+      return atom.charge_as_int(), atom.charge_as_int()
   # others
   hs=0
   atom_names = []
