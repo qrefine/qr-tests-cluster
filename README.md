@@ -64,25 +64,26 @@ phenix.reduce which has it's own problems.
 
 Current issues to be resolved ASAP:
 
-  * Errors that can't be fixed:
-    * 4drw - contains a nonstandard amino acid using the code HSD which is a
-             carbohydrate in the Chemical Comp.
-        
-
   * Errors that have been postponed:
     * 1u0d - multiple models
     * 2jee - has a terminal amino acid with just a N
-   
 
   * Known errors
-    * 4k2r
-    * 5d12
+    * 4k2r - ANP does not have partial charges
+    * 5d12 - G97
     * 3kyi - nonstandard amino acid has strange charge
     * 4rnf - bug in cctbx geometry restraints
 
-
   * No errors: but not 100% sure that all is well.
-    *  1va7, 2oeq, 4xa1, 3tz9, 3dtj, 2ghj, 4drw, 3nm9, 2oy0 and 1il5
+    * 1va7 - tick
+    * 2oeq - ''
+    * 4xa1
+    * 3tz9
+    * 3dtj
+    * 2ghj
+    * 4drw
+    * 2oy0 
+    * 1il5
 
   * Waters
     * Do we make a policy about the inclusion of water below a certain resolution? 
