@@ -40,6 +40,7 @@ default_ion_charges = {
   "CL" : -1,
   "CD" : 2,
   "ZN" : 2,
+  'MG' : 2,
   }
 allowable_amino_acid_charges = {
   "ARG" : 1,
@@ -1036,6 +1037,7 @@ def get_inter_residue_bonds(ppf):
 
 def run_ready_set(pdb_filename):
   from StringIO import StringIO
+  assert pdb_filename.find('.pdb')>-1, 'ReadySet! only works on PDB, not CIF'
   cmd = 'phenix.ready_set %s' % pdb_filename
   print 'Running ReadySet!'
   print cmd
