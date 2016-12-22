@@ -99,6 +99,9 @@ Current issues to be resolved ASAP:
     * 4p7h - :white_check_mark:
     * 5diz - :white_check_mark: Has S-S bond, better check them.
 
+  * Hi/Lo pairs
+    * 3dtj - works in my hands
+
   * Waters
     * Do we make a policy about the inclusion of water below a certain resolution? 
 
