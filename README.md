@@ -69,7 +69,6 @@ Current issues to be resolved ASAP:
     * 2jee - has a terminal amino acid with just a N
 
   * Known errors:
-    * 1il5 - tardy errors
     * 3kyi - nonstandard amino acid has strange charge
     * 4k2r - ANP does not have partial charges
     * 4rnf - bug in cctbx geometry restraints
@@ -83,21 +82,22 @@ Current issues to be resolved ASAP:
     * 3nak - strange nonstandard amino acid
 
   * No errors:
-    * 1va7 - :heavy_check_mark:
-    * 1y1l - :heavy_check_mark:
-    * 1ok9 - :heavy_check_mark: ACT, GOL added to GeoStd
-    * 2oeq - :heavy_check_mark:
-    * 2oy0 - :heavy_check_mark:
-    * 2ghj - :heavy_check_mark:
-    * 3tz9 - :heavy_check_mark: AQU added to GeoStd
-    * 3dtj - :heavy_check_mark:
-    * 3uj4 - :heavy_check_mark:
-    * 4xa1 - :heavy_check_mark:
-    * 4drw - :heavy_check_mark:
-    * 4fsx - :heavy_check_mark:
-    * 4rnf - :heavy_check_mark:
-    * 4p7h - :heavy_check_mark:
-    * 5diz - :heavy_check_mark: Has S-S bond, better check them.
+    * 1il5 - :white_check_mark:
+    * 1va7 - :white_check_mark:
+    * 1y1l - :white_check_mark:
+    * 1ok9 - :white_check_mark: ACT, GOL added to GeoStd
+    * 2oeq - :white_check_mark:
+    * 2oy0 - :white_check_mark:
+    * 2ghj - :white_check_mark:
+    * 3tz9 - :white_check_mark: AQU added to GeoStd
+    * 3dtj - :white_check_mark:
+    * 3uj4 - :white_check_mark:
+    * 4xa1 - :white_check_mark:
+    * 4drw - :white_check_mark:
+    * 4fsx - :white_check_mark:
+    * 4rnf - :white_check_mark:
+    * 4p7h - :white_check_mark:
+    * 5diz - :white_check_mark: Has S-S bond, better check them.
 
   * Waters
     * Do we make a policy about the inclusion of water below a certain resolution? 
