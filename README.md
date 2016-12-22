@@ -64,27 +64,40 @@ phenix.reduce which has it's own problems.
 
 Current issues to be resolved ASAP:
 
-  * Errors that have been postponed:
+  * Errors that have been postponed or manually resolved:
     * 1u0d - multiple models
     * 2jee - has a terminal amino acid with just a N
 
-  * Known errors
-    * 4k2r - ANP does not have partial charges
-    * 5d12 - G97
-    * 3kyi - nonstandard amino acid has strange charge
-    * 4rnf - bug in cctbx geometry restraints
+  * Known errors:
     * 1il5 - tardy errors
+    * 3kyi - nonstandard amino acid has strange charge
+    * 4k2r - ANP does not have partial charges
+    * 4rnf - bug in cctbx geometry restraints
+    * 5d12 - G97
+    * 3oe9 - ITD
+    * 3uds - ADP
+    * 4ctd - C8E
 
-  * No errors: but not 100% sure that all is well.
+  * Unknown errors:
+    * 2x10 - tardy errors, maximum charge error
+    * 3nak - strange nonstandard amino acid
+
+  * No errors:
     * 1va7 - :heavy_check_mark:
+    * 1y1l - :heavy_check_mark:
+    * 1ok9 - :heavy_check_mark: ACT, GOL added to GeoStd
     * 2oeq - :heavy_check_mark:
-    * 4xa1 - :heavy_check_mark:
+    * 2oy0 - :heavy_check_mark:
+    * 2ghj - :heavy_check_mark:
     * 3tz9 - :heavy_check_mark: AQU added to GeoStd
     * 3dtj - :heavy_check_mark:
-    * 2ghj - :heavy_check_mark:
+    * 3uj4 - :heavy_check_mark:
+    * 4xa1 - :heavy_check_mark:
     * 4drw - :heavy_check_mark:
-    * 2oy0 - :heavy_check_mark:
+    * 4fsx - :heavy_check_mark:
     * 4rnf - :heavy_check_mark:
+    * 4p7h - :heavy_check_mark:
+    * 5diz - :heavy_check_mark: Has S-S bond, better check them.
 
   * Waters
     * Do we make a policy about the inclusion of water below a certain resolution? 
