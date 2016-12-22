@@ -73,17 +73,18 @@ Current issues to be resolved ASAP:
     * 5d12 - G97
     * 3kyi - nonstandard amino acid has strange charge
     * 4rnf - bug in cctbx geometry restraints
+    * 1il5 - tardy errors
 
   * No errors: but not 100% sure that all is well.
-    * 1va7 - tick
-    * 2oeq - ''
-    * 4xa1
-    * 3tz9
-    * 3dtj
-    * 2ghj
-    * 4drw
-    * 2oy0 
-    * 1il5
+    * 1va7 - :heavy_check_mark:
+    * 2oeq - :heavy_check_mark:
+    * 4xa1 - :heavy_check_mark:
+    * 3tz9 - :heavy_check_mark: AQU added to GeoStd
+    * 3dtj - :heavy_check_mark:
+    * 2ghj - :heavy_check_mark:
+    * 4drw - :heavy_check_mark:
+    * 2oy0 - :heavy_check_mark:
+    * 4rnf - :heavy_check_mark:
 
   * Waters
     * Do we make a policy about the inclusion of water below a certain resolution? 
