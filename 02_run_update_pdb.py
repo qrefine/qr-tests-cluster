@@ -35,7 +35,7 @@ def _process_pdb_filename(pdb_file):
     easy_run.call(cmd)
     shutil.copyfile(updated_file, pdb_file)
 
-    cmd = "phenix.python ../run_finalise.py %s" % pdb_file + "> "+ pdb_file[:-4]+".log"
+    cmd = "phenix.python ../../qr-core/finalise.py  %s" % pdb_file + "> "+ pdb_file[:-4]+".log"
     print '\n\t~> %s\n' % cmd
     easy_run.call(cmd)
     if not os.path.exists(complete_file):
