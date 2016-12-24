@@ -4,8 +4,10 @@ from iotbx import pdb
 from StringIO import StringIO
 
 import iotbx
-
-import run_finalise
+from utils import hierarchy_utils
+import finalise
+import charges
+import completion
 
 pdbs = {"PRO_terminal" : """
 CRYST1   42.664   49.718   66.065 109.25  94.96  99.24 P 1           4
@@ -214,7 +216,7 @@ def test_qxyz_non_zero():
     f.close()
     pdb_inp = pdb.input(tf)
     hierarchy = pdb_inp.construct_hierarchy()
-    run_finalise.write_pdb_hierarchy_qxyz_file(hierarchy,
+    charges.write_pdb_hierarchy_qxyz_file(hierarchy,
                                                'test_%s.dat' % residue,
                                              )
     _check_non_zero_charge('test_%s.dat' % residue)
@@ -227,11 +229,11 @@ def test_qxyz_xyzq():
   pdb_inp = pdb.input(tf)
   hierarchy = pdb_inp.construct_hierarchy()
   if  os.path.exists('test_water.dat'): os.remove('test_water.dat')
-  run_finalise.write_pdb_hierarchy_qxyz_file(hierarchy,
+  charges.write_pdb_hierarchy_qxyz_file(hierarchy,
                                              'test_water.dat',
                                              )
   assert not os.path.exists('test_water.dat')
-  run_finalise.write_pdb_hierarchy_qxyz_file(hierarchy,
+  charges.write_pdb_hierarchy_qxyz_file(hierarchy,
                                              'test_water.dat',
                                              exclude_water=False,
                                              )
@@ -245,7 +247,7 @@ def test_qxyz_xyzq():
   print lines
   assert lines.strip()==tst_str, '%s %s' % (tst_str, lines)
   os.remove('test_water.dat')
-  run_finalise.write_pdb_hierarchy_xyzq_file(hierarchy,
+  charges.write_pdb_hierarchy_xyzq_file(hierarchy,
                                              'test_water.dat',
                                              exclude_water=False,
                                              )
@@ -263,7 +265,7 @@ def test_terminal_and_alt_loc(residue):
   f=file(tf, "wb")
   f.write(pdbs["%s_terminal" % residue])
   f.close()
-  cmd = 'iotbx.python ../run_finalise.py %s' % tf
+  cmd = 'iotbx.python ../../qr-core/finalise.py %s' % tf
   print cmd
   easy_run.call(cmd)
   pdb_inp = pdb.input(tf.replace('.pdb', '_complete.pdb'))
@@ -287,18 +289,18 @@ def test_1yjp_charge():
   pdb_inp = pdb.input('1yjp.pdb')
   hierarchy = pdb_inp.construct_hierarchy()
   try:
-    charge = run_finalise.calculate_pdb_hierarchy_charge(hierarchy)
+    charge = charges.calculate_pdb_hierarchy_charge(hierarchy)
     assert 0
   except Exception, e:
     assert e.message.find('no hydrogens')>-1
   print 'OK'
   tf='1yjp.pdb'
-  cmd = 'iotbx.python ../run_finalise.py %s' % tf
+  cmd = 'iotbx.python ../../qr-core/finalise.py %s' % tf
   print cmd
   easy_run.call(cmd)
   pdb_inp = pdb.input(tf.replace('.pdb', '_complete.pdb'))
   hierarchy = pdb_inp.construct_hierarchy()
-  charge = run_finalise.calculate_pdb_hierarchy_charge(hierarchy, verbose=1)
+  charge = charges.calculate_pdb_hierarchy_charge(hierarchy, verbose=1)
   print 'charge',charge
   assert charge==0, 'charge of 1yjp should be zero not %s' % charge
   print 'OK'
@@ -306,16 +308,16 @@ def test_1yjp_charge():
 def test_terminal_charge(residue, charge=0):
   # must run after other PRO
   tf = '%s_terminal_complete.pdb' % residue
-  ppf = run_finalise.get_processed_pdb(pdb_filename=tf)
-  inter_residue_bonds = run_finalise.get_inter_residue_bonds(ppf)
+  ppf = hierarchy_utils .get_processed_pdb(pdb_filename=tf)
+  inter_residue_bonds = charges.get_inter_residue_bonds(ppf)
   # should the hierarchy come from ppf???
   pdb_inp = iotbx.pdb.input(tf)
   hierarchy = pdb_inp.construct_hierarchy()
-  hetero_charges = run_finalise.get_hetero_charges(pdb_inp)
+  hetero_charges = charges.get_hetero_charges(pdb_inp)
   if not hetero_charges:
     # some defaults
-    hetero_charges = run_finalise.default_ion_charges
-  total_charge = run_finalise.calculate_pdb_hierarchy_charge(
+    hetero_charges = charges.default_ion_charges
+  total_charge = charges.calculate_pdb_hierarchy_charge(
     hierarchy,
     hetero_charges=hetero_charges,
     inter_residue_bonds=inter_residue_bonds,
@@ -337,11 +339,11 @@ def test_helix():
   f.close()
   pdb_inp=pdb.input(tf)
   hierarchy = pdb_inp.construct_hierarchy()
-  charge = run_finalise.calculate_pdb_hierarchy_charge(hierarchy, verbose=1)
+  charge = charges.calculate_pdb_hierarchy_charge(hierarchy, verbose=1)
   print 'charge',charge
   assert charge==0, 'charge of helix should be zero not %s' % charge
   print 'OK'
-  cmd = 'iotbx.python ../run_finalise.py %s' % tf
+  cmd = 'iotbx.python ../../qr-core/finalise.py %s' % tf
   print cmd
   easy_run.call(cmd)
   pdb_inp = pdb.input(tf.replace('.pdb', '_complete.pdb'))
@@ -354,13 +356,13 @@ def test_helix():
   print 'OK'
   pdb_inp=pdb.input(tf.replace('.pdb', '_complete.pdb'))
   hierarchy = pdb_inp.construct_hierarchy()
-  charge = run_finalise.calculate_pdb_hierarchy_charge(hierarchy, verbose=1)
+  charge = charges.calculate_pdb_hierarchy_charge(hierarchy, verbose=1)
   print 'charge',charge
   assert charge==1, 'charge of helix should be one not %s' % charge
   print 'OK'
 
 def test_charge_for_charmm_pdbs():
-  from run_finalise import calculate_pdb_hierarchy_charge
+  from charges import calculate_pdb_hierarchy_charge
   charge_dict = {'3kyi': -12,
                  '2oy0': 16,
                  '1y1l': -8,
@@ -448,7 +450,7 @@ def test_charge_for_charmm_pdbs():
         # disuphide bridge = in 2i1u 2.94 Phenix says yes, Charmm says no
         continue
       pdb_file_path = os.path.join(pdb_dir, pdb_file)
-      charge = run_finalise.get_total_charge_from_pdb(
+      charge = charges.get_total_charge_from_pdb(
         pdb_file_path,
       )
       print ' PDB %s - charmm charge: %2d, run_finalise charge: %2d'  % (
@@ -460,12 +462,12 @@ def test_charge_for_charmm_pdbs():
 
 def test_charge_of_neutral_terminal():
   charge = 0
-  charge_neutral_nterminal = run_finalise.get_total_charge_from_pdb("./babel_pdbs/clusters/neutral_nterminal.pdb") 
+  charge_neutral_nterminal = charges.get_total_charge_from_pdb("./babel_pdbs/clusters/neutral_nterminal.pdb") 
   assert charge == charge_neutral_nterminal, 'no match %s %s' % (
     charge,
     charge_neutral_nterminal,
     )
-  charge_neutral_cterminal = run_finalise.get_total_charge_from_pdb("./babel_pdbs/clusters/neutral_cterminal.pdb") 
+  charge_neutral_cterminal = charges.get_total_charge_from_pdb("./babel_pdbs/clusters/neutral_cterminal.pdb") 
   assert charge == charge_neutral_cterminal, 'no match %s %s' % (
     charge,
     charge_neutral_cterminal,
@@ -481,7 +483,7 @@ def test_capping_of_cluster_complete():
     if cluster_file.endswith(".pdb"):
       print cluster_file
       cluster_file_path = os.path.join(cluster_dir, cluster_file)
-      cmd = "phenix.python run_cluster_complete.py %s " % cluster_file_path 
+      cmd = "phenix.python ../../qr-core/completion.py %s " % cluster_file_path 
       easy_run.call(cmd)    
       result_file = cluster_file_path[:-4] + "_capping.pdb" 
       babel_file = os.path.join(babel_dir, cluster_file[:-4] + "_babel.pdb")
@@ -492,16 +494,16 @@ def test_capping_of_cluster_complete():
 
 def run():
   test_charge_for_charmm_pdbs()
-  test_charge_of_neutral_terminal()
   test_capping_of_cluster_complete()
+  test_charge_of_neutral_terminal()
   test_GLY_terminal_and_alt_loc()
   test_GLY_terminal_charge()
   test_PRO_terminal_and_alt_loc()
   test_PRO_terminal_charge()
   test_qxyz_non_zero()
-  test_qxyz_xyzq()
-  test_1yjp_charge()
   test_helix()
+  test_qxyz_xyzq()
+  test_1yjp_charge()  
 
 if __name__=="__main__":
   args = sys.argv[1:]
