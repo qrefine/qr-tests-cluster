@@ -1,1 +1,0 @@
-../../qr-core/completion.py
