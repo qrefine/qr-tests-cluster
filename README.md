@@ -72,7 +72,6 @@ Current issues to be resolved ASAP:
     * 3kyi - nonstandard amino acid has strange charge
     * 4k2r - ANP does not have partial charges
     * 4rnf - bug in cctbx geometry restraints
-    * 5d12 - G97
     * 3oe9 - ITD
     * 3uds - ADP
     * 4ctd - C8E
@@ -98,6 +97,7 @@ Current issues to be resolved ASAP:
     * 4rnf - :white_check_mark:
     * 4p7h - :white_check_mark:
     * 5diz - :white_check_mark: Has S-S bond, better check them.
+    * 5d12 - :white_check_mark: G97 added to GeoStd
 
   * Hi/Lo pairs
     * 3dtj - works in my hands
