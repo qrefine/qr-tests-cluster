@@ -141,18 +141,42 @@ def run():
         unique_codes.append(f[:4])
   assert len(unique_codes)==26
   #
-  print "PDB        | ORIGINAL                                                   | PHENIX.REFINE"
-  print "           | RW     RF      BONDS   ANGL   CLSC  RAMA   ROTA   CB  MPSC | RW     RF      BONDS   ANGL   CLSC  RAMA   ROTA   CB  MPSC"
+  print "PDB        | ORIGINAL                                                   | PHENIX.REFINE                                              | COMPLETED(if the completed PDB structure is not found, all values are set to be 0)"
+  print "           | RW     RF      BONDS   ANGL   CLSC  RAMA   ROTA   CB  MPSC | RW     RF      BONDS   ANGL   CLSC  RAMA   ROTA   CB  MPSC | RW     RF      BONDS   ANGL   CLSC  RAMA   ROTA   CB  MPSC"
   for code in unique_codes:
     pdb_0 = "00/%s.pdb"%code
     pdb_1 = "01/%s_refine_001.pdb"%code
+    pdb_2 = "02/%s_complete.pdb"%code
     hkl   = "01/%s_refine_001.mtz"%code
     #
     rw_0, rf_0 = get_r(pdb_file=pdb_0, mtz_file=hkl)
     rw_1, rf_1 = get_r(pdb_file=pdb_1, mtz_file=hkl)
+    if(os.path.isfile(pdb_2)):
+      rw_2, rf_2 = get_r(pdb_file=pdb_2, mtz_file=hkl)
+    else:
+      rw_2, rf_2 = 0, 0
     #
     ms_0 = get_model_stat(file_name = pdb_0)
     ms_1 = get_model_stat(file_name = pdb_1)
+    if (os.path.isfile(pdb_2)):
+      ms_2 = get_model_stat(file_name = pdb_2)
+    else:
+      ms_2 = group_args(
+    b_mean                  = 0,
+    a_mean                  = 0,
+    number_of_worst_clashes = 0,
+    ramachandran_outliers   = 0,
+    rotamer_outliers        = 0,
+    c_beta_dev              = 0,
+    n_cis_proline           = 0,
+    n_cis_general           = 0,
+    n_twisted_proline       = 0,
+    n_twisted_general       = 0,
+    o                       = 0,
+    b                       = 0,
+    mpscore                 = 0,
+    clsc                    = 0,
+    n_atoms                 = 0)
     #
     fmt="%6.4f %6.4f %6.3f %6.2f %6.2f %5.2f %6.2f %4d %5.2f"
     s0 = fmt%(
@@ -173,7 +197,16 @@ def run():
       ms_1.rotamer_outliers, 
       ms_1.c_beta_dev,
       ms_1.mpscore)
-    print "%s %5d"%(code, ms_0.n_atoms), "|", s0, "|", s1
+    s2 = fmt%(
+      rw_2, rf_2,
+      ms_2.b_mean,
+      ms_2.a_mean,
+      ms_2.clsc,
+      ms_2.ramachandran_outliers,
+      ms_2.rotamer_outliers,
+      ms_2.c_beta_dev,
+      ms_2.mpscore)
+    print "%s %5d"%(code, ms_0.n_atoms), "|", s0, "|", s1, "|", s2
     sys.stdout.flush() 
     
    
