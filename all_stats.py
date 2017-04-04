@@ -235,7 +235,7 @@ def run():
       ms_3.rotamer_outliers,
       ms_3.c_beta_dev,
       ms_3.mpscore)
-    print "%s %5d"%(code, ms_0.n_atoms), "|", s0, "|", s1, "|", s2, "|", s3
+    print "%s %5d"%(code, ms_0.n_atoms), "|", s0, "|", s1, "                    |", s2, "|", s3
     sys.stdout.flush()
 
 
