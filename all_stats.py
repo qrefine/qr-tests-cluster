@@ -54,6 +54,8 @@ def get_model_stat(file_name):
   params = monomer_library.pdb_interpretation.master_params.extract()
   params.clash_guard.nonbonded_distance_threshold=None
   params.disable_uc_volume_vs_n_atoms_check=False
+  params.use_neutron_distances = True
+  params.restraints_library.cdl = False
   processed_pdb_file = monomer_library.pdb_interpretation.process(
     mon_lib_srv        = mon_lib_srv,
     ener_lib           = ener_lib,
@@ -61,8 +63,11 @@ def get_model_stat(file_name):
     params             = params,
     log                = null_out())
   xrs = processed_pdb_file.xray_structure()
+  sctr_keys = xrs.scattering_type_registry().type_count_dict().keys()
+  has_hd = "H" in sctr_keys or "D" in sctr_keys
   restraints_manager   = processed_pdb_file.geometry_restraints_manager(
     show_energies      = False,
+    assume_hydrogens_all_missing = not has_hd,
     plain_pairs_radius = 5.0)
   a_mean, b_mean = get_bonds_angles_rmsd(
     restraints_manager = restraints_manager, xrs = xrs)
