@@ -110,7 +110,7 @@ def get_r(pdb_file, mtz_file):
     mtz_file).as_miller_arrays()
   f_obs, r_free_flags = None,None
   for ma in miller_arrays:
-    if(ma.info().label_string().count("F-obs-filtered")>0):
+    if(ma.info().label_string().count("F-obs")>0):
       f_obs = ma.deep_copy()
       merged = f_obs.as_non_anomalous_array().merge_equivalents()
       f_obs = merged.array().set_observation_type(f_obs)
