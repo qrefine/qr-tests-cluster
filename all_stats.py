@@ -141,25 +141,31 @@ def run():
         unique_codes.append(f[:4])
   assert len(unique_codes)==26
   #
-  print "PDB        | ORIGINAL                                                   | PHENIX.REFINE                                              | COMPLETED(if the completed PDB structure is not found, all values are set to be 0)"
-  print "           | RW     RF      BONDS   ANGL   CLSC  RAMA   ROTA   CB  MPSC | RW     RF      BONDS   ANGL   CLSC  RAMA   ROTA   CB  MPSC | RW     RF      BONDS   ANGL   CLSC  RAMA   ROTA   CB  MPSC"
+  print "PDB        | ORIGINAL                                                   | PHENIX.REFINE                                              \
+                    | COMPLETED(no completed PDB structure found, all values 0)  | COMPLETED REFINED in Q|R                                              "
+  print "           | RW     RF      BONDS   ANGL   CLSC  RAMA   ROTA   CB  MPSC | RW     RF      BONDS   ANGL   CLSC  RAMA   ROTA   CB  MPSC \
+                    | RW     RF      BONDS   ANGL   CLSC  RAMA   ROTA   CB  MPSC | RW     RF      BONDS   ANGL   CLSC  RAMA   ROTA   CB  MPSC "
   for code in unique_codes:
     pdb_0 = "00/%s.pdb"%code
     pdb_1 = "01/%s_refine_001.pdb"%code
     pdb_2 = "02/%s_complete.pdb"%code
+    pdb_3 = "03/%s_complete_refined.pdb"%code
     hkl   = "01/%s_refine_001.mtz"%code
     #
     rw_0, rf_0 = get_r(pdb_file=pdb_0, mtz_file=hkl)
     rw_1, rf_1 = get_r(pdb_file=pdb_1, mtz_file=hkl)
     if(os.path.isfile(pdb_2)):
       rw_2, rf_2 = get_r(pdb_file=pdb_2, mtz_file=hkl)
+      rw_3, rf_3 = get_r(pdb_file=pdb_3, mtz_file=hkl)
     else:
       rw_2, rf_2 = 0, 0
+      rw_3, rf_3 = 0, 0   
     #
     ms_0 = get_model_stat(file_name = pdb_0)
     ms_1 = get_model_stat(file_name = pdb_1)
     if (os.path.isfile(pdb_2)):
       ms_2 = get_model_stat(file_name = pdb_2)
+      ms_3 = get_model_stat(file_name = pdb_3)
     else:
       ms_2 = group_args(
     b_mean                  = 0,
@@ -177,6 +183,7 @@ def run():
     mpscore                 = 0,
     clsc                    = 0,
     n_atoms                 = 0)
+      ms_3 = ms_2
     #
     fmt="%6.4f %6.4f %6.3f %6.2f %6.2f %5.2f %6.2f %4d %5.2f"
     s0 = fmt%(
@@ -206,7 +213,16 @@ def run():
       ms_2.rotamer_outliers,
       ms_2.c_beta_dev,
       ms_2.mpscore)
-    print "%s %5d"%(code, ms_0.n_atoms), "|", s0, "|", s1, "|", s2
+    s3 = fmt%(
+      rw_3, rf_3,
+      ms_3.b_mean,
+      ms_3.a_mean,
+      ms_3.clsc,
+      ms_3.ramachandran_outliers,
+      ms_3.rotamer_outliers,
+      ms_3.c_beta_dev,
+      ms_3.mpscore)
+    print "%s %5d"%(code, ms_0.n_atoms), "|", s0, "|", s1, "|", s2, "|", s3
     sys.stdout.flush() 
     
    
