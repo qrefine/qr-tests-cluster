@@ -150,7 +150,7 @@ def run():
     pdb_1 = "01/%s_refine_001.pdb"%code
     pdb_2 = "02/%s_complete.pdb"%code
     pdb_3 = "03/%s_complete_refined.pdb"%code
-    hkl   = "01/%s_refine_001.mtz"%code
+    hkl   = "01/%s.mtz"%code
     #
     rw_0, rf_0 = get_r(pdb_file=pdb_0, mtz_file=hkl)
     rw_1, rf_1 = get_r(pdb_file=pdb_1, mtz_file=hkl)
