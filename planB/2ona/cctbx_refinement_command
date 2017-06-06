@@ -1,0 +1,1 @@
+python ../../../qr-core/qr.py 2ona.mtz 2ona_complete_occH0.pdb restraints=cctbx number_of_macro_cycles=5 max_iterations=200
