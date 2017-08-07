@@ -1,0 +1,587 @@
+nohup: ignoring input
+Starting Q|R
+Running refinement
+-------------------------------------------------------------------------------
+
+Refine a model using restraints from Quantum Chemistry
+
+-------------------------------------------------------------------------------
+input {
+  xray_data {
+    file_name = None
+    labels = None
+    high_resolution = None
+    low_resolution = None
+    outliers_rejection = True
+    french_wilson_scale = True
+    french_wilson {
+      max_bins = 60
+      min_bin_size = 40
+    }
+    sigma_fobs_rejection_criterion = None
+    sigma_iobs_rejection_criterion = None
+    ignore_all_zeros = True
+    force_anomalous_flag_to_be_equal_to = None
+    convert_to_non_anomalous_if_ratio_pairs_lone_less_than_threshold = 0.5
+    r_free_flags {
+      file_name = None
+      label = None
+      test_flag_value = None
+      ignore_r_free_flags = False
+      disable_suitability_test = False
+      ignore_pdb_hexdigest = False
+      generate = False
+      fraction = 0.1
+      max_free = 2000
+      lattice_symmetry_max_delta = 5
+      use_lattice_symmetry = True
+      use_dataman_shells = False
+      n_shells = 20
+    }
+  }
+  pdb {
+    file_name = None
+  }
+  monomers {
+    file_name = None
+  }
+  maps {
+    map_file_name = None
+    d_min = None
+    map_coefficients_file_name = None
+    map_coefficients_label = None
+  }
+  sequence = None
+  scattering_table = wk1995 it1992 *n_gaussian neutron electron
+  wavelength = None
+  energy = None
+  twin_law = None
+}
+max_atoms = 15000
+cluster {
+  clustering = False
+  charge_embedding = False
+  two_buffers = False
+  maxnum_residues_in_cluster = 15
+  clustering_method = gnc *bcc
+}
+restraints = cctbx *qm
+qm_engine_name = *mopac terachem turbomole pyscf
+charge = None
+basis = "sto-3g"
+refine {
+  sf_algorithm = *direct fft
+  refinement_target_name = *ml ls_wunit_k1
+  mode = opt *refine
+  number_of_macro_cycles = 1
+  number_of_weight_search_cycles = 50
+  number_of_micro_cycles = 50
+  data_weight = None
+  max_iterations = 50
+  line_search = True
+  stpmax = 1.e9
+  gradient_only = False
+  update_all_scales = True
+  refine_sites = True
+  refine_adp = False
+  restraints_weight_scale = 1.0
+  shake_sites = False
+  use_convergence_test = True
+  max_bond_rmsd = 0.03
+  max_r_work_r_free_gap = 5.0
+  r_tolerance = 0.001
+  rmsd_tolerance = 0.01
+}
+parallel_params {
+  method = *multiprocessing pbs sge lsf threading
+  nproc = None
+  qsub_command = None
+}
+output_file_name_prefix = None
+output_folder_name = "pdb"
+shared_disk = True
+rst_file = None
+dump_gradients = None
+None
+
+============================== Collecting inputs ==============================
+
+
+                   ----------Processing X-ray data----------                   
+
+F-obs:
+  /home/qr/2ona_opt/2ona.mtz:FOBS,SIGFOBS
+Miller array info: /home/qr/2ona_opt/2ona.mtz:FOBS,SIGFOBS
+Observation type: xray.amplitude
+Type of data: double, size=410
+Type of sigmas: double, size=410
+Number of Miller indices: 410
+Anomalous flag: False
+Unit cell: (25.862, 9.699, 15.851, 77.18, 74.69, 86.93)
+Space group: P 1 (No. 1)
+Systematic absences: 0
+Centric reflections: 0
+Resolution range: 14.5813 2.02911
+Completeness in resolution range: 0.439443
+Completeness with d_max=infinity: 0.438503
+Wavelength: 0.0000
+
+Number of F-obs in resolution range:                   410
+Number of F-obs<0 (these reflections will be rejected): 0
+Number of F-obs=0 (these reflections will be used in refinement): 0
+Refinement resolution range: d_max =  14.5813
+                             d_min =   2.0291
+
+R-free flags:
+  /home/qr/2ona_opt/2ona.mtz:R-free-flags
+Miller array info: /home/qr/2ona_opt/2ona.mtz:R-free-flags
+Observation type: None
+Type of data: int, size=935
+Type of sigmas: None
+Number of Miller indices: 935
+Anomalous flag: False
+Unit cell: (25.862, 9.699, 15.851, 77.18, 74.69, 86.93)
+Space group: P 1 (No. 1)
+Systematic absences: 0
+Centric reflections: 0
+Resolution range: 24.9438 2.02911
+Completeness in resolution range: 1
+Completeness with d_max=infinity: 1
+Wavelength: 0.0000
+
+Test (R-free flags) flag value: 0
+
+Number of work/free reflections by resolution:
+                                     work free  %free
+  bin  1: 14.5817 -  4.3368 [39/95 ]   36    3   7.7%
+  bin  2:  4.3368 -  3.4574 [42/90 ]   39    3   7.1%
+  bin  3:  3.4574 -  3.0248 [39/95 ]   30    9  23.1%
+  bin  4:  3.0248 -  2.7502 [46/96 ]   39    7  15.2%
+  bin  5:  2.7502 -  2.5542 [42/93 ]   37    5  11.9%
+  bin  6:  2.5542 -  2.4043 [38/80 ]   31    7  18.4%
+  bin  7:  2.4043 -  2.2844 [43/103]   39    4   9.3%
+  bin  8:  2.2844 -  2.1853 [53/110]   49    4   7.5%
+  bin  9:  2.1853 -  2.1014 [36/81 ]   35    1   2.8%
+  bin 10:  2.1014 -  2.0291 [32/90 ]   30    2   6.2%
+                             overall  365   45  11.0%
+
+                   ----------Processing PDB file(s)----------                  
+
+  Monomer Library directory:
+    "/home/qr/phenix-1.11.1-2575/modules/chem_data/mon_lib"
+  Total number of atoms: 346
+  Number of models: 1
+  Model: ""
+    Number of chains: 7
+    Chain: "A"
+      Number of atoms: 82
+      Number of conformers: 1
+      Conformer: ""
+        Number of residues, atoms: 6, 82
+          Classifications: {'peptide': 6}
+          Modifications used: {'COO': 1, 'NH3': 1}
+          Link IDs: {'TRANS': 5}
+    Chain: "B"
+      Number of atoms: 82
+      Number of conformers: 1
+      Conformer: ""
+        Number of residues, atoms: 6, 82
+          Classifications: {'peptide': 6}
+          Modifications used: {'COO': 1, 'NH3': 1}
+          Link IDs: {'TRANS': 5}
+    Chain: "C"
+      Number of atoms: 82
+      Number of conformers: 1
+      Conformer: ""
+        Number of residues, atoms: 6, 82
+          Classifications: {'peptide': 6}
+          Modifications used: {'COO': 1, 'NH3': 1}
+          Link IDs: {'TRANS': 5}
+    Chain: "D"
+      Number of atoms: 82
+      Number of conformers: 1
+      Conformer: ""
+        Number of residues, atoms: 6, 82
+          Classifications: {'peptide': 6}
+          Modifications used: {'COO': 1, 'NH3': 1}
+          Link IDs: {'TRANS': 5}
+    Chain: "A"
+      Number of atoms: 9
+      Number of conformers: 1
+      Conformer: ""
+        Number of residues, atoms: 3, 9
+          Classifications: {'water': 3}
+          Link IDs: {None: 2}
+    Chain: "B"
+      Number of atoms: 6
+      Number of conformers: 1
+      Conformer: ""
+        Number of residues, atoms: 2, 6
+          Classifications: {'water': 2}
+          Link IDs: {None: 1}
+    Chain: "D"
+      Number of atoms: 3
+      Number of conformers: 1
+      Conformer: ""
+        Number of residues, atoms: 1, 3
+          Classifications: {'water': 1}
+  Time building chain proxies: 0.11, per 1000 atoms: 0.32
+  Number of scatterers: 346
+  At special positions: 0
+  Unit cell: (25.862, 9.699, 15.851, 77.18, 74.69, 86.93)
+  Space group: P 1 (No. 1)
+  Number of sites at special positions: 0
+  Number of scattering types: 5
+    Type Number    sf(0)
+     S       4     16.00
+     O      34      8.00
+     N      24      7.00
+     C      96      6.00
+     H     188      1.00
+    sf(0) = scattering factor at diffraction angle 0.
+
+  Number of disulfides: simple=0, symmetry=0
+
+  Automatic linking
+    Parameters for automatic linking
+      Linking & cutoffs
+        Metal                : False - 3.50
+        Amimo acid           : False - 1.90
+        Carbohydrate         : True  - 1.99
+        Ligands              : True  - 1.99
+        Amino acid - RNA/DNA : False
+      
+  Number of custom bonds: simple=0, symmetry=0
+  Time building additional restraints: 0.08
+  Conformation dependent library (CDL) restraints added in 53.7 milliseconds
+  
+  Adding C-beta torsion restraints...
+  Number of C-beta restraints generated:  32
+
+  Time building geometry restraints manager: 0.10 seconds
+
+  NOTE: a complete listing of the restraints can be obtained by requesting
+        output of .geo file.
+
+  Histogram of bond lengths:
+        0.84 -     1.03: 188
+        1.03 -     1.22: 2
+        1.22 -     1.42: 46
+        1.42 -     1.61: 92
+        1.61 -     1.80: 8
+  Bond restraints: 336
+  Sorted by residual:
+  bond pdb=" N   GLY B   3 "
+       pdb=" CA  GLY B   3 "
+    ideal  model  delta    sigma   weight residual
+    1.449  1.475 -0.026 1.45e-02 4.76e+03 3.17e+00
+  bond pdb=" CA  VAL B   2 "
+       pdb=" CB  VAL B   2 "
+    ideal  model  delta    sigma   weight residual
+    1.544  1.566 -0.022 1.46e-02 4.69e+03 2.31e+00
+  bond pdb=" N   GLY C   4 "
+       pdb=" CA  GLY C   4 "
+    ideal  model  delta    sigma   weight residual
+    1.450  1.464 -0.014 1.05e-02 9.07e+03 1.85e+00
+  bond pdb=" N   VAL B   2 "
+       pdb=" CA  VAL B   2 "
+    ideal  model  delta    sigma   weight residual
+    1.459  1.474 -0.015 1.19e-02 7.06e+03 1.67e+00
+  bond pdb=" CA  GLY B   4 "
+       pdb=" C   GLY B   4 "
+    ideal  model  delta    sigma   weight residual
+    1.510  1.522 -0.012 1.03e-02 9.43e+03 1.40e+00
+  ... (remaining 331 not shown)
+
+  Histogram of bond angle deviations from ideal:
+       99.32 -   104.53: 4
+      104.53 -   109.74: 288
+      109.74 -   114.96: 193
+      114.96 -   120.17: 33
+      120.17 -   125.39: 80
+  Bond angle restraints: 598
+  Sorted by residual:
+  angle pdb=" N   GLY B   4 "
+        pdb=" CA  GLY B   4 "
+        pdb=" C   GLY B   4 "
+      ideal   model   delta    sigma   weight residual
+     111.14  117.17   -6.03 1.80e+00 3.09e-01 1.12e+01
+  angle pdb=" N   GLY A   3 "
+        pdb=" CA  GLY A   3 "
+        pdb=" C   GLY A   3 "
+      ideal   model   delta    sigma   weight residual
+     110.91  115.01   -4.10 1.49e+00 4.50e-01 7.59e+00
+  angle pdb=" C   VAL B   2 "
+        pdb=" CA  VAL B   2 "
+        pdb=" CB  VAL B   2 "
+      ideal   model   delta    sigma   weight residual
+     110.71  106.34    4.37 1.73e+00 3.34e-01 6.38e+00
+  angle pdb=" N   VAL A   5 "
+        pdb=" CA  VAL A   5 "
+        pdb=" C   VAL A   5 "
+      ideal   model   delta    sigma   weight residual
+     107.77  111.24   -3.47 1.48e+00 4.57e-01 5.50e+00
+  angle pdb=" C   VAL B   5 "
+        pdb=" CA  VAL B   5 "
+        pdb=" CB  VAL B   5 "
+      ideal   model   delta    sigma   weight residual
+     110.28  106.59    3.69 1.58e+00 4.01e-01 5.46e+00
+  ... (remaining 593 not shown)
+
+  Histogram of dihedral angle deviations from ideal:
+        0.00 -     9.23: 92
+        9.23 -    18.46: 3
+       18.46 -    27.69: 7
+       27.69 -    36.92: 3
+       36.92 -    46.15: 3
+  Dihedral angle restraints: 108
+    sinusoidal: 56
+      harmonic: 52
+  Sorted by residual:
+  dihedral pdb=" CA  MET A   1 "
+           pdb=" CB  MET A   1 "
+           pdb=" CG  MET A   1 "
+           pdb=" SD  MET A   1 "
+      ideal   model   delta sinusoidal    sigma   weight residual
+     180.00  133.85   46.15     3      1.50e+01 4.44e-03 8.29e+00
+  dihedral pdb=" CB  MET A   1 "
+           pdb=" CG  MET A   1 "
+           pdb=" SD  MET A   1 "
+           pdb=" CE  MET A   1 "
+      ideal   model   delta sinusoidal    sigma   weight residual
+    -180.00 -145.58  -34.42     3      1.50e+01 4.44e-03 5.83e+00
+  dihedral pdb=" N   MET B   1 "
+           pdb=" CA  MET B   1 "
+           pdb=" CB  MET B   1 "
+           pdb=" CG  MET B   1 "
+      ideal   model   delta sinusoidal    sigma   weight residual
+    -180.00 -150.56  -29.44     3      1.50e+01 4.44e-03 4.60e+00
+  ... (remaining 105 not shown)
+
+  Histogram of chiral volume deviations from ideal:
+       0.005 -    0.058: 14
+       0.058 -    0.110: 1
+       0.110 -    0.163: 6
+       0.163 -    0.215: 4
+       0.215 -    0.268: 3
+  Chirality restraints: 28
+  Sorted by residual:
+  chirality pdb=" CA  VAL D   5 "
+            pdb=" N   VAL D   5 "
+            pdb=" C   VAL D   5 "
+            pdb=" CB  VAL D   5 "
+    both_signs  ideal   model   delta    sigma   weight residual
+      False      2.44    2.71   -0.27 2.00e-01 2.50e+01 1.79e+00
+  chirality pdb=" CA  VAL B   2 "
+            pdb=" N   VAL B   2 "
+            pdb=" C   VAL B   2 "
+            pdb=" CB  VAL B   2 "
+    both_signs  ideal   model   delta    sigma   weight residual
+      False      2.44    2.70   -0.26 2.00e-01 2.50e+01 1.64e+00
+  chirality pdb=" CA  VAL C   5 "
+            pdb=" N   VAL C   5 "
+            pdb=" C   VAL C   5 "
+            pdb=" CB  VAL C   5 "
+    both_signs  ideal   model   delta    sigma   weight residual
+      False      2.44    2.68   -0.24 2.00e-01 2.50e+01 1.46e+00
+  ... (remaining 25 not shown)
+
+  Planarity restraints: 44
+  Sorted by residual:
+                                 delta    sigma   weight rms_deltas residual
+  plane pdb=" CA  VAL C   2 "   -0.003 2.00e-02 2.50e+03   7.02e-03 4.93e-01
+        pdb=" C   VAL C   2 "    0.012 2.00e-02 2.50e+03
+        pdb=" O   VAL C   2 "   -0.005 2.00e-02 2.50e+03
+        pdb=" N   GLY C   3 "   -0.004 2.00e-02 2.50e+03
+                                 delta    sigma   weight rms_deltas residual
+  plane pdb=" CA  VAL B   2 "   -0.003 2.00e-02 2.50e+03   6.43e-03 4.13e-01
+        pdb=" C   VAL B   2 "    0.011 2.00e-02 2.50e+03
+        pdb=" O   VAL B   2 "   -0.004 2.00e-02 2.50e+03
+        pdb=" N   GLY B   3 "   -0.004 2.00e-02 2.50e+03
+                                 delta    sigma   weight rms_deltas residual
+  plane pdb=" CA  GLY D   4 "    0.003 2.00e-02 2.50e+03   6.25e-03 3.91e-01
+        pdb=" C   GLY D   4 "   -0.011 2.00e-02 2.50e+03
+        pdb=" O   GLY D   4 "    0.004 2.00e-02 2.50e+03
+        pdb=" N   VAL D   5 "    0.004 2.00e-02 2.50e+03
+  ... (remaining 41 not shown)
+
+  Histogram of nonbonded interaction distances:
+        1.36 -     2.07: 18
+        2.07 -     2.77: 789
+        2.77 -     3.48: 1261
+        3.48 -     4.19: 2299
+        4.19 -     4.90: 3799
+  Nonbonded interactions: 8166
+  Sorted by model distance:
+  nonbonded pdb="HG22 VAL A   6 "
+            pdb="HG13 VAL C   2 "
+     model   vdw
+     1.358 2.440
+  nonbonded pdb="HG21 VAL C   6 "
+            pdb="HG22 VAL D   6 "
+     model   vdw sym.op.
+     1.546 2.440 x,y-1,z+1
+  nonbonded pdb="HG13 VAL C   5 "
+            pdb="HG22 VAL D   2 "
+     model   vdw sym.op.
+     1.674 2.440 x,y-1,z
+  nonbonded pdb="HG22 VAL C   6 "
+            pdb=" HG2 MET D   1 "
+     model   vdw
+     1.761 2.440
+  nonbonded pdb=" H3  MET A   1 "
+            pdb=" O   VAL B   6 "
+     model   vdw
+     1.815 1.970
+  ... (remaining 8161 not shown)
+
+  NOTE: a complete listing of the restraints can be obtained by requesting
+        output of .geo file.
+
+                   ----------xray_structure summary----------                  
+
+Number of scattering types: 5
+  Type Number    sf(0)   Gaussians
+   S       4     15.96       2
+   O      34      7.97       2
+   N      24      6.97       2
+   C      96      5.97       2
+   H     188      1.00       2
+  sf(0) = scattering factor at diffraction angle 0.
+Number of scatterers: 346
+At special positions: 0
+Unit cell: (25.862, 9.699, 15.851, 77.18, 74.69, 86.93)
+Space group: P 1 (No. 1)
+
+End of input processing
+ params.gradient_only True
+   input {
+     xray_data {
+       file_name = /home/qr/2ona_opt/2ona.mtz
+       labels = None
+       high_resolution = None
+       low_resolution = None
+       outliers_rejection = True
+       french_wilson_scale = True
+       french_wilson {
+         max_bins = 60
+         min_bin_size = 40
+       }
+       sigma_fobs_rejection_criterion = None
+       sigma_iobs_rejection_criterion = None
+       ignore_all_zeros = True
+       force_anomalous_flag_to_be_equal_to = None
+       convert_to_non_anomalous_if_ratio_pairs_lone_less_than_threshold = 0.5
+       r_free_flags {
+         file_name = None
+         label = None
+         test_flag_value = None
+         ignore_r_free_flags = False
+         disable_suitability_test = False
+         ignore_pdb_hexdigest = False
+         generate = False
+         fraction = 0.1
+         max_free = 2000
+         lattice_symmetry_max_delta = 5
+         use_lattice_symmetry = True
+         use_dataman_shells = False
+         n_shells = 20
+       }
+     }
+     pdb {
+       file_name = /home/qr/2ona_opt/2ona_complete_occH0.pdb
+     }
+     monomers {
+       file_name = None
+     }
+     maps {
+       map_file_name = None
+       d_min = None
+       map_coefficients_file_name = None
+       map_coefficients_label = None
+     }
+     sequence = None
+     scattering_table = wk1995 it1992 *n_gaussian neutron electron
+     wavelength = None
+     energy = None
+     twin_law = None
+   }
+   max_atoms = 15000
+   cluster {
+     clustering = true
+     charge_embedding = true
+     two_buffers = true
+     maxnum_residues_in_cluster = 5
+     clustering_method = gnc *bcc
+   }
+   restraints = cctbx *qm
+   qm_engine_name = mopac *terachem turbomole pyscf
+   charge = None
+   basis = 6-31g
+   refine {
+     sf_algorithm = *direct fft
+     refinement_target_name = *ml ls_wunit_k1
+     mode = *opt refine
+     number_of_macro_cycles = 1
+     number_of_weight_search_cycles = 50
+     number_of_micro_cycles = 50
+     data_weight = None
+     max_iterations = 50
+     line_search = True
+     stpmax = 0.5
+     gradient_only = False
+     update_all_scales = True
+     refine_sites = True
+     refine_adp = False
+     restraints_weight_scale = 1.0
+     shake_sites = False
+     use_convergence_test = True
+     max_bond_rmsd = 0.03
+     max_r_work_r_free_gap = 5.0
+     r_tolerance = 0.001
+     rmsd_tolerance = 0.01
+   }
+   parallel_params {
+     method = multiprocessing *pbs sge lsf threading
+     nproc = None
+     qsub_command = qsub -q cpu -l nodes=1:ppn=4
+   }
+   output_file_name_prefix = None
+   output_folder_name = "pdb"
+   shared_disk = True
+   rst_file = None
+   dump_gradients = None
+Total model structure factor:
+  F_model = k_total * (F_calc + k_mask * F_mask)
+
+    k_total = k_isotropic * k_anisotropic
+   Resolution    Compl Nwork Nfree R_work    <Fobs>  <Fmodel> kiso   kani kmask
+ 14.581-3.195    43.67    91     9 0.1914    51.988    50.968 1.000 1.064 0.046
+  3.187-2.574    43.86    85    15 0.2268    27.174    26.182 1.000 1.019 0.000
+  2.572-2.029    44.21   189    21 0.2149    20.892    18.739 1.000 0.978 0.000
+
+r_work=0.2023 r_free=0.3018
+
+***********************************************************
+restart info will be stored in pdb/2ona_complete_occH0.rst.pickle
+***********************************************************
+
+start   0 Rw: 0.2023 Rf: 0.3018 Rf-Rw: 0.0995 rmsd(b):  0.0089 rws:  1.0 n_fev: 0
+micro_cycle   1 Rw: 0.2928 Rf: 0.3551 Rf-Rw: 0.0623 rmsd(b):  0.0186 rws:  1.0 n_fev: 51
+micro_cycle   2 Rw: 0.3173 Rf: 0.3498 Rf-Rw: 0.0324 rmsd(b):  0.0187 rws:  1.0 n_fev: 103
+micro_cycle   3 Rw: 0.3300 Rf: 0.3415 Rf-Rw: 0.0115 rmsd(b):  0.0191 rws:  1.0 n_fev: 155
+micro_cycle   4 Rw: 0.3311 Rf: 0.3449 Rf-Rw: 0.0138 rmsd(b):  0.0190 rws:  1.0 n_fev: 207
+micro_cycle   5 Rw: 0.3345 Rf: 0.3426 Rf-Rw: 0.0081 rmsd(b):  0.0190 rws:  1.0 n_fev: 259
+micro_cycle   6 Rw: 0.3350 Rf: 0.3433 Rf-Rw: 0.0083 rmsd(b):  0.0189 rws:  1.0 n_fev: 311
+micro_cycle   7 Rw: 0.3375 Rf: 0.3433 Rf-Rw: 0.0057 rmsd(b):  0.0189 rws:  1.0 n_fev: 363
+micro_cycle   8 Rw: 0.3379 Rf: 0.3436 Rf-Rw: 0.0057 rmsd(b):  0.0190 rws:  1.0 n_fev: 415
+micro_cycle   9 Rw: 0.3401 Rf: 0.3451 Rf-Rw: 0.0049 rmsd(b):  0.0189 rws:  1.0 n_fev: 467
+
+micro_cycle  10 Rw: 0.3407 Rf: 0.3457 Rf-Rw: 0.0050 rmsd(b):  0.0190 rws:  1.0 n_fev: 519
+micro_cycle  11 Rw: 0.3432 Rf: 0.3475 Rf-Rw: 0.0043 rmsd(b):  0.0189 rws:  1.0 n_fev: 571
+
+micro_cycle  12 Rw: 0.3448 Rf: 0.3488 Rf-Rw: 0.0040 rmsd(b):  0.0188 rws:  1.0 n_fev: 623
+
+micro_cycle  13 Rw: 0.3560 Rf: 0.3562 Rf-Rw: 0.0002 rmsd(b):  0.0194 rws:  1.0 n_fev: 675
+micro_cycle  14 Rw: 0.3581 Rf: 0.3558 Rf-Rw: -0.0023 rmsd(b):  0.0191 rws:  1.0 n_fev: 727
+micro_cycle  15 Rw: 0.3599 Rf: 0.3574 Rf-Rw: -0.0025 rmsd(b):  0.0190 rws:  1.0 n_fev: 779

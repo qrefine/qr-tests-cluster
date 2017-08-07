@@ -1,0 +1,1 @@
+qr.refine 2ona.mtz 2ona_complete_occH0.pdb restratints=qm clustering=true qm_engine_name=terachem mode=refine maxnum_residues_in_cluster=5 qsub_command="qsub -q gpu -l nodes=1:ppn=4" method=pbs basis=6-31g  stpmax=0.5 max_iterations=50   number_of_macro_cycles=1 two_buffers=true charge_embedding=true rst_file=./pdb/2ona_complete_occH0.rst.pickle > log 2>&1 &
